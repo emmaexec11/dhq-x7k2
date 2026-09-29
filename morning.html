@@ -1,59 +1,64 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><meta http-equiv="refresh" content="900">
+<meta name="theme-color" content="#FFFDF8">
 <title>Morning</title><style>
-
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#12100E; color:#F4EDE3; font-family:-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif; }
-.sec { background:#1E1B17; border-radius:22px; padding:22px 24px; margin-bottom:16px; }
-.kicker { font-size:15px; letter-spacing:3px; font-weight:700; text-transform:uppercase; color:#B8AB98; margin-bottom:12px; }
-.ev { display:flex; gap:14px; padding:9px 0; border-bottom:1px solid #2b2722; align-items:baseline; }
+body { background:linear-gradient(180deg,#FFFDF8 0%,#FBF2E2 55%,#F6E9D2 100%); background-attachment:fixed; min-height:100vh; color:#241E14;
+  font-family:-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif;
+  max-width:520px; margin:0 auto; padding:26px 16px 40px; }
+.sec { background:#FFFFFF; border:1px solid rgba(90,70,35,0.08); border-radius:20px;
+  padding:18px 18px; margin-bottom:14px; box-shadow:0 6px 22px rgba(120,90,40,0.10); }
+.kicker { font-size:13px; letter-spacing:3px; font-weight:800; text-transform:uppercase;
+  color:#9A8A6E; margin-bottom:10px; }
+.ev { display:flex; gap:14px; padding:9px 0; border-bottom:1px solid rgba(90,70,35,0.10); align-items:baseline; }
 .ev:last-child { border-bottom:none; }
-.evt { font-weight:800; font-size:19px; min-width:86px; }
-.evs { font-size:20px; }
-.tk { display:flex; gap:12px; padding:9px 0; align-items:center; font-size:20px; border-bottom:1px solid #2b2722; }
+.evt { font-weight:800; font-size:15px; min-width:72px; color:#C98E2F; }
+.evs { font-size:17px; }
+.tk { display:flex; gap:12px; padding:9px 0; align-items:center; font-size:17px; border-bottom:1px solid rgba(90,70,35,0.10); }
 .tk:last-child { border-bottom:none; }
-.box { width:20px; height:20px; border:2.5px solid #B8AB98; border-radius:6px; flex:none; }
-.empty { color:#B8AB98; font-size:18px; padding:8px 0; font-style:italic; }
+.box { width:19px; height:19px; border:2.5px solid #9A8A6E; border-radius:6px; flex:none; }
+.empty { color:#9A8A6E; font-size:16px; padding:8px 0; font-style:italic; }
 .rowlink { text-decoration:none; color:inherit; display:block; }
-
-body { max-width:520px; margin:0 auto; padding:24px 16px 40px; }
-h1 { font-size:30px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; }
-.sub { color:#B8AB98; font-size:15px; margin-bottom:16px; }
-.wx { float:right; font-size:20px; font-weight:800; }
-.step { display:flex; gap:16px; align-items:center; background:#1E1B17; border-radius:18px;
+h1 { font-size:34px; font-weight:900; letter-spacing:-1px; margin-bottom:2px;
+  background:linear-gradient(90deg,#241E14,#C98E2F); -webkit-background-clip:text;
+  background-clip:text; -webkit-text-fill-color:transparent; display:inline-block; }
+.sub { color:#9A8A6E; font-size:15px; font-weight:600; margin-bottom:18px; }
+.wx { float:right; font-size:19px; font-weight:800; margin-top:8px; }
+.step { display:flex; gap:16px; align-items:center; background:#FFFFFF;
+  border:1px solid rgba(90,70,35,0.08); border-radius:18px; box-shadow:0 6px 22px rgba(120,90,40,0.10);
   padding:14px 18px; margin-bottom:10px; }
-.num { width:36px; height:36px; border-radius:11px; color:#12100E;
-  font-weight:900; font-size:18px; display:flex; align-items:center; justify-content:center; flex:none; }
-.nm { font-size:20px; font-weight:800; }
-.dt { color:#B8AB98; font-size:14px; margin-top:1px; }
-.evs { font-size:17px; } .evt { font-size:15px; min-width:72px; } .tk { font-size:17px; }
-.sec { padding:18px 18px; border-radius:18px; }
-.foot { text-align:center; color:#B8AB98; font-size:14px; margin-top:14px; }
-a { color:#E2B15C; text-decoration:none; font-weight:700; }
+.num { width:36px; height:36px; border-radius:12px; color:#FFFFFF;
+  background:linear-gradient(135deg,#E5B45C,#C98E2F);
+  font-weight:900; font-size:17px; display:flex; align-items:center; justify-content:center; flex:none; }
+.nm { font-size:19px; font-weight:800; }
+.dt { color:#9A8A6E; font-size:14px; margin-top:1px; }
+.foot { text-align:center; color:#9A8A6E; font-size:14px; margin-top:16px; }
+a { color:#C98E2F; text-decoration:none; font-weight:700; }
 
-.chatbox { background:#1E1B17; border-radius:18px; padding:14px 14px 12px; margin:6px 0 14px; }
+.chatbox { background:#FFFFFF; border:1px solid rgba(90,70,35,0.08); box-shadow:0 6px 22px rgba(120,90,40,0.10);
+  border-radius:20px; padding:14px 14px 12px; margin:6px 0 14px; }
 .chatlog { max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; padding:4px 2px 10px; }
-.chatempty { color:#B8AB98; font-size:14px; font-style:italic; padding:4px 2px; }
+.chatempty { color:#9A8A6E; font-size:14px; font-style:italic; padding:4px 2px; }
 .cm { max-width:85%; padding:9px 13px; border-radius:14px; font-size:16px; line-height:1.35; white-space:pre-wrap; word-wrap:break-word; }
-.cm-d { align-self:flex-end; background:#E2B15C; color:#12100E; font-weight:600; border-bottom-right-radius:4px; }
-.cm-e { align-self:flex-start; background:#2b2722; border-bottom-left-radius:4px; }
+.cm-d { align-self:flex-end; background:#C98E2F; color:#FFFFFF; font-weight:600; border-bottom-right-radius:4px; }
+.cm-e { align-self:flex-start; background:#F2EADA; color:#241E14; border-bottom-left-radius:4px; }
 .chatform { display:flex; gap:8px; }
-.chatform input { flex:1; background:#2b2722; border:none; border-radius:12px; padding:12px 14px;
-  color:#F4EDE3; font-size:16px; outline:none; }
-.chatform button { background:#E2B15C; color:#12100E; border:none; border-radius:12px;
+.chatform input { flex:1; background:#F4EBDA; border:none; border-radius:12px; padding:12px 14px;
+  color:#241E14; font-size:16px; outline:none; }
+.chatform button { background:#C98E2F; color:#FFFFFF; border:none; border-radius:12px;
   padding:12px 18px; font-weight:800; font-size:15px; }
 
 </style></head><body>
 <div class="wx">🌦 19°/12°</div>
 <h1>🌅 Morning</h1>
 <div class="sub">Tuesday, September 29</div>
-<div class="sec"><div class="kicker" style="color:#E2B15C">📅 Today</div><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#E2B15C">9:30a</span><span class="evs">Order Volume Discussion with Webgility</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#E2B15C">9:30a</span><span class="evs">Webgility meeting — Akshita Srivastava</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#E2B15C">7:00p</span><span class="evs">Country Swing</span></div></a></div>
+<div class="sec"><div class="kicker" style="color:#C98E2F">📅 Today</div><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#C98E2F">9:30a</span><span class="evs">Order Volume Discussion with Webgility</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#C98E2F">9:30a</span><span class="evs">Webgility meeting — Akshita Srivastava</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#C98E2F">7:00p</span><span class="evs">Country Swing</span></div></a></div>
 <div class="sec"><div class="kicker">🐉 Daily Dragons</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Call accountants</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>15 products to the guy for amazon</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>check Amazon appeal</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Foundation on site</span></div></a></div>
-<div class="step"><div class="num" style="background:#E2B15C">1</div><div><div class="nm">Gratitude</div><div class="dt">silent drive or walk · no music · prayer</div></div></div><div class="step"><div class="num" style="background:#E2B15C">2</div><div><div class="nm">Exercise</div><div class="dt">30 min gym · sermon on</div></div></div><div class="step"><div class="num" style="background:#E2B15C">3</div><div><div class="nm">Breakfast</div><div class="dt">protein first</div></div></div><div class="step"><div class="num" style="background:#E2B15C">4</div><div><div class="nm">Work</div><div class="dt">first task from last night&#x27;s note</div></div></div>
+<div class="step"><div class="num">1</div><div><div class="nm">Gratitude</div><div class="dt">silent drive or walk · no music · prayer</div></div></div><div class="step"><div class="num">2</div><div><div class="nm">Exercise</div><div class="dt">30 min gym · sermon on</div></div></div><div class="step"><div class="num">3</div><div><div class="nm">Breakfast</div><div class="dt">protein first</div></div></div><div class="step"><div class="num">4</div><div><div class="nm">Work</div><div class="dt">first task from last night&#x27;s note</div></div></div>
 
 <div class="chatbox" id="chatbox">
-  <div class="kicker" style="color:#E2B15C">💬 Emma</div>
+  <div class="kicker" style="color:#C98E2F">💬 Emma</div>
   <div id="chatlog" class="chatlog"><div class="chatempty">Say anything — add a task, change an alarm, ask a question.</div></div>
   <form id="chatform" class="chatform">
     <input id="chatinput" type="text" placeholder="Message Emma…" autocomplete="off" maxlength="1000">
@@ -99,5 +104,5 @@ a { color:#E2B15C; text-decoration:none; font-weight:700; }
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 9:08am · auto-refreshes</span></div>
+<span style="font-size:12px">updated 9:12am · auto-refreshes</span></div>
 </body></html>

@@ -1,47 +1,52 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><meta http-equiv="refresh" content="900">
+<meta name="theme-color" content="#0B0A0F">
 <title>Night</title><style>
-
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#12100E; color:#F4EDE3; font-family:-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif; }
-.sec { background:#1E1B17; border-radius:22px; padding:22px 24px; margin-bottom:16px; }
-.kicker { font-size:15px; letter-spacing:3px; font-weight:700; text-transform:uppercase; color:#B8AB98; margin-bottom:12px; }
-.ev { display:flex; gap:14px; padding:9px 0; border-bottom:1px solid #2b2722; align-items:baseline; }
+body { background:linear-gradient(180deg,#0B0A0F 0%,#15121D 50%,#0B0A0F 100%); background-attachment:fixed; min-height:100vh; color:#F4EDE3;
+  font-family:-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif;
+  max-width:520px; margin:0 auto; padding:26px 16px 40px; }
+.sec { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:20px;
+  padding:18px 18px; margin-bottom:14px; box-shadow:0 8px 28px rgba(0,0,0,0.45); }
+.kicker { font-size:13px; letter-spacing:3px; font-weight:800; text-transform:uppercase;
+  color:#9C93A6; margin-bottom:10px; }
+.ev { display:flex; gap:14px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.09); align-items:baseline; }
 .ev:last-child { border-bottom:none; }
-.evt { font-weight:800; font-size:19px; min-width:86px; }
-.evs { font-size:20px; }
-.tk { display:flex; gap:12px; padding:9px 0; align-items:center; font-size:20px; border-bottom:1px solid #2b2722; }
+.evt { font-weight:800; font-size:15px; min-width:72px; color:#8FA98B; }
+.evs { font-size:17px; }
+.tk { display:flex; gap:12px; padding:9px 0; align-items:center; font-size:17px; border-bottom:1px solid rgba(255,255,255,0.09); }
 .tk:last-child { border-bottom:none; }
-.box { width:20px; height:20px; border:2.5px solid #B8AB98; border-radius:6px; flex:none; }
-.empty { color:#B8AB98; font-size:18px; padding:8px 0; font-style:italic; }
+.box { width:19px; height:19px; border:2.5px solid #9C93A6; border-radius:6px; flex:none; }
+.empty { color:#9C93A6; font-size:16px; padding:8px 0; font-style:italic; }
 .rowlink { text-decoration:none; color:inherit; display:block; }
-
-body { max-width:520px; margin:0 auto; padding:24px 16px 40px; }
-h1 { font-size:30px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; }
-.sub { color:#B8AB98; font-size:15px; margin-bottom:16px; }
-.wx { float:right; font-size:20px; font-weight:800; }
-.step { display:flex; gap:16px; align-items:center; background:#1E1B17; border-radius:18px;
+h1 { font-size:34px; font-weight:900; letter-spacing:-1px; margin-bottom:2px;
+  background:linear-gradient(90deg,#F4EDE3,#8FA98B); -webkit-background-clip:text;
+  background-clip:text; -webkit-text-fill-color:transparent; display:inline-block; }
+.sub { color:#9C93A6; font-size:15px; font-weight:600; margin-bottom:18px; }
+.wx { float:right; font-size:19px; font-weight:800; margin-top:8px; }
+.step { display:flex; gap:16px; align-items:center; background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08); border-radius:18px; box-shadow:0 8px 28px rgba(0,0,0,0.45);
   padding:14px 18px; margin-bottom:10px; }
-.num { width:36px; height:36px; border-radius:11px; color:#12100E;
-  font-weight:900; font-size:18px; display:flex; align-items:center; justify-content:center; flex:none; }
-.nm { font-size:20px; font-weight:800; }
-.dt { color:#B8AB98; font-size:14px; margin-top:1px; }
-.evs { font-size:17px; } .evt { font-size:15px; min-width:72px; } .tk { font-size:17px; }
-.sec { padding:18px 18px; border-radius:18px; }
-.foot { text-align:center; color:#B8AB98; font-size:14px; margin-top:14px; }
+.num { width:36px; height:36px; border-radius:12px; color:#0B0A0F;
+  background:linear-gradient(135deg,#B7CBAF,#8FA98B);
+  font-weight:900; font-size:17px; display:flex; align-items:center; justify-content:center; flex:none; }
+.nm { font-size:19px; font-weight:800; }
+.dt { color:#9C93A6; font-size:14px; margin-top:1px; }
+.foot { text-align:center; color:#9C93A6; font-size:14px; margin-top:16px; }
 a { color:#8FA98B; text-decoration:none; font-weight:700; }
 
-.chatbox { background:#1E1B17; border-radius:18px; padding:14px 14px 12px; margin:6px 0 14px; }
+.chatbox { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); box-shadow:0 8px 28px rgba(0,0,0,0.45);
+  border-radius:20px; padding:14px 14px 12px; margin:6px 0 14px; }
 .chatlog { max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; padding:4px 2px 10px; }
-.chatempty { color:#B8AB98; font-size:14px; font-style:italic; padding:4px 2px; }
+.chatempty { color:#9C93A6; font-size:14px; font-style:italic; padding:4px 2px; }
 .cm { max-width:85%; padding:9px 13px; border-radius:14px; font-size:16px; line-height:1.35; white-space:pre-wrap; word-wrap:break-word; }
-.cm-d { align-self:flex-end; background:#8FA98B; color:#12100E; font-weight:600; border-bottom-right-radius:4px; }
-.cm-e { align-self:flex-start; background:#2b2722; border-bottom-left-radius:4px; }
+.cm-d { align-self:flex-end; background:#8FA98B; color:#0B0A0F; font-weight:600; border-bottom-right-radius:4px; }
+.cm-e { align-self:flex-start; background:rgba(255,255,255,0.08); color:#F4EDE3; border-bottom-left-radius:4px; }
 .chatform { display:flex; gap:8px; }
-.chatform input { flex:1; background:#2b2722; border:none; border-radius:12px; padding:12px 14px;
+.chatform input { flex:1; background:rgba(255,255,255,0.08); border:none; border-radius:12px; padding:12px 14px;
   color:#F4EDE3; font-size:16px; outline:none; }
-.chatform button { background:#8FA98B; color:#12100E; border:none; border-radius:12px;
+.chatform button { background:#8FA98B; color:#0B0A0F; border:none; border-radius:12px;
   padding:12px 18px; font-weight:800; font-size:15px; }
 
 </style></head><body>
@@ -50,7 +55,7 @@ a { color:#8FA98B; text-decoration:none; font-weight:700; }
 <div class="sub">close the day · locked 21 nights</div>
 <div class="sec"><div class="kicker" style="color:#8FA98B">📅 Tomorrow</div><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/30"><div class="ev"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Don&#x27;t go to work holiday</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/30"><div class="ev"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Ali Birthday&#x27;s birthday</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/30"><div class="ev"><span class="evt" style="color:#8FA98B">1:00p</span><span class="evs">Case management</span></div></a></div>
 <div class="sec"><div class="kicker">🐉 Daily Dragons</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Call accountants</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>15 products to the guy for amazon</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>check Amazon appeal</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Foundation on site</span></div></a></div>
-<div class="step"><div class="num" style="background:#8FA98B">1</div><div><div class="nm">Shutdown</div><div class="dt">at the desk 1 min · jot tomorrow&#x27;s first task</div></div></div><div class="step"><div class="num" style="background:#8FA98B">2</div><div><div class="nm">Reward</div><div class="dt">Fortnite / episode / training — pick one</div></div></div><div class="step"><div class="num" style="background:#8FA98B">3</div><div><div class="nm">Shower + sing</div><div class="dt">screens off from here</div></div></div><div class="step"><div class="num" style="background:#8FA98B">4</div><div><div class="nm">Journal + prayer</div><div class="dt">2 min · thank God · close the day</div></div></div><div class="step"><div class="num" style="background:#8FA98B">5</div><div><div class="nm">One page</div><div class="dt">scripture or MacDonald</div></div></div><div class="step"><div class="num" style="background:#8FA98B">6</div><div><div class="nm">Lights out</div><div class="dt">lie in the quiet</div></div></div>
+<div class="step"><div class="num">1</div><div><div class="nm">Shutdown</div><div class="dt">at the desk 1 min · jot tomorrow&#x27;s first task</div></div></div><div class="step"><div class="num">2</div><div><div class="nm">Reward</div><div class="dt">Fortnite / episode / training — pick one</div></div></div><div class="step"><div class="num">3</div><div><div class="nm">Shower + sing</div><div class="dt">screens off from here</div></div></div><div class="step"><div class="num">4</div><div><div class="nm">Journal + prayer</div><div class="dt">2 min · thank God · close the day</div></div></div><div class="step"><div class="num">5</div><div><div class="nm">One page</div><div class="dt">scripture or MacDonald</div></div></div><div class="step"><div class="num">6</div><div><div class="nm">Lights out</div><div class="dt">lie in the quiet</div></div></div>
 
 <div class="chatbox" id="chatbox">
   <div class="kicker" style="color:#8FA98B">💬 Emma</div>
@@ -99,5 +104,5 @@ a { color:#8FA98B; text-decoration:none; font-weight:700; }
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 9:08am · auto-refreshes</span></div>
+<span style="font-size:12px">updated 9:12am · auto-refreshes</span></div>
 </body></html>
