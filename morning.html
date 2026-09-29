@@ -64,6 +64,18 @@ a { color:#FFC46B; text-decoration:none; font-weight:700; }
   padding:12px 18px; font-weight:800; font-size:15px; }
 
 
+#notebox { background:#FDF3A9; background:linear-gradient(180deg,#FDF6B8,#F8E98D);
+  border:none; border-radius:4px 4px 14px 4px; transform:rotate(-1.2deg);
+  box-shadow:3px 6px 14px rgba(0,0,0,0.35); color:#4A3F18; position:relative; }
+#notebox::before { content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%) rotate(1deg);
+  width:92px; height:22px; background:rgba(255,255,255,0.45); border:1px solid rgba(0,0,0,0.06); }
+#notebox .kicker { color:#8A6D1E !important; }
+#notebox .note { color:#4A3F18; font-family:'Caveat',cursive; font-size:24px; border-bottom:1px dashed rgba(74,63,24,0.25); }
+#notebox .nx { color:#8A6D1E; }
+#notebox .notehint { color:#8A6D1E; }
+#notebox input { background:rgba(255,255,255,0.55); color:#4A3F18; font-family:'Caveat',cursive; font-size:22px; }
+#notebox input::placeholder { color:#8A6D1E; }
+#notebox button[type=submit] { background:#4A3F18; color:#FDF3A9; }
 .note { display:flex; gap:10px; align-items:center; padding:8px 0; font-size:17px;
   border-bottom:1px solid rgba(255,255,255,0.18); }
 .note:last-child { border-bottom:none; }
@@ -98,11 +110,12 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 @media (prefers-reduced-motion:reduce){ body,.orb,.sec,.step{animation:none} }
 
 </style></head><body><div class="orb orb1"></div><div class="orb orb2"></div>
-<div class="wx">🌧 17°/11°</div>
+<div class="wx">🌧 18°/12°</div>
 <h1><span style="-webkit-text-fill-color:initial">🌅</span> Morning</h1>
 <div class="sub">Tuesday, September 29</div>
 <div class="sec"><div class="kicker" style="color:#FFC46B">📅 Today</div><div class="ev evtap" data-key="65ee41abc27d"><span class="evt" style="color:#FFC46B">9:30a</span><span class="evs">Order Volume Discussion with Webgility</span></div><div class="ev evtap" data-key="731abae73e56"><span class="evt" style="color:#FFC46B">9:30a</span><span class="evs">Webgility meeting — Akshita Srivastava</span></div><div class="ev evtap" data-key="184d31e635a7"><span class="evt" style="color:#FFC46B">7:00p</span><span class="evs">Country Swing</span></div></div>
 
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <div class="sec" id="notebox" style="display:none"><div class="kicker" style="color:#FFC46B">📝 From last night</div><div id="notelist"></div></div>
 <script>
 (function() {
@@ -241,5 +254,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 1:34pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 1:42pm · auto-refreshes</span></div>
 </body></html>

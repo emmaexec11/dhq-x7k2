@@ -64,6 +64,18 @@ a { color:#8FA98B; text-decoration:none; font-weight:700; }
   padding:12px 18px; font-weight:800; font-size:15px; }
 
 
+#notebox { background:#FDF3A9; background:linear-gradient(180deg,#FDF6B8,#F8E98D);
+  border:none; border-radius:4px 4px 14px 4px; transform:rotate(-1.2deg);
+  box-shadow:3px 6px 14px rgba(0,0,0,0.35); color:#4A3F18; position:relative; }
+#notebox::before { content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%) rotate(1deg);
+  width:92px; height:22px; background:rgba(255,255,255,0.45); border:1px solid rgba(0,0,0,0.06); }
+#notebox .kicker { color:#8A6D1E !important; }
+#notebox .note { color:#4A3F18; font-family:'Caveat',cursive; font-size:24px; border-bottom:1px dashed rgba(74,63,24,0.25); }
+#notebox .nx { color:#8A6D1E; }
+#notebox .notehint { color:#8A6D1E; }
+#notebox input { background:rgba(255,255,255,0.55); color:#4A3F18; font-family:'Caveat',cursive; font-size:22px; }
+#notebox input::placeholder { color:#8A6D1E; }
+#notebox button[type=submit] { background:#4A3F18; color:#FDF3A9; }
 .note { display:flex; gap:10px; align-items:center; padding:8px 0; font-size:17px;
   border-bottom:1px solid #2b2722; }
 .note:last-child { border-bottom:none; }
@@ -143,6 +155,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     .catch(function() { draw(); });
 })();
 </script>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <div class="sec" id="notebox"><div class="kicker" style="color:#8FA98B">📝 For tomorrow morning</div><div id="notelist"></div><form id="noteform" class="chatform"><input id="noteinput" type="text" placeholder="Jot it, then let it go…" autocomplete="off" maxlength="500"><button type="submit">Save</button></form><div class="notehint">shows up on your morning page — brain can let go now</div></div>
 <script>
 (function() {
@@ -279,5 +292,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 1:34pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 1:42pm · auto-refreshes</span></div>
 </body></html>
