@@ -57,6 +57,14 @@ a { color:#8FA98B; text-decoration:none; font-weight:700; }
 .dayhead { font-weight:800; font-size:15px; color:#B8AB98; margin:10px 0 2px; }
 .dayhead:first-child { margin-top:0; }
 
+
+.sec, .step { animation:rise .55s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+.sec:nth-of-type(1){animation-delay:.05s} .sec:nth-of-type(2){animation-delay:.12s}
+.sec:nth-of-type(3){animation-delay:.19s} .sec:nth-of-type(4){animation-delay:.26s}
+.step:nth-of-type(odd){animation-delay:.3s} .step:nth-of-type(even){animation-delay:.38s}
+@media (prefers-reduced-motion:reduce){ .sec,.step{animation:none} }
+
 </style></head><body>
 <div class="wx">☁️ 18°/8°</div>
 <h1><span style="-webkit-text-fill-color:initial">🌙</span> Night</h1>
@@ -152,5 +160,5 @@ a { color:#8FA98B; text-decoration:none; font-weight:700; }
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 11:48am · auto-refreshes</span></div>
+<span style="font-size:12px">updated 11:54am · auto-refreshes</span></div>
 </body></html>
