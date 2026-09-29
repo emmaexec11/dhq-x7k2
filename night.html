@@ -18,6 +18,11 @@ body { background:#12100E; min-height:100vh; color:#F4EDE3;
 .tk { display:flex; gap:12px; padding:9px 0; align-items:center; font-size:17px; border-bottom:1px solid #2b2722; }
 .tk:last-child { border-bottom:none; }
 .box { width:19px; height:19px; border:2.5px solid #B8AB98; border-radius:6px; flex:none; }
+.box.checked { background:#8FA98B; border-color:#8FA98B; position:relative; }
+.box.checked::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#12100E; font-size:14px; font-weight:900; }
+.tktap, .hb { cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
+.tk.done .tkt { text-decoration:line-through; opacity:0.45; }
 .empty { color:#B8AB98; font-size:16px; padding:8px 0; font-style:italic; }
 .rowlink { text-decoration:none; color:inherit; display:block; }
 h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; display:inline-block; }
@@ -90,6 +95,43 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 <div class="sec"><div class="kicker">👀 Next few days</div><div class="dayhead">Thursday</div><div class="ev"><span class="evt" style="color:#8FA98B">1:30p</span><span class="evs">Singing Lessons</span></div><div class="ev"><span class="evt" style="color:#8FA98B">7:00p</span><span class="evs">Faith and Fitness Kickoff Event</span></div><div class="dayhead">Friday</div><div class="empty">clear</div></div>
 <div class="step"><div class="num">1</div><div><div class="nm">Shutdown</div><div class="dt">at the desk 1 min · jot tomorrow&#x27;s first task</div></div></div><div class="step"><div class="num">2</div><div><div class="nm">Reward</div><div class="dt">Fortnite / episode / training — pick one</div></div></div><div class="step"><div class="num">3</div><div><div class="nm">Shower + sing</div><div class="dt">screens off from here</div></div></div><div class="step"><div class="num">4</div><div><div class="nm">Journal + prayer</div><div class="dt">2 min · thank God · close the day</div></div></div><div class="step"><div class="num">5</div><div><div class="nm">One page</div><div class="dt">scripture or MacDonald</div></div></div><div class="step"><div class="num">6</div><div><div class="nm">Lights out</div><div class="dt">lie in the quiet</div></div></div>
 
+<div class="sec" id="habitbox">
+  <div class="kicker" style="color:#8FA98B">✅ Today's check-through <span id="hbcount" style="float:right"></span></div>
+  <div id="habitlist"></div>
+  <div class="notehint">tap what you did — 10 seconds, done</div>
+</div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3", HABITS = [["morning", "\u2600\ufe0f Morning routine"], ["food", "\ud83c\udf57 Calories + protein"], ["move", "\ud83c\udfcb\ufe0f Gym / movement"], ["skin", "\ud83e\uddf4 Skincare"], ["night", "\ud83c\udf19 Night routine"]];
+  var state = {};
+  function day() { return new Date().toLocaleDateString("en-CA"); }
+  function draw() {
+    var list = document.getElementById("habitlist");
+    list.innerHTML = "";
+    var done = 0;
+    HABITS.forEach(function(h) {
+      var on = state[h[0]] === 1;
+      if (on) done++;
+      var d = document.createElement("div");
+      d.className = "tk hb" + (on ? " done" : "");
+      d.innerHTML = '<span class="box' + (on ? ' checked' : '') + '"></span><span class="tkt">' + h[1] + '</span>';
+      d.onclick = function() {
+        state[h[0]] = on ? 0 : 1;
+        draw();
+        fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ day: day(), habit: h[0], done: state[h[0]] }) }).catch(function() {});
+      };
+      list.appendChild(d);
+    });
+    document.getElementById("hbcount").textContent = done + "/" + HABITS.length;
+  }
+  fetch(EP + "/?k=" + K + "&action=habitstate&day=" + day())
+    .then(function(r) { return r.json(); })
+    .then(function(j) { state = j.habits || {}; draw(); })
+    .catch(function() { draw(); });
+})();
+</script>
 <div class="sec" id="notebox"><div class="kicker" style="color:#8FA98B">📝 For tomorrow morning</div><div id="notelist"></div><form id="noteform" class="chatform"><input id="noteinput" type="text" placeholder="Jot it, then let it go…" autocomplete="off" maxlength="500"><button type="submit">Save</button></form><div class="notehint">shows up on your morning page — brain can let go now</div></div>
 <script>
 (function() {
@@ -176,6 +218,37 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   setInterval(poll, 4000);
 })();
 </script>
+
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var KEY = "dhq_done_tasks";
+  var mem = {};
+  try { mem = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+  var cutoff = Date.now() - 3600 * 1000;
+  Object.keys(mem).forEach(function(k) { if (mem[k] < cutoff) delete mem[k]; });
+  document.querySelectorAll(".tktap").forEach(function(el) {
+    var id = el.getAttribute("data-id");
+    if (mem[id]) mark(el);
+    el.addEventListener("click", function() {
+      if (el.classList.contains("done")) return;
+      mark(el);
+      mem[id] = Date.now();
+      localStorage.setItem(KEY, JSON.stringify(mem));
+      fetch(EP + "/?k=" + K + "&action=queue", { method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: "taskdone", payload: { id: id,
+          lid: el.getAttribute("data-lid"),
+          title: el.querySelector(".tkt").textContent } }) }).catch(function() {});
+    });
+  });
+  function mark(el) {
+    el.classList.add("done");
+    el.querySelector(".box").classList.add("checked");
+  }
+  localStorage.setItem(KEY, JSON.stringify(mem));
+})();
+</script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 12:29pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 12:33pm · auto-refreshes</span></div>
 </body></html>

@@ -18,6 +18,11 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .tk { display:flex; gap:12px; padding:9px 0; align-items:center; font-size:17px; border-bottom:1px solid rgba(255,255,255,0.18); }
 .tk:last-child { border-bottom:none; }
 .box { width:19px; height:19px; border:2.5px solid rgba(255,255,255,0.78); border-radius:6px; flex:none; }
+.box.checked { background:#FFC46B; border-color:#FFC46B; position:relative; }
+.box.checked::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#123468; font-size:14px; font-weight:900; }
+.tktap, .hb { cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
+.tk.done .tkt { text-decoration:line-through; opacity:0.45; }
 .empty { color:rgba(255,255,255,0.78); font-size:16px; padding:8px 0; font-style:italic; }
 .rowlink { text-decoration:none; color:inherit; display:block; }
 h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; display:inline-block; }
@@ -82,7 +87,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 @media (prefers-reduced-motion:reduce){ body,.orb,.sec,.step{animation:none} }
 
 </style></head><body><div class="orb orb1"></div><div class="orb orb2"></div>
-<div class="wx">🌦 19°/13°</div>
+<div class="wx">🌧 18°/12°</div>
 <h1><span style="-webkit-text-fill-color:initial">🌅</span> Morning</h1>
 <div class="sub">Tuesday, September 29</div>
 <div class="sec"><div class="kicker" style="color:#FFC46B">📅 Today</div><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#FFC46B">9:30a</span><span class="evs">Order Volume Discussion with Webgility</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#FFC46B">9:30a</span><span class="evs">Webgility meeting — Akshita Srivastava</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#FFC46B">7:00p</span><span class="evs">Country Swing</span></div></a></div>
@@ -125,7 +130,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   });
   load();
 })();
-</script><div class="sec"><div class="kicker">🐉 Daily Dragons</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>15 products to the guy for amazon</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>check Amazon appeal</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Foundation on site</span></div></a></div><div class="sec"><div class="kicker">🗓 This Week</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Call CNK accountants (250-862-8577) if no email back</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Foundation on Site</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Book flights</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Multicolor photos ( lifestyle ) site</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Eye Shawdow on site</span></div></a><div class="empty">+20 more in the app</div></div><div class="sec"><div class="kicker">📆 This Month</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Uber update</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>CRA paper for gym ( need taxes done)</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Switch to loop sub on new site</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>GMP manufacture?</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Site seo aduit ( AI SEO)</span></div></a><div class="empty">+4 more in the app</div></div>
+</script><div class="sec"><div class="kicker">🐉 Daily Dragons</div><div class="tk tktap" data-id="dldQZy1ZcXotaVktS0xsSA" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">15 products to the guy for amazon</span></div><div class="tk tktap" data-id="QjhzcTN6UTdyTEFzOVEzQw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">check Amazon appeal</span></div><div class="tk tktap" data-id="MktMQ3pZUm55Y2s3Ym83Yw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Foundation on site</span></div></div><div class="sec"><div class="kicker">🗓 This Week</div><div class="tk tktap" data-id="Y1BWRTM2ZEhqSnhYXzlTUQ" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Call CNK accountants (250-862-8577) if no email back</span></div><div class="tk tktap" data-id="cjJSR01wUFVmdWlQeFMxaA" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Foundation on Site</span></div><div class="tk tktap" data-id="eFdTTGJQdmxBaklSUHJpSQ" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Book flights</span></div><div class="tk tktap" data-id="UlhlRFhHeS1Hc0pCV3Rmdw" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Multicolor photos ( lifestyle ) site</span></div><div class="tk tktap" data-id="dXhpZ2tiUHhna012T2VUMg" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Eye Shawdow on site</span></div><div class="empty">+20 more in the app</div></div><div class="sec"><div class="kicker">📆 This Month</div><div class="tk tktap" data-id="SW1pR1RPSVNjTmRWdWVmdA" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Uber update</span></div><div class="tk tktap" data-id="UlNlMVZEaENDQ01peVB1dg" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">CRA paper for gym ( need taxes done)</span></div><div class="tk tktap" data-id="QUNjc29OTEpwdTE1Z20tNw" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Switch to loop sub on new site</span></div><div class="tk tktap" data-id="Y0FrdHZUT18yTkJKUmZlZA" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">GMP manufacture?</span></div><div class="tk tktap" data-id="ai1BMkRyaUNJZU84RmxGbA" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Site seo aduit ( AI SEO)</span></div><div class="empty">+4 more in the app</div></div>
 <div class="step"><div class="num">1</div><div><div class="nm">Gratitude</div><div class="dt">silent drive or walk · no music · prayer</div></div></div><div class="step"><div class="num">2</div><div><div class="nm">Exercise</div><div class="dt">30 min gym · sermon on</div></div></div><div class="step"><div class="num">3</div><div><div class="nm">Breakfast</div><div class="dt">protein first</div></div></div><div class="step"><div class="num">4</div><div><div class="nm">Work</div><div class="dt">first task from last night&#x27;s note</div></div></div>
 
 
@@ -175,6 +180,37 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   setInterval(poll, 4000);
 })();
 </script>
+
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var KEY = "dhq_done_tasks";
+  var mem = {};
+  try { mem = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+  var cutoff = Date.now() - 3600 * 1000;
+  Object.keys(mem).forEach(function(k) { if (mem[k] < cutoff) delete mem[k]; });
+  document.querySelectorAll(".tktap").forEach(function(el) {
+    var id = el.getAttribute("data-id");
+    if (mem[id]) mark(el);
+    el.addEventListener("click", function() {
+      if (el.classList.contains("done")) return;
+      mark(el);
+      mem[id] = Date.now();
+      localStorage.setItem(KEY, JSON.stringify(mem));
+      fetch(EP + "/?k=" + K + "&action=queue", { method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: "taskdone", payload: { id: id,
+          lid: el.getAttribute("data-lid"),
+          title: el.querySelector(".tkt").textContent } }) }).catch(function() {});
+    });
+  });
+  function mark(el) {
+    el.classList.add("done");
+    el.querySelector(".box").classList.add("checked");
+  }
+  localStorage.setItem(KEY, JSON.stringify(mem));
+})();
+</script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 12:29pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 12:33pm · auto-refreshes</span></div>
 </body></html>
