@@ -2,7 +2,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><meta http-equiv="refresh" content="900">
 <meta name="theme-color" content="#12100E">
-<title>Night</title><style>
+<title>Night</title><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet"><style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#12100E; min-height:100vh; color:#F4EDE3;
   font-family:-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif;
@@ -58,14 +58,31 @@ a { color:#8FA98B; text-decoration:none; font-weight:700; }
 .dayhead:first-child { margin-top:0; }
 
 
+body { background:radial-gradient(120% 60% at 80% -10%,#1E2233 0%,#12100E 55%) #12100E; position:relative; }
+.orb { position:fixed; z-index:-1; border-radius:50%; pointer-events:none; filter:blur(55px); }
+.orb1 { width:300px; height:300px; background:radial-gradient(circle,rgba(143,169,139,0.28),transparent 70%);
+  top:-60px; right:-70px; animation:drift1 26s ease-in-out infinite alternate; }
+.orb2 { width:240px; height:240px; background:radial-gradient(circle,rgba(110,130,200,0.18),transparent 70%);
+  bottom:8%; left:-80px; animation:drift2 32s ease-in-out infinite alternate; }
+@keyframes drift1 { 0% { transform:translate(0,0); } 100% { transform:translate(-40px,50px); } }
+@keyframes drift2 { 0% { transform:translate(0,0); } 100% { transform:translate(50px,-40px); } }
+.star { position:fixed; z-index:-1; width:3px; height:3px; border-radius:50%; background:#F4EDE3;
+  animation:twinkle 4s ease-in-out infinite; pointer-events:none; }
+@keyframes twinkle { 0%,100% { opacity:0.15; } 50% { opacity:0.8; } }
+h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weight:600;
+  font-size:44px; letter-spacing:0;
+  background:linear-gradient(100deg,#F4EDE3 0%,#C9D8C5 45%,#8FA98B 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 16px rgba(143,169,139,0.35)); }
+.sub { font-size:16px; font-weight:700; letter-spacing:0.5px; }
 .sec, .step { animation:rise .55s cubic-bezier(.2,.7,.3,1) both; }
 @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 .sec:nth-of-type(1){animation-delay:.05s} .sec:nth-of-type(2){animation-delay:.12s}
 .sec:nth-of-type(3){animation-delay:.19s} .sec:nth-of-type(4){animation-delay:.26s}
 .step:nth-of-type(odd){animation-delay:.3s} .step:nth-of-type(even){animation-delay:.38s}
-@media (prefers-reduced-motion:reduce){ .sec,.step{animation:none} }
+@media (prefers-reduced-motion:reduce){ body,.orb,.star,.sec,.step{animation:none} }
 
-</style></head><body>
+</style></head><body><div class="orb orb1"></div><div class="orb orb2"></div><div class="star" style="top:8%;left:18%"></div><div class="star" style="top:14%;left:72%;animation-delay:1.2s"></div><div class="star" style="top:5%;left:48%;animation-delay:2.1s;width:2px;height:2px"></div><div class="star" style="top:22%;left:88%;animation-delay:0.6s;width:2px;height:2px"></div><div class="star" style="top:28%;left:8%;animation-delay:2.8s"></div>
 <div class="wx">☁️ 18°/8°</div>
 <h1><span style="-webkit-text-fill-color:initial">🌙</span> Night</h1>
 <div class="sub">close the day · locked 21 nights</div>
@@ -160,5 +177,5 @@ a { color:#8FA98B; text-decoration:none; font-weight:700; }
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 12:08pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 12:10pm · auto-refreshes</span></div>
 </body></html>
