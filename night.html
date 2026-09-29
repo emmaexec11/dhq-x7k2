@@ -21,8 +21,10 @@ body { background:#12100E; min-height:100vh; color:#F4EDE3;
 .box.checked { background:#8FA98B; border-color:#8FA98B; position:relative; }
 .box.checked::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
   justify-content:center; color:#12100E; font-size:14px; font-weight:900; }
-.tktap, .hb { cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
+.tktap, .hb, .evtap { cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
 .tk.done .tkt { text-decoration:line-through; opacity:0.45; }
+.evtap.evgone { opacity:0.35; }
+.evtap.evgone .evs { text-decoration:line-through; }
 .empty { color:#B8AB98; font-size:16px; padding:8px 0; font-style:italic; }
 .rowlink { text-decoration:none; color:inherit; display:block; }
 h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; display:inline-block; }
@@ -100,8 +102,8 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 <div class="wx">☁️ 18°/8°</div>
 <h1><span style="-webkit-text-fill-color:initial">🌙</span> Night</h1>
 <div class="sub">close the day · locked 21 nights</div>
-<div class="sec"><div class="kicker" style="color:#8FA98B">📅 Tomorrow</div><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/30"><div class="ev"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Don&#x27;t go to work holiday</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/30"><div class="ev"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Ali Birthday&#x27;s birthday</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/30"><div class="ev"><span class="evt" style="color:#8FA98B">1:00p</span><span class="evs">Case management</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/30"><div class="ev"><span class="evt" style="color:#8FA98B">8:00p</span><span class="evs">Wings at Dakota&#x27;s</span></div></a></div>
-<div class="sec"><div class="kicker">👀 Next few days</div><div class="dayhead">Thursday</div><div class="ev"><span class="evt" style="color:#8FA98B">1:30p</span><span class="evs">Singing Lessons</span></div><div class="ev"><span class="evt" style="color:#8FA98B">7:00p</span><span class="evs">Faith and Fitness Kickoff Event</span></div><div class="dayhead">Friday</div><div class="empty">clear</div></div>
+<div class="sec"><div class="kicker" style="color:#8FA98B">📅 Tomorrow</div><div class="ev evtap" data-key="79df4b682e28"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Don&#x27;t go to work holiday</span></div><div class="ev evtap" data-key="aad1d5359e39"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Ali Birthday&#x27;s birthday</span></div><div class="ev evtap" data-key="262cf06082a3"><span class="evt" style="color:#8FA98B">1:00p</span><span class="evs">Case management</span></div><div class="ev evtap" data-key="c10058cfe959"><span class="evt" style="color:#8FA98B">8:00p</span><span class="evs">Wings at Dakota&#x27;s</span></div></div>
+<div class="sec"><div class="kicker">👀 Next few days</div><div class="dayhead">Thursday</div><div class="ev evtap" data-key="e3509ecd2eef"><span class="evt" style="color:#8FA98B">1:30p</span><span class="evs">Singing Lessons</span></div><div class="ev evtap" data-key="e9e18bc5946d"><span class="evt" style="color:#8FA98B">7:00p</span><span class="evs">Faith and Fitness Kickoff Event</span></div><div class="dayhead">Friday</div><div class="empty">clear</div></div>
 <details class="stepsfold"><summary><span class="kicker" style="color:#8FA98B;margin:0">🌙 Night closer · 6 steps</span><span class="chev">▾</span></summary><div class="step"><div class="num">1</div><div><div class="nm">Shutdown</div><div class="dt">at the desk 1 min · jot tomorrow&#x27;s first task</div></div></div><div class="step"><div class="num">2</div><div><div class="nm">Reward</div><div class="dt">Fortnite / episode / training — pick one</div></div></div><div class="step"><div class="num">3</div><div><div class="nm">Shower + sing</div><div class="dt">screens off from here</div></div></div><div class="step"><div class="num">4</div><div><div class="nm">Journal + prayer</div><div class="dt">2 min · thank God · close the day</div></div></div><div class="step"><div class="num">5</div><div><div class="nm">One page</div><div class="dt">scripture or MacDonald</div></div></div><div class="step"><div class="num">6</div><div><div class="nm">Lights out</div><div class="dt">lie in the quiet</div></div></div></details>
 
 <div class="sec" id="habitbox">
@@ -236,28 +238,46 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   try { mem = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
   var cutoff = Date.now() - 3600 * 1000;
   Object.keys(mem).forEach(function(k) { if (mem[k] < cutoff) delete mem[k]; });
+  function q(kind, payload) {
+    fetch(EP + "/?k=" + K + "&action=queue", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: kind, payload: payload }) }).catch(function() {});
+  }
   document.querySelectorAll(".tktap").forEach(function(el) {
     var id = el.getAttribute("data-id");
-    if (mem[id]) mark(el);
+    if (mem[id]) mark(el, true);
     el.addEventListener("click", function() {
-      if (el.classList.contains("done")) return;
-      mark(el);
-      mem[id] = Date.now();
+      var undo = el.classList.contains("done");
+      mark(el, !undo);
+      if (undo) delete mem[id]; else mem[id] = Date.now();
       localStorage.setItem(KEY, JSON.stringify(mem));
-      fetch(EP + "/?k=" + K + "&action=queue", { method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kind: "taskdone", payload: { id: id,
-          lid: el.getAttribute("data-lid"),
-          title: el.querySelector(".tkt").textContent } }) }).catch(function() {});
+      q(undo ? "taskundo" : "taskdone", { id: id,
+        lid: el.getAttribute("data-lid"),
+        title: el.querySelector(".tkt").textContent });
     });
   });
-  function mark(el) {
-    el.classList.add("done");
-    el.querySelector(".box").classList.add("checked");
+  var EMEM = {};
+  try { EMEM = JSON.parse(localStorage.getItem("dhq_hidden_evs") || "{}"); } catch (e) {}
+  Object.keys(EMEM).forEach(function(k) { if (EMEM[k] < cutoff) delete EMEM[k]; });
+  document.querySelectorAll(".evtap").forEach(function(el) {
+    var key = el.getAttribute("data-key");
+    if (EMEM[key]) el.classList.add("evgone");
+    el.addEventListener("click", function() {
+      var undo = el.classList.contains("evgone");
+      el.classList.toggle("evgone", !undo);
+      if (undo) delete EMEM[key]; else EMEM[key] = Date.now();
+      localStorage.setItem("dhq_hidden_evs", JSON.stringify(EMEM));
+      q(undo ? "evshow" : "evhide", { key: key });
+    });
+  });
+  function mark(el, on) {
+    el.classList.toggle("done", on);
+    el.querySelector(".box").classList.toggle("checked", on);
   }
   localStorage.setItem(KEY, JSON.stringify(mem));
+  localStorage.setItem("dhq_hidden_evs", JSON.stringify(EMEM));
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 12:49pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 12:54pm · auto-refreshes</span></div>
 </body></html>
