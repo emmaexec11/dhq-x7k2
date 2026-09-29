@@ -49,13 +49,63 @@ a { color:#E8702A; text-decoration:none; font-weight:700; }
 .chatform button { background:#E8702A; color:#FFFFFF; border:none; border-radius:12px;
   padding:12px 18px; font-weight:800; font-size:15px; }
 
+
+.note { display:flex; gap:10px; align-items:center; padding:8px 0; font-size:17px;
+  border-bottom:1px solid rgba(40,60,100,0.10); }
+.note:last-child { border-bottom:none; }
+.note span { flex:1; }
+.nx { background:none; border:none; color:#7C8699; font-size:15px; padding:4px 6px; }
+.notehint { color:#7C8699; font-size:12px; font-style:italic; margin-top:8px; }
+.dayhead { font-weight:800; font-size:15px; color:#7C8699; margin:10px 0 2px; }
+.dayhead:first-child { margin-top:0; }
+
 </style></head><body>
 <div class="wx">🌦 19°/12°</div>
 <h1><span style="-webkit-text-fill-color:initial">🌅</span> Morning</h1>
 <div class="sub">Tuesday, September 29</div>
 <div class="sec"><div class="kicker" style="color:#E8702A">📅 Today</div><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#E8702A">9:30a</span><span class="evs">Order Volume Discussion with Webgility</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#E8702A">9:30a</span><span class="evs">Webgility meeting — Akshita Srivastava</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#E8702A">7:00p</span><span class="evs">Country Swing</span></div></a></div>
-<div class="sec"><div class="kicker">🐉 Daily Dragons</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>15 products to the guy for amazon</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>check Amazon appeal</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Foundation on site</span></div></a></div>
+
+<div class="sec" id="notebox" style="display:none"><div class="kicker" style="color:#E8702A">📝 From last night</div><div id="notelist"></div></div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var box = document.getElementById("notebox"), list = document.getElementById("notelist");
+  function since() { return new Date(Date.now() - 20*3600*1000).toISOString(); }
+  function load() {
+    fetch(EP + "/?k=" + K + "&action=notes&since=" + encodeURIComponent(since()))
+      .then(function(r) { return r.json(); })
+      .then(function(j) {
+        var notes = j.notes || [];
+        list.innerHTML = "";
+        notes.forEach(function(nt) {
+          var d = document.createElement("div"); d.className = "note";
+          var s = document.createElement("span"); s.textContent = nt.text; d.appendChild(s);
+          var x = document.createElement("button"); x.className = "nx"; x.textContent = "✕";
+          x.onclick = function() {
+            fetch(EP + "/?k=" + K + "&action=notedel", { method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id: nt.id }) }).then(load);
+          };
+          d.appendChild(x); list.appendChild(d);
+        });
+        box.style.display = notes.length ? "block" : "none";
+      }).catch(function() {});
+  }
+  var f = document.getElementById("noteform");
+  if (f) f.addEventListener("submit", function(e) {
+    e.preventDefault();
+    var inp = document.getElementById("noteinput"), t = inp.value.trim();
+    if (!t) return;
+    inp.value = "";
+    fetch(EP + "/?k=" + K + "&action=notesave", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: t }) }).then(load);
+  });
+  load();
+})();
+</script><div class="sec"><div class="kicker">🐉 Daily Dragons</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>15 products to the guy for amazon</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>check Amazon appeal</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Foundation on site</span></div></a></div><div class="sec"><div class="kicker">🗓 This Week</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Call CNK accountants (250-862-8577) if no email back</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Foundation on Site</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Book flights</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Multicolor photos ( lifestyle ) site</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Eye Shawdow on site</span></div></a><div class="empty">+20 more in the app</div></div><div class="sec"><div class="kicker">📆 This Month</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Uber update</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>CRA paper for gym ( need taxes done)</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Switch to loop sub on new site</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>GMP manufacture?</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Site seo aduit ( AI SEO)</span></div></a><div class="empty">+4 more in the app</div></div>
 <div class="step"><div class="num">1</div><div><div class="nm">Gratitude</div><div class="dt">silent drive or walk · no music · prayer</div></div></div><div class="step"><div class="num">2</div><div><div class="nm">Exercise</div><div class="dt">30 min gym · sermon on</div></div></div><div class="step"><div class="num">3</div><div><div class="nm">Breakfast</div><div class="dt">protein first</div></div></div><div class="step"><div class="num">4</div><div><div class="nm">Work</div><div class="dt">first task from last night&#x27;s note</div></div></div>
+
 
 <div class="chatbox" id="chatbox">
   <div class="kicker" style="color:#E8702A">💬 Emma</div>
@@ -104,5 +154,5 @@ a { color:#E8702A; text-decoration:none; font-weight:700; }
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 11:22am · auto-refreshes</span></div>
+<span style="font-size:12px">updated 11:27am · auto-refreshes</span></div>
 </body></html>
