@@ -31,8 +31,19 @@ h1 { font-size:30px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; 
 .sec { padding:18px 18px; border-radius:18px; }
 .foot { text-align:center; color:#B8AB98; font-size:14px; margin-top:14px; }
 a { color:#8FA98B; text-decoration:none; font-weight:700; }
-.emma { display:block; text-align:center; background:#8FA98B; color:#12100E; border-radius:16px;
-  padding:14px 6px; font-weight:800; font-size:16px; margin:6px 0 14px; }
+
+.chatbox { background:#1E1B17; border-radius:18px; padding:14px 14px 12px; margin:6px 0 14px; }
+.chatlog { max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; padding:4px 2px 10px; }
+.chatempty { color:#B8AB98; font-size:14px; font-style:italic; padding:4px 2px; }
+.cm { max-width:85%; padding:9px 13px; border-radius:14px; font-size:16px; line-height:1.35; white-space:pre-wrap; word-wrap:break-word; }
+.cm-d { align-self:flex-end; background:#8FA98B; color:#12100E; font-weight:600; border-bottom-right-radius:4px; }
+.cm-e { align-self:flex-start; background:#2b2722; border-bottom-left-radius:4px; }
+.chatform { display:flex; gap:8px; }
+.chatform input { flex:1; background:#2b2722; border:none; border-radius:12px; padding:12px 14px;
+  color:#F4EDE3; font-size:16px; outline:none; }
+.chatform button { background:#8FA98B; color:#12100E; border:none; border-radius:12px;
+  padding:12px 18px; font-weight:800; font-size:15px; }
+
 </style></head><body>
 <div class="wx">🌧 18°/11°</div>
 <h1>🌙 Night</h1>
@@ -40,7 +51,53 @@ a { color:#8FA98B; text-decoration:none; font-weight:700; }
 <div class="sec"><div class="kicker" style="color:#8FA98B">📅 Tomorrow</div><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#8FA98B">9:30a</span><span class="evs">Order Volume Discussion with Webgility</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#8FA98B">9:30a</span><span class="evs">Webgility meeting — Akshita Srivastava</span></div></a><a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/9/29"><div class="ev"><span class="evt" style="color:#8FA98B">7:00p</span><span class="evs">Country Swing</span></div></a></div>
 <div class="sec"><div class="kicker">🐉 Daily Dragons</div><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Groceries — Independent</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Call accountants</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>15 products to the guy for amazon</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>check Amazon appeal</span></div></a><a class="rowlink" href="https://tasks.google.com/"><div class="tk"><span class="box"></span><span>Foundation on site</span></div></a></div>
 <div class="step"><div class="num" style="background:#8FA98B">1</div><div><div class="nm">Shutdown</div><div class="dt">at the desk 1 min · jot tomorrow&#x27;s first task</div></div></div><div class="step"><div class="num" style="background:#8FA98B">2</div><div><div class="nm">Reward</div><div class="dt">Fortnite / episode / training — pick one</div></div></div><div class="step"><div class="num" style="background:#8FA98B">3</div><div><div class="nm">Shower + sing</div><div class="dt">screens off from here</div></div></div><div class="step"><div class="num" style="background:#8FA98B">4</div><div><div class="nm">Journal + prayer</div><div class="dt">2 min · thank God · close the day</div></div></div><div class="step"><div class="num" style="background:#8FA98B">5</div><div><div class="nm">One page</div><div class="dt">scripture or MacDonald</div></div></div><div class="step"><div class="num" style="background:#8FA98B">6</div><div><div class="nm">Lights out</div><div class="dt">lie in the quiet</div></div></div>
-<a class="emma" href="https://t.me/Assistant_cloud_agent_bot">💬 Text Emma — add / change / done anything</a>
+
+<div class="chatbox" id="chatbox">
+  <div class="kicker" style="color:#8FA98B">💬 Emma</div>
+  <div id="chatlog" class="chatlog"><div class="chatempty">Say anything — add a task, change an alarm, ask a question.</div></div>
+  <form id="chatform" class="chatform">
+    <input id="chatinput" type="text" placeholder="Message Emma…" autocomplete="off" maxlength="1000">
+    <button type="submit">Send</button>
+  </form>
+</div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3", last = 0;
+  var log = document.getElementById("chatlog");
+  function render(msgs) {
+    if (!msgs.length) return;
+    var empty = log.querySelector(".chatempty");
+    if (empty) empty.remove();
+    msgs.forEach(function(m) {
+      last = Math.max(last, m.id);
+      var div = document.createElement("div");
+      div.className = "cm " + (m.sender === "devon" ? "cm-d" : "cm-e");
+      div.textContent = m.text;
+      log.appendChild(div);
+    });
+    log.scrollTop = log.scrollHeight;
+  }
+  function poll() {
+    fetch(EP + "/?k=" + K + "&action=poll&since=" + last)
+      .then(function(r) { return r.json(); })
+      .then(function(j) { render(j.msgs || []); })
+      .catch(function() {});
+  }
+  document.getElementById("chatform").addEventListener("submit", function(e) {
+    e.preventDefault();
+    var inp = document.getElementById("chatinput");
+    var t = inp.value.trim();
+    if (!t) return;
+    inp.value = "";
+    fetch(EP + "/?k=" + K + "&action=send", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sender: "devon", text: t })
+    }).then(poll).catch(function() {});
+  });
+  poll();
+  setInterval(poll, 4000);
+})();
+</script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 9:04pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 9:11pm · auto-refreshes</span></div>
 </body></html>
