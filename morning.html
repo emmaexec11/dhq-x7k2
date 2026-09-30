@@ -36,6 +36,10 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .tk.done .tkt { text-decoration:line-through; opacity:0.45; }
 .evtap.evgone { opacity:0.35; }
 .evtap.evgone .evs { text-decoration:line-through; }
+.evconfirm { display:inline-flex; gap:6px; margin-left:8px; }
+.evconfirm button { border:none; border-radius:10px; padding:5px 10px; font-size:13px; font-weight:700; cursor:pointer; }
+.evconfirm button:first-child { background:#C0533A; color:#fff; }
+.evconfirm button:last-child { background:rgba(255,255,255,0.18); color:inherit; }
 .empty { color:rgba(255,255,255,0.78); font-size:16px; padding:8px 0; font-style:italic; }
 .rowlink { text-decoration:none; color:inherit; display:block; }
 h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; display:inline-block; }
@@ -122,7 +126,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 <h1><span style="-webkit-text-fill-color:initial">🌅</span> Morning</h1>
 <div class="sub">Tuesday, September 29</div>
 
-<div class="sec"><div class="kicker" style="color:#FFC46B">📅 Today</div><div class="ev evtap" data-key="184d31e635a7"><span class="evt" style="color:#FFC46B">7:00p</span><span class="evs">Country Swing</span></div></div>
+<div class="sec"><div class="kicker" style="color:#FFC46B">📅 Today</div><div class="ev evtap" data-key="184d31e635a7" data-gid="g48b939on8pkp6blc46uf57ou0_20260930T020000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#FFC46B">7:00p</span><span class="evs">Country Swing</span></div></div>
 
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <div class="sec" id="notebox" style="display:none"><div class="kicker" style="color:#FFC46B">📝 From last night</div><div id="notelist"></div></div>
@@ -247,11 +251,26 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     var key = el.getAttribute("data-key");
     if (EMEM[key]) el.classList.add("evgone");
     el.addEventListener("click", function() {
-      var undo = el.classList.contains("evgone");
-      el.classList.toggle("evgone", !undo);
-      if (undo) delete EMEM[key]; else EMEM[key] = Date.now();
-      localStorage.setItem("dhq_hidden_evs", JSON.stringify(EMEM));
-      q(undo ? "evshow" : "evhide", { key: key });
+      if (el.classList.contains("evgone") || el.querySelector(".evconfirm")) return;
+      var c = document.createElement("span");
+      c.className = "evconfirm";
+      var yes = document.createElement("button");
+      yes.textContent = "🗑 Remove";
+      var no = document.createElement("button");
+      no.textContent = "✕";
+      c.appendChild(yes); c.appendChild(no);
+      el.appendChild(c);
+      yes.addEventListener("click", function(ev) {
+        ev.stopPropagation();
+        c.remove();
+        el.classList.add("evgone");
+        EMEM[key] = Date.now();
+        localStorage.setItem("dhq_hidden_evs", JSON.stringify(EMEM));
+        q("evdel", { key: key, gid: el.getAttribute("data-gid"),
+          cal: el.getAttribute("data-cal"),
+          title: el.querySelector(".evs").textContent });
+      });
+      no.addEventListener("click", function(ev) { ev.stopPropagation(); c.remove(); });
     });
   });
   function mark(el, on) {
@@ -263,5 +282,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 5:34pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 5:48pm · auto-refreshes</span></div>
 </body></html>
