@@ -34,6 +34,29 @@ body { background:#12100E; min-height:100vh; color:#F4EDE3;
 .gfill { height:100%; border-radius:99px; background:linear-gradient(90deg,#8FA98B,#B7CBAF);
   transition:width .6s cubic-bezier(.2,.7,.3,1); }
 .tk.done .tkt { text-decoration:line-through; opacity:0.45; }
+.tk .tkt { flex:1; }
+.tka { flex:none; font-size:16px; padding:4px 5px; color:#B8AB98; opacity:0.75; cursor:pointer; }
+.tk.starred .stario { color:#8FA98B; opacity:1; }
+.tk { position:relative; flex-wrap:wrap; }
+.tkmenu { flex-basis:100%; display:flex; gap:6px; flex-wrap:wrap; padding:8px 0 4px; }
+.tkmenu button { border:none; border-radius:10px; padding:6px 11px; font-size:13px; font-weight:700;
+  cursor:pointer; background:#2b2722; color:#F4EDE3; }
+#top1text { font-size:22px; font-weight:800; line-height:1.3; }
+.coform { margin-bottom:12px; }
+.coform:last-of-type { margin-bottom:4px; }
+.colab { display:block; font-size:14px; font-weight:800; margin-bottom:5px; color:#B8AB98; }
+.corow { display:flex; gap:8px; }
+.corow input { flex:1; border:none; border-radius:12px; padding:10px 13px; font-size:16px;
+  background:#2A2620; color:#F4EDE3; outline:none; }
+.corow input::placeholder { color:#B8AB98; }
+.corow button { border:none; border-radius:12px; padding:10px 15px; font-weight:800; font-size:14px;
+  background:#8FA98B; color:#12100E; cursor:pointer; }
+.codone { font-size:14px; color:#8FA98B; margin-top:5px; font-weight:600; }
+.codone:empty { display:none; }
+.wakerow { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+#upbtn { border:none; border-radius:14px; padding:11px 18px; font-weight:800; font-size:16px;
+  background:#8FA98B; color:#12100E; cursor:pointer; }
+#uptime { font-size:18px; font-weight:800; }
 .evtap.evgone { opacity:0.35; }
 .evtap.evgone .evs { text-decoration:line-through; }
 .evconfirm { display:inline-flex; gap:6px; margin-left:8px; }
@@ -169,7 +192,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="sec"><div class="kicker" style="color:#8FA98B">📅 Tomorrow</div><div class="ev evtap" data-key="79df4b682e28" data-gid="6csj8pj470p66b9mcgr6ab9k6ko6ab9oc9i34b9hc5h38e9l6pijed1i74" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Don&#x27;t go to work holiday</span></div><div class="ev evtap" data-key="aad1d5359e39" data-gid="6gpm2d336lgm4b9o70qmab9k74sjab9o60qj6b9p6cqmaopnchgmcphj64_20260930" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Ali Birthday&#x27;s birthday</span></div><div class="ev evtap" data-key="262cf06082a3" data-gid="cdgmadr16lij6b9p6lhjgb9kc5j6cbb1c4rj6b9g6cojgo9h70rj6cj1ck_20260930T200000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">1:00p</span><span class="evs">Case management</span></div><div class="ev evtap" data-key="c10058cfe959" data-gid="e0882bmkupepi7jfrue7ukcjh0" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">8:00p</span><span class="evs">Wings at Dakota&#x27;s</span></div></div>
-<div class="sec"><div class="kicker">🐉 Daily Dragons</div><div class="tk tktap" data-id="dldQZy1ZcXotaVktS0xsSA" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">15 products to the guy for amazon</span></div><div class="tk tktap" data-id="QjhzcTN6UTdyTEFzOVEzQw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">check Amazon appeal</span></div><div class="tk tktap" data-id="MktMQ3pZUm55Y2s3Ym83Yw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Foundation on site</span></div></div><div class="sec"><div class="kicker">👀 Next few days</div><div class="dayhead">Thursday</div><div class="ev evtap" data-key="e3509ecd2eef" data-gid="c9hjicpo6dj3ib9oc4qj6b9k6pgjibb16krj0bb6ccpm8o9g64sjed1m6g_20261001T203000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">1:30p</span><span class="evs">Singing Lessons</span></div><div class="ev evtap" data-key="e9e18bc5946d" data-gid="kksjijt1l1su97bpugvtaso3ks" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">7:00p</span><span class="evs">Faith and Fitness Kickoff Event</span></div><div class="dayhead">Friday</div><div class="empty">clear</div></div>
+<div class="sec"><div class="kicker">🐉 Daily Dragons</div><div class="tk tktap" data-id="dldQZy1ZcXotaVktS0xsSA" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">15 products to the guy for amazon</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="QjhzcTN6UTdyTEFzOVEzQw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">check Amazon appeal</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="MktMQ3pZUm55Y2s3Ym83Yw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Foundation on site</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div><div class="sec"><div class="kicker">👀 Next few days</div><div class="dayhead">Thursday</div><div class="ev evtap" data-key="e3509ecd2eef" data-gid="c9hjicpo6dj3ib9oc4qj6b9k6pgjibb16krj0bb6ccpm8o9g64sjed1m6g_20261001T203000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">1:30p</span><span class="evs">Singing Lessons</span></div><div class="ev evtap" data-key="e9e18bc5946d" data-gid="kksjijt1l1su97bpugvtaso3ks" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">7:00p</span><span class="evs">Faith and Fitness Kickoff Event</span></div><div class="dayhead">Friday</div><div class="empty">clear</div></div>
 <details class="stepsfold"><summary><span class="kicker" style="color:#8FA98B;margin:0">🌙 Night closer · <span id="stepcount">0/6</span></span><span class="chev">▾</span></summary><div class="step steptap" data-step="step1"><div class="num">1</div><div><div class="nm">Shutdown</div><div class="dt">at the desk 1 min · jot tomorrow&#x27;s first task</div></div></div><div class="step steptap" data-step="step2"><div class="num">2</div><div><div class="nm">Reward</div><div class="dt">Fortnite / episode / training — pick one</div></div></div><div class="step steptap" data-step="step3"><div class="num">3</div><div><div class="nm">Shower + sing</div><div class="dt">screens off from here</div></div></div><div class="step steptap" data-step="step4"><div class="num">4</div><div><div class="nm">Journal + prayer</div><div class="dt">2 min · thank God · close the day</div></div></div><div class="step steptap" data-step="step5"><div class="num">5</div><div><div class="nm">One page</div><div class="dt">scripture or MacDonald</div></div></div><div class="step steptap" data-step="step6"><div class="num">6</div><div><div class="nm">Lights out</div><div class="dt">lie in the quiet</div></div></div></details>
 <script>
 (function() {
@@ -243,6 +266,61 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     .catch(function() { draw(); });
 })();
 </script>
+<div class="sec" id="closeout">
+  <div class="kicker" style="color:#8FA98B">🌙 Close-out</div>
+  <form class="coform" data-pre="🎯 "><span class="colab">🎯 Tomorrow's #1</span>
+    <div class="corow"><input type="text" placeholder="the one thing that matters" autocomplete="off" maxlength="200">
+    <button type="submit">Save</button></div><div class="codone"></div></form>
+  <form class="coform" data-pre="🏆 "><span class="colab">🏆 Win of the day</span>
+    <div class="corow"><input type="text" placeholder="what went right today" autocomplete="off" maxlength="200">
+    <button type="submit">Save</button></div><div class="codone"></div></form>
+  <div class="notehint">both land on your morning page</div>
+</div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var forms = document.querySelectorAll(".coform");
+  var existing = {};
+  function since() { return new Date(Date.now() - 8*3600*1000).toISOString(); }
+  function paint() {
+    forms.forEach(function(f) {
+      var pre = f.getAttribute("data-pre"), nt = existing[pre];
+      f.querySelector(".codone").textContent = nt ? "saved: " + nt.text.slice(3) : "";
+    });
+  }
+  fetch(EP + "/?k=" + K + "&action=notes&since=" + encodeURIComponent(since()))
+    .then(function(r) { return r.json(); })
+    .then(function(j) {
+      (j.notes || []).forEach(function(nt) {
+        forms.forEach(function(f) {
+          if (nt.text.indexOf(f.getAttribute("data-pre")) === 0) existing[f.getAttribute("data-pre")] = nt;
+        });
+      });
+      paint();
+    }).catch(function() {});
+  forms.forEach(function(f) {
+    f.addEventListener("submit", function(e) {
+      e.preventDefault();
+      var pre = f.getAttribute("data-pre");
+      var inp = f.querySelector("input"), t = inp.value.trim();
+      if (!t) return;
+      inp.value = "";
+      var old = existing[pre];
+      var save = function() {
+        fetch(EP + "/?k=" + K + "&action=notesave", { method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: pre + t }) })
+          .then(function() { existing[pre] = { text: pre + t }; paint(); });
+      };
+      if (old && old.id) {
+        fetch(EP + "/?k=" + K + "&action=notedel", { method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: old.id }) }).then(save);
+      } else save();
+    });
+  });
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <div class="sec" id="notebox"><div class="kicker" style="color:#8FA98B">📝 For tomorrow morning</div><div id="notelist"></div><form id="noteform" class="chatform"><input id="noteinput" type="text" placeholder="Jot it, then let it go…" autocomplete="off" maxlength="500"><button type="submit">Save</button></form><div class="notehint">shows up on your morning page — brain can let go now</div></div>
 <script>
@@ -254,7 +332,22 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     fetch(EP + "/?k=" + K + "&action=notes&since=" + encodeURIComponent(since()))
       .then(function(r) { return r.json(); })
       .then(function(j) {
-        var notes = j.notes || [];
+        var all = j.notes || [];
+        var top1 = null, win = null, notes = [];
+        all.forEach(function(nt) {
+          if (nt.text.indexOf("\ud83c\udfaf ") === 0) top1 = nt;
+          else if (nt.text.indexOf("\ud83c\udfc6 ") === 0) win = nt;
+          else notes.push(nt);
+        });
+        var tb = document.getElementById("top1box");
+        if (tb) {
+          var any = top1 || win;
+          tb.style.display = any ? "block" : "none";
+          document.getElementById("top1text").textContent = top1 ? top1.text.slice(3) : "";
+          document.getElementById("top1text").style.display = top1 ? "block" : "none";
+          document.getElementById("wintext").textContent = win ? "\ud83c\udfc6 last night's win: " + win.text.slice(3) : "";
+          document.getElementById("wintext").style.display = win ? "block" : "none";
+        }
         list.innerHTML = "";
         notes.forEach(function(nt) {
           var d = document.createElement("div"); d.className = "note";
@@ -344,6 +437,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ kind: kind, payload: payload }) }).catch(function() {});
   }
+  var LISTS = {"Daily Dragons": "MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow", "This Week": "Qm1lM3gxUW5sUmNaejVhNA", "This Month": "UUt5ZlpxdXJKUkp3NTRBXw", "At Some Point": "WEJaZ3ZWOFI1NHhMOFZWTA"};
   document.querySelectorAll(".tktap").forEach(function(el) {
     var id = el.getAttribute("data-id");
     if (mem[id]) mark(el, true);
@@ -355,6 +449,45 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       q(undo ? "taskundo" : "taskdone", { id: id,
         lid: el.getAttribute("data-lid"),
         title: el.querySelector(".tkt").textContent });
+    });
+    var st = el.querySelector(".stario");
+    if (st) st.addEventListener("click", function(ev) {
+      ev.stopPropagation();
+      var on = st.textContent === "★";
+      st.textContent = on ? "☆" : "★";
+      el.classList.toggle("starred", !on);
+      q(on ? "stardel" : "staradd", { id: id, title: el.querySelector(".tkt").textContent });
+    });
+    var ed = el.querySelector(".tkedit");
+    if (ed) ed.addEventListener("click", function(ev) {
+      ev.stopPropagation();
+      var cur = el.querySelector(".tkt").textContent;
+      var t = prompt("Edit task", cur);
+      if (!t || !t.trim() || t.trim() === cur) return;
+      el.querySelector(".tkt").textContent = t.trim();
+      q("taskedit", { id: id, lid: el.getAttribute("data-lid"), title: t.trim() });
+    });
+    var mv = el.querySelector(".tkmove");
+    if (mv) mv.addEventListener("click", function(ev) {
+      ev.stopPropagation();
+      var old = el.querySelector(".tkmenu");
+      if (old) { old.remove(); return; }
+      var m = document.createElement("div");
+      m.className = "tkmenu";
+      Object.keys(LISTS).forEach(function(nm) {
+        if (LISTS[nm] === el.getAttribute("data-lid")) return;
+        var b = document.createElement("button");
+        b.textContent = nm;
+        b.addEventListener("click", function(e2) {
+          e2.stopPropagation();
+          q("taskmove", { id: id, lid: el.getAttribute("data-lid"), to: LISTS[nm],
+            title: el.querySelector(".tkt").textContent });
+          el.style.opacity = "0.3";
+          m.remove();
+        });
+        m.appendChild(b);
+      });
+      el.appendChild(m);
     });
   });
   var EMEM = {};
@@ -395,5 +528,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 5:50pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 5:59pm · auto-refreshes</span></div>
 </body></html>
