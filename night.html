@@ -209,6 +209,9 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     .then(function(r) { return r.json(); })
     .then(function(j) { state = j.habits || {}; draw(); })
     .catch(function() { draw(); });
+  fetch(EP + "/?k=" + K + "&action=queue", { method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ kind: "nightseen", payload: { day: day() } }) }).catch(function() {});
 })();
 </script>
 
@@ -618,5 +621,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 8:35pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 8:47pm · auto-refreshes</span></div>
 </body></html>
