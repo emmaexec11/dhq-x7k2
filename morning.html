@@ -87,6 +87,14 @@ h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; 
   border-top:1px solid rgba(255,255,255,0.18); border-radius:0; margin:0; padding:12px 0; }
 .foot { text-align:center; color:rgba(255,255,255,0.78); font-size:14px; margin-top:16px; }
 a { color:#FFC46B; text-decoration:none; font-weight:700; }
+#goalbox .kicker { color:#E3B65E !important; }
+#calbox .kicker { color:#9DB4E8 !important; }
+#dragonbox .kicker { color:#E08960 !important; }
+#peekbox .kicker { color:#7FC4B2 !important; }
+#habitbox .kicker { color:#B79FE0 !important; }
+#closeout .kicker { color:#9FD08C !important; }
+#wakebox .kicker { color:#7FC4B2 !important; }
+#top1box .kicker { color:#E3B65E !important; }
 
 .chatbox { background:rgba(255,255,255,0.13); border:1px solid rgba(255,255,255,0.22); box-shadow:0 8px 28px rgba(5,25,70,0.28);
   border-radius:20px; padding:14px 14px 12px; margin:6px 0 14px; }
@@ -149,7 +157,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 <h1><span style="-webkit-text-fill-color:initial">🌅</span> Morning</h1>
 <div class="sub">Tuesday, September 29</div>
 <div class="sec" id="top1box" style="display:none"><div class="kicker" style="color:#FFC46B">🎯 Today's #1</div><div id="top1text"></div><div id="wintext" class="notehint"></div></div>
-<div class="sec"><div class="kicker" style="color:#FFC46B">📅 Today</div><div class="ev evtap" data-key="184d31e635a7" data-gid="g48b939on8pkp6blc46uf57ou0_20260930T020000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#FFC46B">7:00p</span><span class="evs">Country Swing</span></div></div>
+<div class="sec" id="calbox"><div class="kicker">📅 Today</div><div class="ev evtap" data-key="184d31e635a7" data-gid="g48b939on8pkp6blc46uf57ou0_20260930T020000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#FFC46B">7:00p</span><span class="evs">Country Swing</span></div></div>
 
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <div class="sec" id="notebox" style="display:none"><div class="kicker" style="color:#FFC46B">📝 From last night</div><div id="notelist"></div></div>
@@ -205,7 +213,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   });
   load();
 })();
-</script><div class="sec"><div class="kicker">🐉 Daily Dragons</div><div class="tk tktap starred" data-id="MktMQ3pZUm55Y2s3Ym83Yw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Foundation on site</span><span class="tka stario">★</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="dldQZy1ZcXotaVktS0xsSA" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">15 products to the guy for amazon</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="QjhzcTN6UTdyTEFzOVEzQw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">check Amazon appeal</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div>
+</script><div class="sec" id="dragonbox"><div class="kicker">🐉 Daily Dragons</div><div class="tk tktap starred" data-id="MktMQ3pZUm55Y2s3Ym83Yw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Foundation on site</span><span class="tka stario">★</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="dldQZy1ZcXotaVktS0xsSA" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">15 products to the guy for amazon</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="QjhzcTN6UTdyTEFzOVEzQw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">check Amazon appeal</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div>
 <div class="sec" id="wakebox">
   <div class="kicker" style="color:#FFC46B">☀️ Wake anchor</div>
   <div class="wakerow"><button id="upbtn">☀️ I'm up</button>
@@ -385,5 +393,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 6:30pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 6:32pm · auto-refreshes</span></div>
 </body></html>
