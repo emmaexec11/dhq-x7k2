@@ -88,11 +88,6 @@ h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; 
 .foot { text-align:center; color:#B8AB98; font-size:14px; margin-top:16px; }
 a { color:#8FA98B; text-decoration:none; font-weight:700; }
 #goalbox .kicker { color:#E3B65E !important; }
-#goalbox { padding:14px 18px; }
-#goalbox .goal { padding:4px 0; }
-#goalbox .gl { font-size:14px; }
-#goalbox .gn { font-size:12px; }
-#goalbox .gbar { height:6px; }
 #calbox .kicker { color:#9DB4E8 !important; }
 #dragonbox .kicker { color:#E08960 !important; }
 #peekbox .kicker { color:#7FC4B2 !important; }
@@ -240,11 +235,11 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     .catch(function() { draw(); });
 })();
 </script>
-<div class="sec" id="goalbox">
-  <div class="kicker" style="color:#8FA98B">🎯 This week <span id="gpct" style="float:right"></span></div>
+<details class="stepsfold" id="goalbox">
+  <summary><span class="kicker" style="margin:0">🎯 This week · <span id="gpct"></span></span><span class="chev">▾</span></summary>
   <div id="goallist"></div>
   <div class="notehint">fills as you tap habits below · 80%+ by Friday = green week 🟢</div>
-</div>
+</details>
 <script>
 (function() {
   var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3", GOALS = [{"l": "\ud83c\udfcb\ufe0f Fitness", "k": ["move"], "t": 4, "d": "gym 4x"}, {"l": "\ud83c\udf57 Fuel", "k": ["food"], "t": 7, "d": "cals + protein daily"}, {"l": "\ud83c\udf3f Routines", "k": ["morning", "night", "skin"], "t": 21, "d": "AM / PM / skin daily"}];
@@ -543,5 +538,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 6:39pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 6:43pm · auto-refreshes</span></div>
 </body></html>
