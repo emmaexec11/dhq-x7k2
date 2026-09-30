@@ -88,6 +88,11 @@ h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; 
 .foot { text-align:center; color:#B8AB98; font-size:14px; margin-top:16px; }
 a { color:#8FA98B; text-decoration:none; font-weight:700; }
 #goalbox .kicker { color:#E3B65E !important; }
+#goalbox { padding:14px 18px; }
+#goalbox .goal { padding:4px 0; }
+#goalbox .gl { font-size:14px; }
+#goalbox .gn { font-size:12px; }
+#goalbox .gbar { height:6px; }
 #calbox .kicker { color:#9DB4E8 !important; }
 #dragonbox .kicker { color:#E08960 !important; }
 #peekbox .kicker { color:#7FC4B2 !important; }
@@ -158,47 +163,6 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 <h1><span style="-webkit-text-fill-color:initial">🌙</span> Night</h1>
 <div class="sub">close the day · locked 21 nights</div>
 
-<div class="sec" id="goalbox">
-  <div class="kicker" style="color:#8FA98B">🎯 This week <span id="gpct" style="float:right"></span></div>
-  <div id="goallist"></div>
-  <div class="notehint">fills as you tap habits below · 80%+ by Friday = green week 🟢</div>
-</div>
-<script>
-(function() {
-  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3", GOALS = [{"l": "\ud83c\udfcb\ufe0f Fitness", "k": ["move"], "t": 4, "d": "gym 4x"}, {"l": "\ud83c\udf57 Fuel", "k": ["food"], "t": 7, "d": "cals + protein daily"}, {"l": "\ud83c\udf3f Routines", "k": ["morning", "night", "skin"], "t": 21, "d": "AM / PM / skin daily"}];
-  function iso(d) { return d.toLocaleDateString("en-CA"); }
-  var now = new Date();
-  var monday = new Date(now); monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
-  var daysIn = Math.round((now - monday) / 86400000) + 1;
-  fetch(EP + "/?k=" + K + "&action=habitrange&start=" + iso(monday) + "&end=" + iso(now))
-    .then(function(r) { return r.json(); })
-    .then(function(j) {
-      var st = {};
-      (j.rows || []).forEach(function(r) {
-        if (r.done) { st[r.day] = st[r.day] || {}; st[r.day][r.habit] = 1; }
-      });
-      var list = document.getElementById("goallist"), tot = 0, tgt = 0;
-      GOALS.forEach(function(g) {
-        var hits = 0;
-        Object.keys(st).forEach(function(day) {
-          g.k.forEach(function(k) { if (st[day][k]) hits++; });
-        });
-        tot += hits; tgt += g.t;
-        var expect = g.t * daysIn / 7;
-        var chip = hits >= Math.floor(expect) ? "on track ✅" : "catch-up 💪";
-        var pct = Math.min(100, Math.round(hits * 100 / g.t));
-        var d = document.createElement("div"); d.className = "goal";
-        d.innerHTML = '<div class="grow"><span class="gl">' + g.l + '</span>'
-          + '<span class="gn">' + hits + "/" + g.t + ' · <em>' + chip + '</em></span></div>'
-          + '<div class="gbar"><div class="gfill" style="width:' + pct + '%"></div></div>';
-        list.appendChild(d);
-      });
-      var wp = Math.round(tot * 100 / tgt);
-      document.getElementById("gpct").textContent = wp + "%";
-      document.getElementById("gpct").style.color = wp >= 80 ? "#9FD08C" : "";
-    }).catch(function() {});
-})();
-</script>
 <div class="sec" id="calbox"><div class="kicker">📅 Tomorrow</div><div class="ev evtap" data-key="79df4b682e28" data-gid="6csj8pj470p66b9mcgr6ab9k6ko6ab9oc9i34b9hc5h38e9l6pijed1i74" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Don&#x27;t go to work holiday</span></div><div class="ev evtap" data-key="aad1d5359e39" data-gid="6gpm2d336lgm4b9o70qmab9k74sjab9o60qj6b9p6cqmaopnchgmcphj64_20260930" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">all day</span><span class="evs">Ali Birthday&#x27;s birthday</span></div><div class="ev evtap" data-key="262cf06082a3" data-gid="cdgmadr16lij6b9p6lhjgb9kc5j6cbb1c4rj6b9g6cojgo9h70rj6cj1ck_20260930T200000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">1:00p</span><span class="evs">Case management</span></div><div class="ev evtap" data-key="c10058cfe959" data-gid="e0882bmkupepi7jfrue7ukcjh0" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">8:00p</span><span class="evs">Wings at Dakota&#x27;s</span></div></div>
 <div class="sec" id="dragonbox"><div class="kicker">🐉 Daily Dragons</div><div class="tk tktap starred" data-id="MktMQ3pZUm55Y2s3Ym83Yw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Foundation on site</span><span class="tka stario">★</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="dldQZy1ZcXotaVktS0xsSA" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">15 products to the guy for amazon</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="QjhzcTN6UTdyTEFzOVEzQw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">check Amazon appeal</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div><div class="sec" id="peekbox"><div class="kicker">👀 Next few days</div><div class="dayhead">Thursday</div><div class="ev evtap" data-key="e3509ecd2eef" data-gid="c9hjicpo6dj3ib9oc4qj6b9k6pgjibb16krj0bb6ccpm8o9g64sjed1m6g_20261001T203000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">1:30p</span><span class="evs">Singing Lessons</span></div><div class="ev evtap" data-key="e9e18bc5946d" data-gid="kksjijt1l1su97bpugvtaso3ks" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#8FA98B">7:00p</span><span class="evs">Faith and Fitness Kickoff Event</span></div><div class="dayhead">Friday</div><div class="empty">clear</div></div>
 <details class="stepsfold"><summary><span class="kicker" style="color:#8FA98B;margin:0">🌙 Night closer · <span id="stepcount">0/6</span></span><span class="chev">▾</span></summary><div class="step steptap" data-step="step1"><div class="num">1</div><div><div class="nm">Shutdown</div><div class="dt">at the desk 1 min · jot tomorrow&#x27;s first task</div></div></div><div class="step steptap" data-step="step2"><div class="num">2</div><div><div class="nm">Reward</div><div class="dt">Fortnite / episode / training — pick one</div></div></div><div class="step steptap" data-step="step3"><div class="num">3</div><div><div class="nm">Shower + sing</div><div class="dt">screens off from here</div></div></div><div class="step steptap" data-step="step4"><div class="num">4</div><div><div class="nm">Journal + prayer</div><div class="dt">2 min · thank God · close the day</div></div></div><div class="step steptap" data-step="step5"><div class="num">5</div><div><div class="nm">One page</div><div class="dt">scripture or MacDonald</div></div></div><div class="step steptap" data-step="step6"><div class="num">6</div><div><div class="nm">Lights out</div><div class="dt">lie in the quiet</div></div></div></details>
@@ -272,6 +236,47 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     .then(function(r) { return r.json(); })
     .then(function(j) { state = j.habits || {}; draw(); })
     .catch(function() { draw(); });
+})();
+</script>
+<div class="sec" id="goalbox">
+  <div class="kicker" style="color:#8FA98B">🎯 This week <span id="gpct" style="float:right"></span></div>
+  <div id="goallist"></div>
+  <div class="notehint">fills as you tap habits below · 80%+ by Friday = green week 🟢</div>
+</div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3", GOALS = [{"l": "\ud83c\udfcb\ufe0f Fitness", "k": ["move"], "t": 4, "d": "gym 4x"}, {"l": "\ud83c\udf57 Fuel", "k": ["food"], "t": 7, "d": "cals + protein daily"}, {"l": "\ud83c\udf3f Routines", "k": ["morning", "night", "skin"], "t": 21, "d": "AM / PM / skin daily"}];
+  function iso(d) { return d.toLocaleDateString("en-CA"); }
+  var now = new Date();
+  var monday = new Date(now); monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  var daysIn = Math.round((now - monday) / 86400000) + 1;
+  fetch(EP + "/?k=" + K + "&action=habitrange&start=" + iso(monday) + "&end=" + iso(now))
+    .then(function(r) { return r.json(); })
+    .then(function(j) {
+      var st = {};
+      (j.rows || []).forEach(function(r) {
+        if (r.done) { st[r.day] = st[r.day] || {}; st[r.day][r.habit] = 1; }
+      });
+      var list = document.getElementById("goallist"), tot = 0, tgt = 0;
+      GOALS.forEach(function(g) {
+        var hits = 0;
+        Object.keys(st).forEach(function(day) {
+          g.k.forEach(function(k) { if (st[day][k]) hits++; });
+        });
+        tot += hits; tgt += g.t;
+        var expect = g.t * daysIn / 7;
+        var chip = hits >= Math.floor(expect) ? "on track ✅" : "catch-up 💪";
+        var pct = Math.min(100, Math.round(hits * 100 / g.t));
+        var d = document.createElement("div"); d.className = "goal";
+        d.innerHTML = '<div class="grow"><span class="gl">' + g.l + '</span>'
+          + '<span class="gn">' + hits + "/" + g.t + ' · <em>' + chip + '</em></span></div>'
+          + '<div class="gbar"><div class="gfill" style="width:' + pct + '%"></div></div>';
+        list.appendChild(d);
+      });
+      var wp = Math.round(tot * 100 / tgt);
+      document.getElementById("gpct").textContent = wp + "%";
+      document.getElementById("gpct").style.color = wp >= 80 ? "#9FD08C" : "";
+    }).catch(function() {});
 })();
 </script>
 <div class="sec" id="closeout">
@@ -536,5 +541,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 6:32pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 6:33pm · auto-refreshes</span></div>
 </body></html>
