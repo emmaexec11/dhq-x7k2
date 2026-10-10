@@ -142,9 +142,13 @@ a { color:#FFC46B; text-decoration:none; font-weight:700; }
 #goalbox .kicker { color:#FFD34D !important; }
 #calbox .kicker { color:#8FD4FF !important; }
 #dragonbox .kicker { color:#FFD34D !important; }
-#peekbox .kicker { color:#6FEFC5 !important; }
+#peekbox .kicker { color:#8FD4FF !important; }
 #wakebox .kicker { color:#6FEFC5 !important; }
 #top1box .kicker { color:#FFD34D !important; }
+#calbox, #peekbox { border-left:4px solid #8FD4FF88; }
+#dragonbox, .stepsfold[data-droplid] { border-left:4px solid #FFD34D88; }
+.stepsfold[data-droplid] .kicker { color:#FFD34D !important; }
+#goalbox { border-left:4px solid #FFD34D88; }
 .kicker { opacity:1; }
 .kicker { text-shadow:0 1px 8px rgba(8,20,55,0.6); font-weight:900; }
 
@@ -475,7 +479,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
             saveDefs(); draw();
           };
         });
-        d.querySelectorAll(".gtool").forEach(function(el) {
+        d.querySelectorAll(".gtool[data-act]").forEach(function(el) {
           el.onclick = function(ev) {
             ev.stopPropagation();
             var act = el.getAttribute("data-act");
@@ -766,5 +770,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 12:05pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 12:18pm · auto-refreshes</span></div>
 </body></html>
