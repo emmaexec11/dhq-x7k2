@@ -226,52 +226,11 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 
-<details class="stepsfold" id="goalbox">
-  <summary><span class="kicker" style="margin:0">🎯 Goals · <span id="gpct"></span></span><span class="chev">▾</span></summary>
-  <div class="subhead">📊 This week</div>
-  <div id="goallist"></div>
-  <div id="goalxlist"></div>
-  <form id="gadd"><input type="text" placeholder="new goal — e.g. read 10 pages" autocomplete="off" maxlength="80">
-    <select id="gtgt"><option value="7">7x/wk</option><option value="5">5x/wk</option><option value="4">4x/wk</option>
-    <option value="3">3x/wk</option><option value="2">2x/wk</option><option value="1">1x/wk</option></select>
-    <button type="submit">＋</button></form>
-  <div class="notehint">80%+ by Friday = green week 🟢 · tap a goal to log today</div>
-  
-<div class="subhead">✅ Today's check-through <span id="hbcount" style="float:right"></span></div>
-<div id="habitlist"></div>
-<div class="notehint">tap what you did — 10 seconds, done</div>
-<script>
-(function() {
-  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3", HABITS = [["morning", "\u2600\ufe0f Morning routine"], ["food", "\ud83c\udf57 Calories + protein"], ["move", "\ud83c\udfcb\ufe0f Gym / movement"], ["skin", "\ud83e\uddf4 Skincare"], ["night", "\ud83c\udf19 Night routine"]];
-  var state = {};
-  function day() { return new Date().toLocaleDateString("en-CA"); }
-  function draw() {
-    var list = document.getElementById("habitlist");
-    list.innerHTML = "";
-    var done = 0;
-    HABITS.forEach(function(h) {
-      var on = state[h[0]] === 1;
-      if (on) done++;
-      var d = document.createElement("div");
-      d.className = "tk hb" + (on ? " done" : "");
-      d.innerHTML = '<span class="box' + (on ? ' checked' : '') + '"></span><span class="tkt">' + h[1] + '</span>';
-      d.onclick = function() {
-        state[h[0]] = on ? 0 : 1;
-        draw();
-        fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ day: day(), habit: h[0], done: state[h[0]] }) }).catch(function() {});
-      };
-      list.appendChild(d);
-    });
-    document.getElementById("hbcount").textContent = done + "/" + HABITS.length;
-  }
-  fetch(EP + "/?k=" + K + "&action=habitstate&day=" + day())
-    .then(function(r) { return r.json(); })
-    .then(function(j) { state = j.habits || {}; draw(); })
-    .catch(function() { draw(); });
-})();
-</script>
+<details class="stepsfold" id="goalbox" open>
+  <summary><span class="kicker" style="margin:0">🎯 Goals · <span id="gverdict"></span></span><span class="chev">▾</span></summary>
+  <div id="gcats"></div>
+  <div class="notehint" style="margin-top:8px">tap the circle = did my stuff · tap the name = details</div>
+  <div class="gtools"><span class="gtool" id="gaddcat">＋ category</span></div>
   
 <div class="subhead">🌙 Close-out</div>
   <form class="coform" data-pre="🎯 "><span class="colab">🎯 Tomorrow's #1</span>
@@ -329,126 +288,254 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 </details>
 <script>
 (function() {
-  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3", GOALS = [{"l": "\ud83d\udcb0 Wyld $200k/mo", "k": ["wyld"], "t": 5, "d": "AI agents \u00b7 outreach \u00b7 ads \u00b7 LTV", "s": ["AI agents doing the heavy lifting", "Cold outreach (Lexara wholesale)", "Scaling ads", "Outsource product creation", "LTV focus \u2014 flows + subs"]}, {"l": "\ud83e\udd4b Train", "k": ["move"], "t": 6, "d": "BJJ M/T/W/F 11am \u00b7 gym Thu/Sat", "s": ["Session done \u2014 BJJ or gym", "3-min reset \u2014 hang \u00b7 hip flexor \u00b7 bridges", "Gym day: dead hang 30s to finish"]}, {"l": "\ud83c\udf57 Recomp fuel", "k": ["food"], "t": 7, "d": "2800-3000 cal \u00b7 210g protein", "s": ["Breakfast ~860 cal \u00b7 75g protein", "Lunch ~780 cal \u00b7 57g protein", "Dinner taco bowl ~900 cal \u00b7 63g", "Post-BJJ whey + banana", "210g protein hit"]}, {"l": "\u2600\ufe0f Morning routine", "k": ["morning"], "t": 7, "d": "splash \u00b7 prayer walk \u00b7 Bible page", "s": ["Splash + 60s skincare", "Prayer walk \u2014 3 gratitudes", "Breakfast + Bible page", "Deep work started"]}, {"l": "\ud83c\udf19 Night routine", "k": ["night"], "t": 7, "d": "shutdown \u00b7 reward \u00b7 shower \u00b7 prayer", "s": ["Shutdown at desk", "Reward \u2014 one pick", "Shower + sing", "Journal as prayer \u00b7 lights out"]}, {"l": "\ud83e\uddf4 Skin + hair", "k": ["skin"], "t": 7, "d": "AM/PM skincare \u00b7 minox nightly", "s": ["AM: cleanse + HA + moisturizer/SPF", "PM: cleanse + retinol 2-3x/wk + moisturizer", "Minox foam on temples", "Weekly: derma pen scalp \u00b7 Nizoral 2x \u00b7 BHA"]}, {"l": "\ud83c\udfa4 Music", "k": ["music"], "t": 4, "d": "sing strain-free \u00b7 songwriting", "s": ["Sing 10-15 min (shower counts)", "Weekly: 1 songwriting session"]}, {"l": "\ud83d\udc83 Country swing", "k": ["swing"], "t": 1, "d": "1x/wk \u2014 meet the right people", "s": ["Went dancing", "Talked to someone new"]}, {"l": "\u271d\ufe0f Church Sunday", "k": ["church"], "t": 1, "d": "full rest + church", "s": ["Church", "Full rest \u2014 no work"]}];
-  var GX = [], st = {}, openG = -1;
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var DEFS = null, st = {};
   function iso(d) { return d.toLocaleDateString("en-CA"); }
   var now = new Date(), today = iso(now);
   var monday = new Date(now); monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
-  var daysIn = Math.round((now - monday) / 86400000) + 1;
-  function bar(hits, t, label, extra, todayOn) {
-    var expect = t * daysIn / 7;
-    var chip = hits >= Math.floor(expect) ? "on track ✅" : "catch-up 💪";
-    var pct = Math.min(100, Math.round(hits * 100 / t));
-    return '<div class="grow"><span class="gl">' + (todayOn ? "✅ " : "") + label + '</span>'
-      + '<span class="gn">' + hits + "/" + t + ' · <em>' + chip + '</em>' + extra + '</span></div>'
-      + '<div class="gbar"><div class="gfill" style="width:' + pct + '%"></div></div>';
+  monday.setHours(0,0,0,0);
+  var start28 = new Date(now); start28.setDate(now.getDate() - 27);
+  var openCat = null, openItemCal = {};
+  function gk(c, i) { return "G." + c + "." + i; }
+  function setH(h, v) {
+    fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ day: today, habit: h, done: v }) }).catch(function() {});
   }
-  function hits_for(keys) {
-    var n = 0;
-    Object.keys(st).forEach(function(day) {
-      keys.forEach(function(k) { if (st[day][k]) n++; });
+  function setHDay(h, d, v) {
+    fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ day: d, habit: h, done: v }) }).catch(function() {});
+  }
+  function saveDefs() {
+    fetch(EP + "/?k=" + K + "&action=kvset", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: "goals2", value: DEFS }) }).catch(function() {});
+  }
+  function syncLegacy(cat) {
+    var leg = {};
+    cat.items.forEach(function(it) {
+      if (it.legacy) {
+        leg[it.legacy] = leg[it.legacy] || 0;
+        if (st[today] && st[today][gk(cat.id, it.id)]) leg[it.legacy] = 1;
+      }
     });
+    Object.keys(leg).forEach(function(l) { setH(l, leg[l]); });
+  }
+  function weekHits(cid, it) {
+    var n = 0;
+    for (var d = new Date(monday); d <= now; d.setDate(d.getDate() + 1)) {
+      var k = iso(d);
+      if (st[k] && st[k][gk(cid, it.id)]) n++;
+    }
     return n;
   }
-  function draw() {
-    var list = document.getElementById("goallist"), tot = 0, tgt = 0;
-    list.innerHTML = "";
-    function set(h, v) {
-      fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ day: today, habit: h, done: v }) }).catch(function() {});
+  function itemPct(cid, it) {
+    var m = it.min || 1;
+    return Math.round(weekHits(cid, it) * 100 / m);
+  }
+  function daysElapsed() { return Math.round((now - monday) / 86400000) + 1; }
+  function onPace(cid, it) {
+    var need = (it.min || 1) * daysElapsed() / 7;
+    return weekHits(cid, it) >= Math.floor(need);
+  }
+  function catPct(cat) {
+    if (!cat.items.length) return 100;
+    var s = 0;
+    cat.items.forEach(function(it) { s += Math.min(100, itemPct(cat.id, it)); });
+    return Math.round(s / cat.items.length);
+  }
+  function calCells(cid, it) {
+    var html = '<div class="gcal">';
+    for (var off = 27; off >= 0; off--) {
+      var d = new Date(now); d.setDate(now.getDate() - off); d.setHours(0,0,0,0);
+      var k = iso(d);
+      var done = st[k] && st[k][gk(cid, it.id)];
+      var cls = "gc-rest";
+      if (done) cls = "gc-done";
+      else if (it.days && it.days.indexOf(d.getDay()) >= 0 && d < new Date(now.getFullYear(), now.getMonth(), now.getDate())) cls = "gc-miss";
+      var lab = off === 0 ? "·" : "";
+      html += '<span class="gcell ' + cls + '" data-d="' + k + '">' + lab + '</span>';
     }
-    GOALS.forEach(function(g, gi) {
-      var mk = g.k[0];
-      var hits = hits_for(g.k);
-      tot += hits; tgt += g.t;
-      var on = st[today] && st[today][mk] ? 1 : 0;
-      var subs = "";
-      (g.s || []).forEach(function(sl, si) {
-        var sk = mk + "_" + si;
-        var son = st[today] && st[today][sk] ? 1 : 0;
-        subs += '<div class="gsubrow' + (son ? " son" : "") + '" data-k="' + sk + '">'
-          + '<span class="gchk">' + (son ? "✅" : "⬜") + '</span>' + g.s[si] + '</div>';
+    return html + '</div>';
+  }
+  function verdict(p) {
+    if (p >= 100) return ["💎 Amazing", "#9FD08C"];
+    if (p >= 80) return ["✅ On track", "#9FD08C"];
+    if (p >= 60) return ["🟡 Pass", "#E8C878"];
+    return ["🔥 Step it up", "#E08A7A"];
+  }
+  function draw() {
+    if (!DEFS) return;
+    var wrap = document.getElementById("gcats");
+    wrap.innerHTML = "";
+    var tot = 0;
+    DEFS.cats.forEach(function(cat) {
+      var cp = catPct(cat);
+      tot += cp;
+      var allToday = cat.items.length > 0 && cat.items.every(function(it) {
+        return st[today] && st[today][gk(cat.id, it.id)];
       });
-      var d = document.createElement("div"); d.className = "goal";
-      d.innerHTML = '<details class="gfold"' + (openG === gi ? " open" : "") + '>'
-        + '<summary>' + bar(hits, g.t, g.l, "", on) + '</summary>'
-        + '<div class="gsubs">' + subs + '</div></details>';
-      var det = d.querySelector("details");
-      det.addEventListener("toggle", function() {
-        if (det.open) openG = gi; else if (openG === gi) openG = -1;
+      var someToday = cat.items.some(function(it) {
+        return st[today] && st[today][gk(cat.id, it.id)];
       });
-      d.querySelectorAll(".gsubrow").forEach(function(row) {
-        row.onclick = function() {
-          var sk = row.getAttribute("data-k");
-          st[today] = st[today] || {};
-          var nv = st[today][sk] ? 0 : 1;
-          st[today][sk] = nv;
-          set(sk, nv);
-          var all = (g.s || []).length > 0 && (g.s || []).every(function(x, si) {
-            return st[today][mk + "_" + si];
-          });
-          var want = all ? 1 : 0;
-          if (want !== (st[today][mk] ? 1 : 0)) { st[today][mk] = want; set(mk, want); }
-          draw();
-        };
-      });
-      list.appendChild(d);
-    });
-    var xl = document.getElementById("goalxlist");
-    xl.innerHTML = "";
-    GX.forEach(function(g) {
-      var k = "g" + g.id;
-      var hits = hits_for([k]);
-      tot += hits; tgt += g.target;
-      var on = st[today] && st[today][k] ? 1 : 0;
-      var d = document.createElement("div"); d.className = "goal goalx" + (on ? " gon" : "");
-      d.innerHTML = bar(hits, g.target, g.label, ' <span class="gxdel">✕</span>', on);
-      d.onclick = function(ev) {
-        if (ev.target.className === "gxdel") {
-          if (!confirm("Delete goal: " + g.label + "?")) return;
-          fetch(EP + "/?k=" + K + "&action=goaldel", { method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: g.id }) });
-          GX = GX.filter(function(x) { return x.id !== g.id; });
-          draw(); return;
-        }
+      var circ = allToday ? "✅" : (someToday ? "🟡" : "⚪");
+      var d = document.createElement("div");
+      d.className = "gcat";
+      var head = '<div class="gcathead">'
+        + '<span class="gcirc">' + circ + '</span>'
+        + '<span class="gcatname">' + cat.icon + " " + cat.name + '</span>'
+        + '<span class="gcatpct" style="color:' + verdict(cp)[1] + '">' + cp + '%</span></div>';
+      var body = "";
+      if (openCat === cat.id) {
+        body = '<div class="gcatbody">';
+        if (cat.star) body += '<div class="gstar">' + cat.star + '</div>';
+        cat.items.forEach(function(it) {
+          var hits = weekHits(cat.id, it), pct = itemPct(cat.id, it);
+          var onToday = st[today] && st[today][gk(cat.id, it.id)];
+          var chip = onPace(cat.id, it) ? "✅" : "🔥";
+          body += '<div class="gitem" data-i="' + it.id + '">'
+            + '<div class="gitemrow">'
+            + '<span class="gichk" data-i="' + it.id + '">' + (onToday ? "✅" : "⬜") + '</span>'
+            + '<span class="giname" data-i="' + it.id + '">' + it.name + '</span>'
+            + '<span class="gin">' + hits + "/" + it.min + (it.tgt > it.min ? "→" + it.tgt : "") + " · " + Math.min(pct, 150) + "% " + chip + '</span>'
+            + '<span class="giedit" data-i="' + it.id + '">✎</span></div>'
+            + (openItemCal[cat.id + "." + it.id] ? calCells(cat.id, it) : "")
+            + '</div>';
+        });
+        body += '<div class="gtools"><span class="gtool" data-act="additem">＋ goal</span>'
+          + '<span class="gtool" data-act="editcat">✎ category</span></div></div>';
+      }
+      d.innerHTML = head + body;
+      d.querySelector(".gcirc").onclick = function(ev) {
+        ev.stopPropagation();
+        var want = allToday ? 0 : 1;
         st[today] = st[today] || {};
-        st[today][k] = on ? 0 : 1;
-        fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ day: today, habit: k, done: on ? 0 : 1 }) }).catch(function() {});
+        cat.items.forEach(function(it) {
+          st[today][gk(cat.id, it.id)] = want;
+          setH(gk(cat.id, it.id), want);
+        });
+        syncLegacy(cat);
         draw();
       };
-      xl.appendChild(d);
+      d.querySelector(".gcathead").onclick = function() {
+        openCat = openCat === cat.id ? null : cat.id;
+        draw();
+      };
+      if (openCat === cat.id) {
+        d.querySelectorAll(".gichk").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var it = cat.items.filter(function(x) { return x.id === el.getAttribute("data-i"); })[0];
+            st[today] = st[today] || {};
+            var nv = st[today][gk(cat.id, it.id)] ? 0 : 1;
+            st[today][gk(cat.id, it.id)] = nv;
+            setH(gk(cat.id, it.id), nv);
+            syncLegacy(cat);
+            draw();
+          };
+        });
+        d.querySelectorAll(".giname").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var key = cat.id + "." + el.getAttribute("data-i");
+            openItemCal[key] = !openItemCal[key];
+            draw();
+          };
+        });
+        d.querySelectorAll(".gcell").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var gi = el.closest(".gitem").getAttribute("data-i");
+            var it = cat.items.filter(function(x) { return x.id === gi; })[0];
+            var dd = el.getAttribute("data-d");
+            st[dd] = st[dd] || {};
+            var nv = st[dd][gk(cat.id, it.id)] ? 0 : 1;
+            st[dd][gk(cat.id, it.id)] = nv;
+            setHDay(gk(cat.id, it.id), dd, nv);
+            draw();
+          };
+        });
+        d.querySelectorAll(".giedit").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var it = cat.items.filter(function(x) { return x.id === el.getAttribute("data-i"); })[0];
+            var nm = prompt("Goal name (empty = delete)", it.name);
+            if (nm === null) return;
+            if (!nm.trim()) {
+              if (!confirm("Delete " + it.name + "?")) return;
+              cat.items = cat.items.filter(function(x) { return x.id !== it.id; });
+            } else {
+              it.name = nm.trim();
+              var mn = prompt("Minimum per week (100%)", String(it.min));
+              if (mn && Number(mn) > 0) it.min = Math.min(7, Number(mn));
+              var tg = prompt("Ideal per week (bonus)", String(it.tgt || it.min));
+              if (tg && Number(tg) >= it.min) it.tgt = Math.min(7, Number(tg));
+            }
+            saveDefs(); draw();
+          };
+        });
+        d.querySelectorAll(".gtool").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var act = el.getAttribute("data-act");
+            if (act === "additem") {
+              var nm = prompt("New goal in " + cat.name);
+              if (!nm || !nm.trim()) return;
+              var mn = Number(prompt("Times per week minimum", "3") || 3);
+              cat.items.push({ id: "x" + Date.now().toString(36), name: nm.trim(),
+                min: Math.min(7, Math.max(1, mn)), tgt: Math.min(7, Math.max(1, mn)) });
+              saveDefs(); draw();
+            } else if (act === "editcat") {
+              var nm = prompt("Category name (empty = delete)", cat.name);
+              if (nm === null) return;
+              if (!nm.trim()) {
+                if (!confirm("Delete category " + cat.name + " and its goals?")) return;
+                DEFS.cats = DEFS.cats.filter(function(c) { return c.id !== cat.id; });
+              } else {
+                cat.name = nm.trim();
+                var ic = prompt("Emoji", cat.icon); if (ic) cat.icon = ic.trim();
+                var sr = prompt("North star line (shown on morning card)", cat.star || "");
+                if (sr !== null) cat.star = sr.trim();
+              }
+              saveDefs(); draw();
+            }
+          };
+        });
+      }
+      wrap.appendChild(d);
     });
-    var wp = tgt ? Math.round(tot * 100 / tgt) : 0;
-    document.getElementById("gpct").textContent = wp + "%";
-    document.getElementById("gpct").style.color = wp >= 80 ? "#9FD08C" : "";
+    var avg = DEFS.cats.length ? Math.round(tot / DEFS.cats.length) : 0;
+    var v = verdict(avg);
+    var gv = document.getElementById("gverdict");
+    gv.textContent = v[0] + " " + avg + "%";
+    gv.style.color = v[1];
+    var sl = document.getElementById("starline");
+    if (sl) sl.textContent = DEFS.cats.map(function(c) { return c.star; }).filter(Boolean).join("  ·  ");
   }
+  var addBtn = document.getElementById("gaddcat");
+  if (addBtn) addBtn.onclick = function() {
+    if (!DEFS) return;
+    var nm = prompt("New category name");
+    if (!nm || !nm.trim()) return;
+    var ic = prompt("Emoji", "⭐") || "⭐";
+    DEFS.cats.push({ id: "c" + Date.now().toString(36), icon: ic.trim(), name: nm.trim(), star: "", items: [] });
+    saveDefs(); draw();
+  };
   Promise.all([
-    fetch(EP + "/?k=" + K + "&action=goallist").then(function(r) { return r.json(); }),
-    fetch(EP + "/?k=" + K + "&action=habitrange&start=" + iso(monday) + "&end=" + iso(now))
+    fetch(EP + "/?k=" + K + "&action=kvget&key=goals2").then(function(r) { return r.json(); }),
+    fetch(EP + "/?k=" + K + "&action=habitrange&start=" + iso(start28) + "&end=" + today)
       .then(function(r) { return r.json(); })
   ]).then(function(res) {
-    GX = res[0].goals || [];
+    DEFS = res[0].value || { cats: [] };
     (res[1].rows || []).forEach(function(r) {
-      if (r.done) { st[r.day] = st[r.day] || {}; st[r.day][r.habit] = 1; }
+      if (r.done && r.habit.indexOf("G.") === 0) {
+        st[r.day] = st[r.day] || {};
+        st[r.day][r.habit] = 1;
+      }
     });
     draw();
-  }).catch(function() { draw(); });
-  document.getElementById("gadd").addEventListener("submit", function(e) {
-    e.preventDefault();
-    var inp = e.target.querySelector("input"), t = inp.value.trim();
-    if (!t) return;
-    var tgt = Number(document.getElementById("gtgt").value);
-    inp.value = "";
-    fetch(EP + "/?k=" + K + "&action=goaladd", { method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ label: t, target: tgt }) })
-      .then(function(r) { return r.json(); })
-      .then(function(j) { GX.push({ id: j.id, label: t, target: tgt }); draw(); });
-  });
+  }).catch(function() {});
 })();
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
@@ -736,5 +823,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 11:18am · auto-refreshes</span></div>
+<span style="font-size:12px">updated 11:38am · auto-refreshes</span></div>
 </body></html>
