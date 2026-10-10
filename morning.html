@@ -65,6 +65,12 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .gcatpct { font-size:14px; font-weight:800; }
 .gcatbody { padding:0 2px 12px 6px; }
 .gstar { font-size:14px; color:rgba(255,255,255,0.78); font-weight:700; margin-bottom:8px; }
+.gll { margin:2px 0 10px; display:flex; flex-direction:column; gap:5px; }
+.gllrow { display:flex; gap:8px; align-items:baseline; font-size:13px; line-height:1.4; }
+.gllk { flex:none; font-size:10px; font-weight:900; letter-spacing:1px; text-transform:uppercase;
+  padding:3px 9px; border-radius:99px; }
+.glllag { background:linear-gradient(135deg,#FFE0A3,#FFC46B); color:#123468; }
+.glllead { background:rgba(255,255,255,0.18); color:rgba(255,255,255,0.78); border:1px solid rgba(255,255,255,0.18); }
 .gitem { padding:4px 0; }
 .gitemrow { display:flex; align-items:center; gap:9px; }
 .gichk { width:20px; height:20px; flex:none; border-radius:7px; border:2px solid rgba(255,255,255,0.78);
@@ -167,11 +173,12 @@ h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; 
 .stepsfold .chev { color:rgba(255,255,255,0.78); font-size:15px; transition:transform .2s; }
 .stepsfold[open] > summary .chev { transform:rotate(180deg); }
 .listchips { display:flex; gap:8px; margin-top:13px; flex-wrap:wrap; }
-.lchip { font-size:12px; font-weight:800; letter-spacing:0.5px; padding:7px 13px; border-radius:99px;
+.lchip, .rchip { font-size:12px; font-weight:800; letter-spacing:0.5px; padding:7px 13px; border-radius:99px;
   background:rgba(255,255,255,0.18); color:rgba(255,255,255,0.78); cursor:pointer; user-select:none;
-  -webkit-tap-highlight-color:transparent; transition:all .2s; }
-.lchip.lon { background:linear-gradient(135deg,#FFE0A3,#FFC46B); color:#123468;
+  display:inline-block; -webkit-tap-highlight-color:transparent; transition:all .2s; }
+.lchip.lon, .rchip.lon { background:linear-gradient(135deg,#FFE0A3,#FFC46B); color:#123468;
   box-shadow:0 0 10px #FFC46B55; }
+.rwrap { margin:2px 0 12px; }
 .lpanel { border-top:1px solid rgba(255,255,255,0.18); margin-top:11px; padding-top:3px; }
 .stepsfold .step { box-shadow:none; border:none; background:transparent;
   border-top:1px solid rgba(255,255,255,0.18); border-radius:0; margin:0; padding:12px 0; }
@@ -363,6 +370,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 
 <details class="stepsfold" id="goalbox">
   <summary><span class="kicker" style="margin:0">🎯 Goals<span id="gtotal"></span></span><span class="chev">▾</span></summary>
+  <div class="rwrap"><span class="rchip" id="rchip">☀️ morning routine · 6 steps</span><div id="rpanel" style="display:none"><div class="step" data-step="step1"><div class="num">1</div><div><div class="nm">Wake</div><div class="dt">alarm in the bathroom · Alarmy scan · no snooze</div></div></div><div class="step" data-step="step2"><div class="num">2</div><div><div class="nm">Splash + skin</div><div class="dt">water chug · cold face splash · HA + moisturizer 60s</div></div></div><div class="step" data-step="step3"><div class="num">3</div><div><div class="nm">Kitchen</div><div class="dt">sermon on · breakfast prep + airfryer + coffee</div></div></div><div class="step" data-step="step4"><div class="num">4</div><div><div class="nm">Prayer walk</div><div class="dt">10 min · no phone · 3 gratitudes without fail</div></div></div><div class="step" data-step="step5"><div class="num">5</div><div><div class="nm">Breakfast + Bible</div><div class="dt">eat + coffee · 1 page lectio</div></div></div><div class="step" data-step="step6"><div class="num">6</div><div><div class="nm">Deep work</div><div class="dt">phone unlocks · 4h block before BJJ</div></div></div></div></div><script>(function(){var c=document.getElementById("rchip"),p=document.getElementById("rpanel");c.onclick=function(ev){ev.stopPropagation();var s=p.style.display==="none";p.style.display=s?"block":"none";c.classList.toggle("lon",s);};})();</script>
   <div class="subhead" id="gverdict"></div>
   <div class="subhead" id="gwarn" style="display:none;color:#ff6b5e"></div>
   <div id="gcats"></div>
@@ -552,6 +560,12 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       if (openCat === cat.id) {
         body = '<div class="gcatbody">';
         if (cat.star) body += '<div class="gstar">' + cat.star + '</div>';
+        if (cat.lag || cat.lead) {
+          body += '<div class="gll">'
+            + (cat.lag ? '<div class="gllrow"><span class="gllk glllag">🎯 lag</span><span>' + cat.lag + '</span></div>' : '')
+            + (cat.lead ? '<div class="gllrow"><span class="gllk glllead">⚡ lead</span><span>' + cat.lead + '</span></div>' : '')
+            + '</div>';
+        }
         if (cat.note) {
           body += '<div class="gtool gnotebtn">📖 full breakdown</div>'
             + '<div class="gnote" style="display:' + (openNote === cat.id ? "block" : "none") + '">' + cat.note + '</div>';
@@ -982,7 +996,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 3:28pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 3:38pm · auto-refreshes</span></div>
 
 <script>
 (function() {
