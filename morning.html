@@ -329,7 +329,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 </script><details class="stepsfold" id="routinebox"><summary><span class="kicker" style="color:#FFC46B;margin:0">☀️ Morning routine · 6 steps</span><span class="chev">▾</span></summary><div class="step" data-step="step1"><div class="num">1</div><div><div class="nm">Wake</div><div class="dt">alarm in the bathroom · Alarmy scan · no snooze</div></div></div><div class="step" data-step="step2"><div class="num">2</div><div><div class="nm">Splash + skin</div><div class="dt">water chug · cold face splash · HA + moisturizer 60s</div></div></div><div class="step" data-step="step3"><div class="num">3</div><div><div class="nm">Kitchen</div><div class="dt">sermon on · breakfast prep + airfryer + coffee</div></div></div><div class="step" data-step="step4"><div class="num">4</div><div><div class="nm">Prayer walk</div><div class="dt">10 min · no phone · 3 gratitudes without fail</div></div></div><div class="step" data-step="step5"><div class="num">5</div><div><div class="nm">Breakfast + Bible</div><div class="dt">eat + coffee · 1 page lectio</div></div></div><div class="step" data-step="step6"><div class="num">6</div><div><div class="nm">Deep work</div><div class="dt">phone unlocks · 4h block before BJJ</div></div></div></details><details class="stepsfold" id="aftbox"><summary><span class="kicker" style="color:#FFC46B;margin:0">💼 Afternoon · work · 4 steps</span><span class="chev">▾</span></summary><div class="step"><div class="num">1</div><div><div class="nm">Leave 10:15</div><div class="dt">BJJ Mon/Tue/Wed/Fri · gym Thu/Sat</div></div></div><div class="step"><div class="num">2</div><div><div class="nm">Refuel</div><div class="dt">whey + lunch · 3-min reset</div></div></div><div class="step"><div class="num">3</div><div><div class="nm">Work block 2</div><div class="dt">ads · outreach · product · LTV</div></div></div><div class="step"><div class="num">4</div><div><div class="nm">Wrap by 5</div><div class="dt">loose ends · tomorrow&#x27;s first task</div></div></div></details>
 
 <details class="stepsfold" id="goalbox">
-  <summary><span class="kicker" style="margin:0">🎯 Goals</span><span class="chev">▾</span></summary>
+  <summary><span class="kicker" style="margin:0">🎯 Goals<span id="gtotal"></span></span><span class="chev">▾</span></summary>
   <div class="subhead" id="gverdict"></div>
   <div id="gcats"></div>
   <div class="notehint" style="margin-top:8px">tap the circle = did my stuff · tap the name = details</div>
@@ -408,6 +408,38 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     if (!cat.items.length) return 100;
     var s = 0;
     cat.items.forEach(function(it) { s += Math.min(100, itemPct(cat.id, it)); });
+    return Math.round(s / cat.items.length);
+  }
+  var TRACK0 = new Date(2026, 9, 5);
+  function weekTracked(ws) {
+    return ws >= TRACK0;
+  }
+  function hitsBetween(cid, it, a, b) {
+    var n = 0;
+    for (var d = new Date(a); d <= b; d.setDate(d.getDate() + 1)) {
+      var k = iso(d);
+      if (st[k] && st[k][gk(cid, it.id)]) n++;
+    }
+    return n;
+  }
+  function itemOverall(cid, it) {
+    if (it.per === "mo") return Math.min(100, itemPct(cid, it));
+    var s = 0, nw = 0;
+    for (var w = 3; w >= 1; w--) {
+      var ws = new Date(monday); ws.setDate(monday.getDate() - 7 * w);
+      if (!weekTracked(ws)) continue;
+      var we = new Date(ws); we.setDate(ws.getDate() + 6);
+      s += Math.min(100, Math.round(hitsBetween(cid, it, ws, we) * 100 / (it.min || 1)));
+      nw++;
+    }
+    s += Math.min(100, itemPct(cid, it));
+    nw++;
+    return Math.round(s / nw);
+  }
+  function catOverall(cat) {
+    if (!cat.items.length) return 100;
+    var s = 0;
+    cat.items.forEach(function(it) { s += itemOverall(cat.id, it); });
     return Math.round(s / cat.items.length);
   }
   function calCells(cid, it) {
@@ -621,6 +653,14 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     var gv = document.getElementById("gverdict");
     gv.textContent = "This week: " + v[0] + " · " + avg + "%";
     gv.style.color = v[1];
+    var totO = 0;
+    DEFS.cats.forEach(function(cat) { totO += catOverall(cat); });
+    var avgO = DEFS.cats.length ? Math.round(totO / DEFS.cats.length) : 0;
+    var gt = document.getElementById("gtotal");
+    if (gt) {
+      gt.textContent = " · " + avgO + "%";
+      gt.style.color = verdict(avgO)[1];
+    }
   }
   var addBtn = document.getElementById("gaddcat");
   if (addBtn) addBtn.onclick = function() {
@@ -878,7 +918,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 1:18pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 1:38pm · auto-refreshes</span></div>
 
 <script>
 (function() {
