@@ -67,6 +67,9 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .gc-miss { background:#b05050; }
 .gtools { display:flex; gap:14px; padding:6px 2px; }
 .gtool { font-size:13px; font-weight:700; color:rgba(255,255,255,0.78); cursor:pointer; }
+.gnotebtn { padding:4px 0 8px; }
+.gnote { white-space:pre-wrap; font-size:14px; line-height:1.55; color:#FFFFFF;
+  background:rgba(255,255,255,0.18); border-radius:14px; padding:13px 14px; margin:2px 0 12px; }
 #top1text { font-size:22px; font-weight:800; line-height:1.3; }
 .coform { margin-bottom:12px; }
 .coform:last-of-type { margin-bottom:4px; }
@@ -282,7 +285,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   var monday = new Date(now); monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
   monday.setHours(0,0,0,0);
   var start28 = new Date(now); start28.setDate(now.getDate() - 27);
-  var openCat = null, openItemCal = {};
+  var openCat = null, openItemCal = {}, openNote = null;
   function gk(c, i) { return "G." + c + "." + i; }
   function setH(h, v) {
     fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
@@ -377,6 +380,10 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       if (openCat === cat.id) {
         body = '<div class="gcatbody">';
         if (cat.star) body += '<div class="gstar">' + cat.star + '</div>';
+        if (cat.note) {
+          body += '<div class="gtool gnotebtn">📖 full breakdown</div>'
+            + '<div class="gnote" style="display:' + (openNote === cat.id ? "block" : "none") + '">' + cat.note + '</div>';
+        }
         cat.items.forEach(function(it) {
           var hits = weekHits(cat.id, it), pct = itemPct(cat.id, it);
           var onToday = st[today] && st[today][gk(cat.id, it.id)];
@@ -410,6 +417,12 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
         draw();
       };
       if (openCat === cat.id) {
+        var nb = d.querySelector(".gnotebtn");
+        if (nb) nb.onclick = function(ev) {
+          ev.stopPropagation();
+          openNote = openNote === cat.id ? null : cat.id;
+          draw();
+        };
         d.querySelectorAll(".gichk").forEach(function(el) {
           el.onclick = function(ev) {
             ev.stopPropagation();
@@ -753,5 +766,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 12:00pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 12:05pm · auto-refreshes</span></div>
 </body></html>
