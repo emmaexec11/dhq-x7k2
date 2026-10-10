@@ -271,6 +271,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 <details class="stepsfold" id="goalbox" open>
   <summary><span class="kicker" style="margin:0">🎯 Goals<span id="gtotal"></span></span><span class="chev">▾</span></summary>
   <div class="subhead" id="gverdict"></div>
+  <div class="subhead" id="gwarn" style="display:none;color:#ff6b5e"></div>
   <div id="gcats"></div>
   <div class="notehint" style="margin-top:8px">tap the circle = did my stuff · tap the name = details</div>
   <div class="gtools"><span class="gtool" id="gaddcat">＋ category</span></div>
@@ -666,6 +667,18 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     var gv = document.getElementById("gverdict");
     gv.textContent = "This week: " + v[0] + " · " + avg + "%";
     gv.style.color = v[1];
+    var slips = [];
+    DEFS.cats.forEach(function(cat) {
+      cat.items.forEach(function(it) {
+        var p = Math.min(100, itemPct(cat.id, it));
+        if (p < 80) slips.push(cat.icon + " " + it.name + " " + p + "%");
+      });
+    });
+    var gw = document.getElementById("gwarn");
+    if (gw) {
+      gw.textContent = slips.length ? "⚠️ Slipping: " + slips.join(" · ") : "";
+      gw.style.display = slips.length ? "" : "none";
+    }
     var totO = 0;
     DEFS.cats.forEach(function(cat) { totO += catOverall(cat); });
     var avgO = DEFS.cats.length ? Math.round(totO / DEFS.cats.length) : 0;
@@ -986,7 +999,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 1:51pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 1:53pm · auto-refreshes</span></div>
 
 <script>
 (function() {
