@@ -249,7 +249,8 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 </script>
 
 <details class="stepsfold" id="goalbox" open>
-  <summary><span class="kicker" style="margin:0">🎯 Goals · <span id="gverdict"></span></span><span class="chev">▾</span></summary>
+  <summary><span class="kicker" style="margin:0">🎯 Goals</span><span class="chev">▾</span></summary>
+  <div class="subhead" id="gverdict"></div>
   <div id="gcats"></div>
   <div class="notehint" style="margin-top:8px">tap the circle = did my stuff · tap the name = details</div>
   <div class="gtools"><span class="gtool" id="gaddcat">＋ category</span></div>
@@ -530,10 +531,8 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     var avg = DEFS.cats.length ? Math.round(tot / DEFS.cats.length) : 0;
     var v = verdict(avg);
     var gv = document.getElementById("gverdict");
-    gv.textContent = v[0] + " " + avg + "%";
+    gv.textContent = "This week: " + v[0] + " · " + avg + "%";
     gv.style.color = v[1];
-    var sl = document.getElementById("starline");
-    if (sl) sl.textContent = DEFS.cats.map(function(c) { return c.star; }).filter(Boolean).join("  ·  ");
   }
   var addBtn = document.getElementById("gaddcat");
   if (addBtn) addBtn.onclick = function() {
@@ -845,5 +844,5 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 11:58am · auto-refreshes</span></div>
+<span style="font-size:12px">updated 12:00pm · auto-refreshes</span></div>
 </body></html>
