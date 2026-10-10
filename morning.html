@@ -226,7 +226,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 <h1><span style="-webkit-text-fill-color:initial">🌅</span> Morning</h1>
 <div class="sub">Saturday, October 10</div>
 <div class="sec" id="top1box" style="display:none"><div class="kicker" style="color:#FFC46B">🎯 Today's #1</div><div id="top1text"></div><div id="wintext" class="notehint"></div></div>
-<div class="sec" id="calbox"><div class="kicker"><a class="klink" href="https://calendar.google.com/calendar/u/0/r/day/2026/10/10">📅 Today ↗</a></div><div class="ev evtap" data-key="27ddb8b2c372" data-gid="cp9vb2dsupn1gbfn4cfn0uocbk" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#FFC46B">10:00a</span><span class="evs">Thanksgiving with parents</span></div></div>
+<div class="sec" id="calbox"><div class="kicker"><a class="klink" href="https://calendar.google.com/calendar/u/0/r/day/2026/10/10">📅 Today ↗</a></div><div class="ev evtap" data-key="9602647af251" data-gid="miqrue9rl3pq6c42qots2gifss" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#FFC46B">5:00p</span><span class="evs">Potluck at Payton&#x27;s — game night</span></div></div>
 
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <div class="sec" id="notebox" style="display:none"><div class="kicker" style="color:#FFC46B">📝 From last night</div><div id="notelist"></div></div>
@@ -392,12 +392,29 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   function pdaysElapsed(it) {
     return Math.floor((now - period(it).start) / 86400000) + 1;
   }
+  var TRACK1 = new Date(2026, 9, 10);
   function itemPct(cid, it) {
+    // done vs due-so-far: starts at 100, drops when a due day passes unmet,
+    // and moves both ways when days are tapped/untapped
     var m = it.min || 1, hits = weekHits(cid, it), p = period(it);
     var doneToday = st[today] && st[today][gk(cid, it.id)] ? 1 : 0;
-    var daysLeft = (p.len - pdaysElapsed(it)) + (doneToday ? 0 : 1);
-    var achievable = Math.min(m, hits + Math.max(0, daysLeft));
-    return Math.round(achievable * 100 / m);
+    var todayD = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var pstart = p.start < TRACK1 ? TRACK1 : p.start;
+    var avail = Math.round((new Date(p.start.getFullYear(), p.start.getMonth(), p.start.getDate() + p.len) - pstart) / 86400000);
+    var eff = Math.min(m, Math.ceil(m * avail / p.len));
+    var due;
+    if (it.per !== "mo" && it.days && it.days.length) {
+      due = 0;
+      for (var d = new Date(pstart); d <= todayD; d.setDate(d.getDate() + 1)) {
+        if (it.days.indexOf(d.getDay()) >= 0 && (d < todayD || doneToday)) due++;
+      }
+      due = Math.min(eff, due);
+    } else {
+      var remAfter = Math.round((new Date(p.start.getFullYear(), p.start.getMonth(), p.start.getDate() + p.len) - todayD) / 86400000) - 1;
+      due = Math.max(0, eff - remAfter - (doneToday ? 0 : 1));
+    }
+    if (due <= 0) return 100;
+    return Math.min(100, Math.round(hits * 100 / due));
   }
   function onPace(cid, it) {
     var p = period(it);
@@ -508,7 +525,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
         cat.items.forEach(function(it) {
           var hits = weekHits(cat.id, it), pct = itemPct(cat.id, it);
           var onToday = st[today] && st[today][gk(cat.id, it.id)];
-          var chip = onPace(cat.id, it) ? "✅" : "🔥";
+          var chip = pct >= 80 ? "✅" : "🔥";
           body += '<div class="gitem" data-i="' + it.id + '">'
             + '<div class="gitemrow">'
             + '<span class="gichk" data-i="' + it.id + '">' + (onToday ? "✅" : "⬜") + '</span>'
@@ -919,7 +936,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 1:44pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 1:51pm · auto-refreshes</span></div>
 
 <script>
 (function() {
