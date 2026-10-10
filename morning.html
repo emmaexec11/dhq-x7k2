@@ -18,13 +18,15 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .tk { display:flex; gap:12px; padding:9px 0; align-items:center; font-size:17px; border-bottom:1px solid rgba(255,255,255,0.18); }
 .tk:last-child { border-bottom:none; }
 .box { width:19px; height:19px; border:2.5px solid rgba(255,255,255,0.78); border-radius:6px; flex:none; }
-.box.checked { background:#FFC46B; border-color:#FFC46B; position:relative; }
+.box.checked { background:linear-gradient(135deg,#FFE0A3,#FFC46B); border-color:transparent;
+  position:relative; box-shadow:0 0 10px #FFC46B77; animation:gpop .35s cubic-bezier(.3,1.6,.5,1); }
 .box.checked::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
   justify-content:center; color:#123468; font-size:14px; font-weight:900; }
 .tktap, .hb, .evtap, .steptap { cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
 .step.sdone .nm { text-decoration:line-through; opacity:0.5; }
 .step.sdone .dt { opacity:0.4; }
-.step.sdone .num { background:#FFC46B; color:#123468; }
+.step.sdone .num { background:linear-gradient(135deg,#FFE0A3,#FFC46B); color:#123468;
+  box-shadow:0 0 14px #FFC46B88; }
 .goal { padding:7px 0; }
 .grow { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px; }
 .gl { font-size:16px; font-weight:700; }
@@ -49,14 +51,29 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .gcat:last-of-type { border-bottom:none; }
 .gcathead { display:flex; align-items:center; gap:12px; padding:12px 2px; cursor:pointer;
   -webkit-tap-highlight-color:transparent; user-select:none; }
-.gcirc { font-size:24px; flex:none; padding:2px 4px; }
+.gcirc { width:26px; height:26px; flex:none; border-radius:50%; border:2px solid rgba(255,255,255,0.78);
+  position:relative; box-sizing:border-box; transition:all .25s cubic-bezier(.2,.7,.3,1); }
+.gcirc.gon { border-color:transparent; background:linear-gradient(135deg,#FFE0A3,#FFC46B);
+  box-shadow:0 0 12px #FFC46B88, 0 2px 8px rgba(0,0,0,0.3); animation:gpop .35s cubic-bezier(.3,1.6,.5,1); }
+.gcirc.gon::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#123468; font-size:16px; font-weight:900; }
+.gcirc.ghalf { border-color:#FFC46B; }
+.gcirc.ghalf::after { content:""; position:absolute; inset:5px; border-radius:50%;
+  background:linear-gradient(135deg,#FFE0A3,#FFC46B); opacity:0.85; }
+@keyframes gpop { 0% { transform:scale(0.6); } 60% { transform:scale(1.15); } 100% { transform:scale(1); } }
 .gcatname { flex:1; font-size:17px; font-weight:800; }
 .gcatpct { font-size:14px; font-weight:800; }
 .gcatbody { padding:0 2px 12px 6px; }
 .gstar { font-size:14px; color:rgba(255,255,255,0.78); font-weight:700; margin-bottom:8px; }
 .gitem { padding:4px 0; }
 .gitemrow { display:flex; align-items:center; gap:9px; }
-.gichk { font-size:17px; cursor:pointer; padding:3px 2px; }
+.gichk { width:20px; height:20px; flex:none; border-radius:7px; border:2px solid rgba(255,255,255,0.78);
+  position:relative; box-sizing:border-box; cursor:pointer; transition:all .25s cubic-bezier(.2,.7,.3,1); }
+.gichk.gon { border-color:transparent; background:linear-gradient(135deg,#FFE0A3,#FFC46B);
+  box-shadow:0 0 10px #FFC46B77; animation:gpop .35s cubic-bezier(.3,1.6,.5,1); }
+.gichk.gon::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#123468; font-size:13px; font-weight:900; }
+.gchipok { color:#58d68d; font-weight:900; text-shadow:0 0 8px rgba(88,214,141,0.55); }
 .giname { flex:1; font-size:15px; cursor:pointer; }
 .gin { font-size:12px; color:rgba(255,255,255,0.78); font-weight:700; white-space:nowrap; }
 .giedit { font-size:13px; color:rgba(255,255,255,0.78); opacity:0.6; padding:3px 4px; cursor:pointer; }
@@ -84,7 +101,8 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
   background:rgba(255,255,255,0.18); color:#FFFFFF; outline:none; }
 .corow input::placeholder { color:rgba(255,255,255,0.78); }
 .corow button { border:none; border-radius:12px; padding:10px 15px; font-weight:800; font-size:14px;
-  background:#FFC46B; color:#123468; cursor:pointer; }
+  background:linear-gradient(135deg,#FFE0A3,#FFC46B); color:#123468; cursor:pointer;
+  box-shadow:0 3px 10px #FFC46B55; }
 .codone { font-size:14px; color:#FFC46B; margin-top:5px; font-weight:600; }
 .codone:empty { display:none; }
 .subhead { font-size:13px; font-weight:800; letter-spacing:2px; text-transform:uppercase;
@@ -99,7 +117,13 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .gsubrow { font-size:14px; font-weight:600; padding:6px 6px; color:rgba(255,255,255,0.78);
   cursor:pointer; border-radius:8px; }
 .gsubrow.son { color:#FFC46B; }
-.gchk { margin-right:7px; }
+.gchk { display:inline-block; vertical-align:middle; width:17px; height:17px; margin-right:9px;
+  border-radius:6px; border:2px solid rgba(255,255,255,0.78); box-sizing:border-box; position:relative;
+  transition:all .25s cubic-bezier(.2,.7,.3,1); }
+.gchk.gon { border-color:transparent; background:linear-gradient(135deg,#FFE0A3,#FFC46B);
+  box-shadow:0 0 8px #FFC46B77; }
+.gchk.gon::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#123468; font-size:11px; font-weight:900; }
 #gadd { display:flex; gap:7px; margin:10px 0 4px; }
 #gadd input { flex:1; min-width:0; border:none; border-radius:12px; padding:9px 12px; font-size:15px;
   background:rgba(255,255,255,0.18); color:#FFFFFF; outline:none; }
@@ -107,10 +131,12 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 #gadd select { border:none; border-radius:12px; padding:9px 8px; font-size:14px; font-weight:700;
   background:rgba(255,255,255,0.18); color:#FFFFFF; outline:none; }
 #gadd button { border:none; border-radius:12px; padding:9px 14px; font-weight:800; font-size:16px;
-  background:#FFC46B; color:#123468; cursor:pointer; }
+  background:linear-gradient(135deg,#FFE0A3,#FFC46B); color:#123468; cursor:pointer;
+  box-shadow:0 3px 10px #FFC46B55; }
 .wakerow { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
 #upbtn { border:none; border-radius:14px; padding:11px 18px; font-weight:800; font-size:16px;
-  background:#FFC46B; color:#123468; cursor:pointer; }
+  background:linear-gradient(135deg,#FFE0A3,#FFC46B); color:#123468; cursor:pointer;
+  box-shadow:0 3px 12px #FFC46B55; }
 #uptime { font-size:18px; font-weight:800; }
 .evtap.evgone { opacity:0.35; }
 .evtap.evgone .evs { text-decoration:line-through; }
@@ -491,7 +517,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   }
   function verdict(p) {
     if (p >= 100) return ["💎 Perfect week", "#9FD08C"];
-    if (p >= 80) return ["✅ Green — win", "#9FD08C"];
+    if (p >= 80) return ["✓ Green — win", "#9FD08C"];
     return ["🔥 Below 80 — step it up", "#E08A7A"];
   }
   function draw() {
@@ -508,11 +534,11 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       var someToday = cat.items.some(function(it) {
         return st[today] && st[today][gk(cat.id, it.id)];
       });
-      var circ = allToday ? "✅" : (someToday ? "🟡" : "⚪");
+      var circCls = allToday ? " gon" : (someToday ? " ghalf" : "");
       var d = document.createElement("div");
       d.className = "gcat";
       var head = '<div class="gcathead">'
-        + '<span class="gcirc">' + circ + '</span>'
+        + '<span class="gcirc' + circCls + '"></span>'
         + '<span class="gcatname">' + cat.icon + " " + cat.name + '</span>'
         + '<span class="gcatpct" style="color:' + verdict(cp)[1] + '">' + cp + '%</span></div>';
       var body = "";
@@ -526,10 +552,10 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
         cat.items.forEach(function(it) {
           var hits = weekHits(cat.id, it), pct = itemPct(cat.id, it);
           var onToday = st[today] && st[today][gk(cat.id, it.id)];
-          var chip = pct >= 80 ? "✅" : "🔥";
+          var chip = pct >= 80 ? '<span class="gchipok">✓</span>' : "🔥";
           body += '<div class="gitem" data-i="' + it.id + '">'
             + '<div class="gitemrow">'
-            + '<span class="gichk" data-i="' + it.id + '">' + (onToday ? "✅" : "⬜") + '</span>'
+            + '<span class="gichk' + (onToday ? " gon" : "") + '" data-i="' + it.id + '"></span>'
             + '<span class="giname" data-i="' + it.id + '">' + it.name + '</span>'
             + '<span class="gin">' + hits + "/" + it.min + (it.per === "mo" ? "mo" : "") + (it.tgt > it.min ? "→" + it.tgt : "") + " · " + Math.min(pct, 150) + "% " + chip + '</span>'
             + '<span class="giedit" data-i="' + it.id + '">✎</span></div>'
@@ -949,7 +975,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 2:59pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 3:04pm · auto-refreshes</span></div>
 
 <script>
 (function() {
