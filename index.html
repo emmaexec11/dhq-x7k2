@@ -41,6 +41,9 @@ h1 { font-size:30px; font-weight:900; letter-spacing:-0.5px; }
 .tkmenu { flex-basis:100%; display:flex; gap:6px; flex-wrap:wrap; padding:8px 0 4px; }
 .tkmenu button { border:none; border-radius:10px; padding:6px 11px; font-size:13px; font-weight:700;
   cursor:pointer; background:#2b2722; color:#F4EDE3; }
+.tkghost { position:fixed; z-index:99; pointer-events:none; margin:0; display:flex; align-items:center;
+  background:#2b2722; border-radius:14px; padding:10px 12px; box-shadow:0 12px 30px rgba(0,0,0,0.45); }
+.dropglow { outline:2px solid #E2B15C; outline-offset:-2px; }
 </style></head><body>
 <div class="top"><h1>Devon HQ</h1>
 <div class="wxnow">☁️ 7°<small>Overcast · feels 6°</small></div></div>
@@ -57,7 +60,7 @@ h1 { font-size:30px; font-weight:900; letter-spacing:-0.5px; }
 <span style="float:right;font-weight:700;letter-spacing:0">☁️ 15°/1°</span></div>
 <a class="rowlink" href="https://calendar.google.com/calendar/r/day/2026/10/12"><div class="ev"><span class="evt" style="color:#B8AB98">all day</span><span class="evs">Don&#x27;t go to work — Thanksgiving 🦃</span></div></a></div>
 <div class="sec"><div class="kicker">🐉 Daily Dragons</div><div class="tk tktap" data-id="MXhSRUU0c1lTck5Pdko4dw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Bens wedding gift</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="ajhpU1kzeVRsVGZhTUVZeQ" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Get a few products for holly to have</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="R2tiRUROY254bDhFb2RTQg" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">🗳️ Vote - Kelowna municipal election (by Sat Oct 17)</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div><div class="sec"><div class="kicker">📆 This Week</div><div class="tk tktap starred" data-id="MktMQ3pZUm55Y2s3Ym83Yw" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Foundation on site</span><span class="tka stario">★</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="eUtMczdld3V5RGhhYWJVbw" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Donate to that girl</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="R2lFd2JzcGpYTk1naG9aQg" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Send Ben wedding gift</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div><div class="sec"><div class="kicker">🗓 This Month</div><div class="tk tktap starred" data-id="QjhzcTN6UTdyTEFzOVEzQw" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">check Amazon appeal</span><span class="tka stario">★</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="cldScE1pbVR6aGRRaWpMZg" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Kelowna Influencer</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="YnpPMGs3SklkZVJ1bDVxOQ" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Charged for the YMCA go in an pause</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="dXhpZ2tiUHhna012T2VUMg" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Eye Shawdow on site</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="UlhlRFhHeS1Hc0pCV3Rmdw" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Multicolor photos ( lifestyle ) site</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="UlNlMVZEaENDQ01peVB1dg" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">CRA paper for gym ( need taxes done)</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div>
-<div class="stamp">updated 9:57am · auto-refreshes · text Emma to add/change anything</div>
+<div class="stamp">updated 10:05am · auto-refreshes · text Emma to add/change anything</div>
 
 <script>
 (function() {
@@ -76,7 +79,9 @@ h1 { font-size:30px; font-weight:900; letter-spacing:-0.5px; }
   document.querySelectorAll(".tktap").forEach(function(el) {
     var id = el.getAttribute("data-id");
     if (mem[id]) mark(el, true);
+    var dragged = false;
     el.addEventListener("click", function() {
+      if (dragged) { dragged = false; return; }
       var undo = el.classList.contains("done");
       mark(el, !undo);
       if (undo) delete mem[id]; else mem[id] = Date.now();
@@ -135,6 +140,62 @@ h1 { font-size:30px; font-weight:900; letter-spacing:-0.5px; }
       m.appendChild(del);
       el.appendChild(m);
     });
+    var dTimer = null, ghost = null, sx = 0, sy = 0, dragging = false, curZone = null;
+    el.addEventListener("pointerdown", function(ev) {
+      if (ev.target.classList.contains("tka") || (ev.target.closest && ev.target.closest(".tkmenu"))) return;
+      sx = ev.clientX; sy = ev.clientY;
+      dTimer = setTimeout(function() {
+        dTimer = null; dragging = true;
+        if (navigator.vibrate) navigator.vibrate(30);
+        var r = el.getBoundingClientRect();
+        ghost = el.cloneNode(true);
+        ghost.classList.add("tkghost");
+        ghost.style.width = r.width + "px";
+        ghost.style.left = r.left + "px";
+        ghost.style.top = r.top + "px";
+        document.body.appendChild(ghost);
+        el.style.opacity = "0.4";
+        try { el.setPointerCapture(ev.pointerId); } catch (e) {}
+      }, 350);
+    });
+    el.addEventListener("touchmove", function(ev) {
+      if (dragging) ev.preventDefault();
+    }, { passive: false });
+    el.addEventListener("pointermove", function(ev) {
+      if (dTimer && (Math.abs(ev.clientX - sx) > 10 || Math.abs(ev.clientY - sy) > 10)) {
+        clearTimeout(dTimer); dTimer = null; return;
+      }
+      if (!dragging || !ghost) return;
+      ghost.style.transform = "translate(" + (ev.clientX - sx) + "px," + (ev.clientY - sy) + "px) scale(1.03)";
+      var t = document.elementFromPoint(ev.clientX, ev.clientY);
+      var z = t && t.closest ? t.closest("[data-droplid]") : null;
+      if (z !== curZone) {
+        if (curZone) curZone.classList.remove("dropglow");
+        curZone = z;
+        if (curZone) curZone.classList.add("dropglow");
+      }
+    });
+    function endDrag() {
+      if (dTimer) { clearTimeout(dTimer); dTimer = null; }
+      if (!dragging) return;
+      dragging = false; dragged = true;
+      if (ghost) { ghost.remove(); ghost = null; }
+      el.style.opacity = "";
+      var z = curZone;
+      if (curZone) { curZone.classList.remove("dropglow"); curZone = null; }
+      if (z) {
+        var to = z.getAttribute("data-droplid");
+        if (to && to !== el.getAttribute("data-lid")) {
+          q("taskmove", { id: id, lid: el.getAttribute("data-lid"), to: to,
+            title: el.querySelector(".tkt").textContent });
+          el.setAttribute("data-lid", to);
+          if (z.tagName === "DETAILS") z.open = true;
+          z.appendChild(el);
+        }
+      }
+    }
+    el.addEventListener("pointerup", endDrag);
+    el.addEventListener("pointercancel", endDrag);
   });
   var EMEM = {};
   try { EMEM = JSON.parse(localStorage.getItem("dhq_hidden_evs") || "{}"); } catch (e) {}
