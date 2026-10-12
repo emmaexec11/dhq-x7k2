@@ -244,8 +244,15 @@ a { color:#B79FE8; text-decoration:none; font-weight:700; }
   border-bottom:1px dashed rgba(255,255,255,0.13); }
 .mantra:last-child { border-bottom:none; }
 .mantra span { flex:1; }
-.mdot { width:18px; height:18px; min-width:18px; border-radius:50%; border:2px solid rgba(255,255,255,0.13);
-  background:none; padding:0; }
+.mdot { background:none; border:none; padding:2px 4px; font-size:15px; min-width:24px; }
+.mantra.mnote { border-radius:12px; padding:9px 10px; margin:5px 0; border-bottom:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.25); }
+.mpick { padding:8px 6px 10px; border-bottom:1px dashed rgba(255,255,255,0.13); }
+.mprow { display:flex; gap:8px; align-items:center; padding:3px 0; }
+.mplab { font-size:12px; font-weight:800; color:rgba(228,220,248,0.72); width:22px; }
+.msw { width:26px; height:26px; min-width:26px; border-radius:50%; border:2px solid transparent; padding:0; }
+.msw.mswnone { background:none; border:2px dashed rgba(228,220,248,0.72); color:rgba(228,220,248,0.72); font-size:11px; }
+.msw.mswon { border:2px solid rgba(228,220,248,0.72); outline:2px solid rgba(228,220,248,0.72); outline-offset:1px; }
 
 
 body { background-size:100% 240%; animation:sky 36s ease-in-out infinite alternate; position:relative; }
@@ -293,25 +300,52 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ key: "mantras", value: M }) }).catch(function() {});
   }
-  var PAL = ["", "#FFD66B", "#9BC995", "#8AB4F8", "#F79AA3", "#E8A86B"];
+  var PAL = ["", "#FFD66B", "#9BC995", "#8AB4F8", "#F79AA3", "#E8A86B", "#FFFFFF"];
+  var BGS = ["", "#E8A86B", "#FBF0A2", "#9BC995", "#8AB4F8", "#F79AA3", "#FFFFFF"];
+  var openPick = -1;
   function draw() {
     list.innerHTML = M.length ? "" : '<div class="notehint">＋ add a saying you\u2019re working on \u2014 it shows morning + night</div>';
     M.forEach(function(it, i) {
       var d = document.createElement("div"); d.className = "mantra";
-      var c = PAL[it.c || 0];
-      var dot = document.createElement("button"); dot.className = "mdot"; dot.title = "change colour";
-      if (c) { dot.style.background = c; dot.style.borderColor = c; }
-      dot.onclick = function() { it.c = ((it.c || 0) + 1) % PAL.length; save(); draw(); };
+      var c = PAL[it.c || 0], b = BGS[it.b || 0];
+      if (b) {
+        d.classList.add("mnote");
+        d.style.background = b;
+        d.style.borderColor = b;
+      }
+      var dot = document.createElement("button"); dot.className = "mdot"; dot.title = "colours";
+      dot.textContent = "\uD83C\uDFA8";
+      dot.onclick = function() { openPick = openPick === i ? -1 : i; draw(); };
       d.appendChild(dot);
       var s = document.createElement("span"); s.textContent = "\u201C" + it.t + "\u201D";
       if (c) s.style.color = c;
+      else if (b) s.style.color = "#2A2520";
       d.appendChild(s);
       var x = document.createElement("button"); x.className = "nx"; x.textContent = "\u2715";
+      if (b) x.style.color = "#2A2520";
       x.onclick = function() {
         if (!confirm("Remove this reminder?")) return;
+        if (openPick === i) openPick = -1;
         M.splice(i, 1); save(); draw();
       };
       d.appendChild(x); list.appendChild(d);
+      if (openPick === i) {
+        var pk = document.createElement("div"); pk.className = "mpick";
+        [["Aa", PAL, "c"], ["bg", BGS, "b"]].forEach(function(row) {
+          var r = document.createElement("div"); r.className = "mprow";
+          var lb = document.createElement("span"); lb.className = "mplab"; lb.textContent = row[0];
+          r.appendChild(lb);
+          row[1].forEach(function(col, ci) {
+            var sw = document.createElement("button"); sw.className = "msw";
+            if (col) { sw.style.background = col; } else { sw.classList.add("mswnone"); sw.textContent = "\u2715"; }
+            if ((it[row[2]] || 0) === ci) sw.classList.add("mswon");
+            sw.onclick = function() { it[row[2]] = ci; save(); draw(); };
+            r.appendChild(sw);
+          });
+          pk.appendChild(r);
+        });
+        list.appendChild(pk);
+      }
     });
   }
   document.getElementById("mantraadd").onclick = function() {
@@ -1172,7 +1206,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 10:41pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 10:43pm · auto-refreshes</span></div>
 
 <script>
 (function() {
