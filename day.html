@@ -1,0 +1,1242 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta http-equiv="refresh" content="900">
+<meta name="theme-color" content="#06190E">
+<title>Day</title><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet"><style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:linear-gradient(170deg,#04120A 0%,#0A2416 30%,#10381F 52%,#0B2A16 76%,#040F08 100%); min-height:100vh; color:#EFFFE9;
+  font-family:-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif;
+  max-width:520px; margin:0 auto; padding:26px 16px 40px; }
+.sec { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); border-radius:20px;
+  padding:18px 18px; margin-bottom:14px; box-shadow:0 8px 28px rgba(2,10,5,0.45); }
+.kicker { font-size:13px; letter-spacing:3px; font-weight:800; text-transform:uppercase;
+  color:rgba(220,248,215,0.72); margin-bottom:10px; }
+.ev { display:flex; gap:14px; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.13); align-items:baseline; }
+.ev:last-child { border-bottom:none; }
+.evt { font-weight:800; font-size:15px; min-width:72px; color:#B8F84A; }
+.evs { font-size:17px; }
+.tk { display:flex; gap:12px; padding:9px 0; align-items:center; font-size:17px; border-bottom:1px solid rgba(255,255,255,0.13); }
+.tk:last-child { border-bottom:none; }
+.box { width:19px; height:19px; border:2.5px solid rgba(220,248,215,0.72); border-radius:6px; flex:none; }
+.box.checked { background:linear-gradient(135deg,#E2FFA6,#B8F84A); border-color:transparent;
+  position:relative; box-shadow:0 0 10px #B8F84A77; animation:gpop .35s cubic-bezier(.3,1.6,.5,1); }
+.box.checked::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#122B07; font-size:14px; font-weight:900; }
+.tktap, .hb, .evtap, .steptap { cursor:pointer; -webkit-tap-highlight-color:transparent; user-select:none; }
+.step.sdone .nm { text-decoration:line-through; opacity:0.5; }
+.step.sdone .dt { opacity:0.4; }
+.step.sdone .num { background:linear-gradient(135deg,#E2FFA6,#B8F84A); color:#122B07;
+  box-shadow:0 0 14px #B8F84A88; }
+.goal { padding:7px 0; }
+.grow { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px; }
+.gl { font-size:16px; font-weight:700; }
+.gn { font-size:13px; color:rgba(220,248,215,0.72); }
+.gn em { font-style:normal; font-weight:700; color:#B8F84A; }
+.gbar { height:8px; border-radius:99px; background:rgba(255,255,255,0.13); overflow:hidden; }
+.gfill { height:100%; border-radius:99px; background:linear-gradient(90deg,#B8F84A,#E2FFA6);
+  transition:width .6s cubic-bezier(.2,.7,.3,1); }
+.tk.done .tkt { text-decoration:line-through; opacity:0.45; }
+.tk .tkt { flex:1; }
+.tka { flex:none; font-size:16px; padding:4px 5px; color:rgba(220,248,215,0.72); opacity:0.75; cursor:pointer; }
+.tk.starred .stario { color:#B8F84A; opacity:1; }
+.tk { position:relative; flex-wrap:wrap; }
+.tkmenu { flex-basis:100%; display:flex; gap:6px; flex-wrap:wrap; padding:8px 0 4px; }
+.tkmenu button { border:none; border-radius:10px; padding:6px 11px; font-size:13px; font-weight:700;
+  cursor:pointer; background:rgba(255,255,255,0.13); color:#EFFFE9; }
+.tkghost { position:fixed; z-index:99; pointer-events:none; margin:0; display:flex; align-items:center;
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); border-radius:14px; padding:10px 12px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.45); }
+.dropglow { outline:2px solid #B8F84A; outline-offset:-2px; }
+.gcat { border-bottom:1px solid rgba(255,255,255,0.13); }
+.gcat:last-of-type { border-bottom:none; }
+.gcathead { display:flex; align-items:center; gap:12px; padding:12px 2px; cursor:pointer;
+  -webkit-tap-highlight-color:transparent; user-select:none; }
+.gcirc { width:26px; height:26px; flex:none; border-radius:50%; border:2px solid rgba(220,248,215,0.72);
+  position:relative; box-sizing:border-box; transition:all .25s cubic-bezier(.2,.7,.3,1); }
+.gcirc.gon { border-color:transparent; background:linear-gradient(135deg,#E2FFA6,#B8F84A);
+  box-shadow:0 0 12px #B8F84A88, 0 2px 8px rgba(0,0,0,0.3); animation:gpop .35s cubic-bezier(.3,1.6,.5,1); }
+.gcirc.gon::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#122B07; font-size:16px; font-weight:900; }
+.gcirc.ghalf { border-color:#B8F84A; }
+.gcirc.ghalf::after { content:""; position:absolute; inset:5px; border-radius:50%;
+  background:linear-gradient(135deg,#E2FFA6,#B8F84A); opacity:0.85; }
+@keyframes gpop { 0% { transform:scale(0.6); } 60% { transform:scale(1.15); } 100% { transform:scale(1); } }
+.gcatmain { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.gcatname { font-size:17px; font-weight:800; }
+.gheadll { font-size:12.5px; font-weight:650; color:rgba(220,248,215,0.72); line-height:1.45;
+  display:flex; flex-wrap:wrap; gap:3px 12px; }
+.ghlag { color:#FFD84A; }
+.ghlead { color:#7AE8FF; }
+.gcatpct { font-size:14px; font-weight:800; }
+.gcatbody { padding:0 2px 12px 6px; }
+.gstar { font-size:14px; color:rgba(220,248,215,0.72); font-weight:700; margin-bottom:8px; }
+.gll { margin:2px 0 10px; display:flex; flex-direction:column; gap:5px; }
+.gllrow { display:flex; gap:8px; align-items:baseline; font-size:13px; line-height:1.4; }
+.gllk { flex:none; font-size:10px; font-weight:900; letter-spacing:1px; text-transform:uppercase;
+  padding:3px 9px; border-radius:99px; }
+.glllag { background:linear-gradient(135deg,#E2FFA6,#B8F84A); color:#122B07; }
+.glllead { background:rgba(255,255,255,0.10); color:rgba(220,248,215,0.72); border:1px solid rgba(255,255,255,0.13); }
+.gitem { padding:4px 0; }
+.gitemrow { display:flex; align-items:center; gap:9px; }
+.gichk { width:20px; height:20px; flex:none; border-radius:7px; border:2px solid rgba(220,248,215,0.72);
+  position:relative; box-sizing:border-box; cursor:pointer; transition:all .25s cubic-bezier(.2,.7,.3,1); }
+.gichk.gon { border-color:transparent; background:linear-gradient(135deg,#E2FFA6,#B8F84A);
+  box-shadow:0 0 10px #B8F84A77; animation:gpop .35s cubic-bezier(.3,1.6,.5,1); }
+.gichk.gon::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#122B07; font-size:13px; font-weight:900; }
+.gchipok { color:#58d68d; font-weight:900; text-shadow:0 0 8px rgba(88,214,141,0.55); }
+.giname { flex:1; font-size:15px; cursor:pointer; }
+.gin { font-size:12px; color:rgba(220,248,215,0.72); font-weight:700; white-space:nowrap; }
+.giedit { font-size:13px; color:rgba(220,248,215,0.72); opacity:0.6; padding:3px 4px; cursor:pointer; }
+.giopt { font-size:10px; font-weight:800; color:rgba(220,248,215,0.72); opacity:0.45; border:1px solid rgba(220,248,215,0.72); border-radius:8px; padding:1px 6px; cursor:pointer; white-space:nowrap; }
+.giopt.gopton { opacity:1; color:#8ab4f8; border-color:#8ab4f8; }
+.gcal { display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; padding:6px 0 4px 28px; max-width:260px; }
+.gchd { font-size:10px; font-weight:800; text-align:center; color:rgba(220,248,215,0.72); }
+.gcell { height:20px; border-radius:5px; background:#ffffff14; font-size:11px; text-align:center;
+  line-height:20px; color:#fff; cursor:pointer; }
+.gc-done { background:#5fa860; }
+.gc-skip { background:#4a7fb5; }
+.gc-miss { background:#b05050; }
+.gc-rest { background:#8a6fc966; }
+.gc-fut { background:#ffffff0a; cursor:default; }
+.gc-futsched { box-shadow:inset 0 0 0 1px #ffffff44; }
+.gleg { font-size:11px; color:rgba(220,248,215,0.72); padding:2px 0 8px 28px; line-height:1.5; }
+.gtools { display:flex; gap:14px; padding:6px 2px; }
+.gtool { font-size:13px; font-weight:700; color:rgba(220,248,215,0.72); cursor:pointer; }
+.gnotebtn { padding:4px 0 8px; }
+.gnote { white-space:pre-wrap; font-size:14px; line-height:1.55; color:#EFFFE9;
+  background:rgba(255,255,255,0.10); border-radius:14px; padding:13px 14px; margin:2px 0 12px; }
+#top1text { font-size:22px; font-weight:800; line-height:1.3; }
+.coform { margin-bottom:12px; }
+.coform:last-of-type { margin-bottom:4px; }
+.colab { display:block; font-size:14px; font-weight:800; margin-bottom:5px; color:rgba(220,248,215,0.72); }
+.corow { display:flex; gap:8px; }
+.corow input { flex:1; border:none; border-radius:12px; padding:10px 13px; font-size:16px;
+  background:rgba(255,255,255,0.10); color:#EFFFE9; outline:none; }
+.corow input::placeholder { color:rgba(220,248,215,0.72); }
+.corow button { border:none; border-radius:12px; padding:10px 15px; font-weight:800; font-size:14px;
+  background:linear-gradient(135deg,#E2FFA6,#B8F84A); color:#122B07; cursor:pointer;
+  box-shadow:0 3px 10px #B8F84A55; }
+.codone { font-size:14px; color:#B8F84A; margin-top:5px; font-weight:600; }
+.codone:empty { display:none; }
+.subhead { font-size:13px; font-weight:800; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(220,248,215,0.72); margin:18px 0 8px; }
+#goalbox .subhead:first-of-type { margin-top:10px; }
+.goalx { cursor:pointer; border-radius:12px; padding:7px 8px; margin:0 -8px; }
+.goalx.gon .gl { color:#B8F84A; }
+.gxdel { margin-left:8px; padding:2px 6px; opacity:0.55; }
+.gfold summary { list-style:none; cursor:pointer; }
+.gfold summary::-webkit-details-marker { display:none; }
+.gsubs { margin:4px 0 6px 4px; }
+.gsubrow { font-size:14px; font-weight:600; padding:6px 6px; color:rgba(220,248,215,0.72);
+  cursor:pointer; border-radius:8px; }
+.gsubrow.son { color:#B8F84A; }
+.gchk { display:inline-block; vertical-align:middle; width:17px; height:17px; margin-right:9px;
+  border-radius:6px; border:2px solid rgba(220,248,215,0.72); box-sizing:border-box; position:relative;
+  transition:all .25s cubic-bezier(.2,.7,.3,1); }
+.gchk.gon { border-color:transparent; background:linear-gradient(135deg,#E2FFA6,#B8F84A);
+  box-shadow:0 0 8px #B8F84A77; }
+.gchk.gon::after { content:"✓"; position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; color:#122B07; font-size:11px; font-weight:900; }
+#gadd { display:flex; gap:7px; margin:10px 0 4px; }
+#gadd input { flex:1; min-width:0; border:none; border-radius:12px; padding:9px 12px; font-size:15px;
+  background:rgba(255,255,255,0.10); color:#EFFFE9; outline:none; }
+#gadd input::placeholder { color:rgba(220,248,215,0.72); }
+#gadd select { border:none; border-radius:12px; padding:9px 8px; font-size:14px; font-weight:700;
+  background:rgba(255,255,255,0.10); color:#EFFFE9; outline:none; }
+#gadd button { border:none; border-radius:12px; padding:9px 14px; font-weight:800; font-size:16px;
+  background:linear-gradient(135deg,#E2FFA6,#B8F84A); color:#122B07; cursor:pointer;
+  box-shadow:0 3px 10px #B8F84A55; }
+.wakerow { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+#upbtn { border:none; border-radius:14px; padding:11px 18px; font-weight:800; font-size:16px;
+  background:linear-gradient(135deg,#E2FFA6,#B8F84A); color:#122B07; cursor:pointer;
+  box-shadow:0 3px 12px #B8F84A55; }
+#uptime { font-size:18px; font-weight:800; }
+.evtap.evgone { opacity:0.35; }
+.evtap.evgone .evs { text-decoration:line-through; }
+.evconfirm { display:inline-flex; gap:6px; margin-left:8px; }
+.evconfirm button { border:none; border-radius:10px; padding:5px 10px; font-size:13px; font-weight:700; cursor:pointer; }
+.evconfirm button:first-child { background:#C0533A; color:#fff; }
+.evconfirm button:last-child { background:rgba(255,255,255,0.18); color:inherit; }
+.evconfirm button.evedit { background:rgba(255,255,255,0.18); color:inherit; }
+.klink { color:inherit; text-decoration:none; }
+.empty { color:rgba(220,248,215,0.72); font-size:16px; padding:8px 0; font-style:italic; }
+.rowlink { text-decoration:none; color:inherit; display:block; }
+h1 { font-size:32px; font-weight:900; letter-spacing:-0.5px; margin-bottom:2px; display:inline-block; }
+.sub { color:rgba(220,248,215,0.72); font-size:15px; font-weight:600; margin-bottom:18px; }
+.wx { float:right; font-size:19px; font-weight:800; margin-top:8px; }
+.step { display:flex; gap:16px; align-items:center; background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.14); border-radius:18px; box-shadow:0 8px 28px rgba(2,10,5,0.45);
+  padding:14px 18px; margin-bottom:10px; }
+.num { width:36px; height:36px; border-radius:12px; color:#122B07;
+  background:linear-gradient(135deg,#E2FFA6,#B8F84A);
+  font-weight:900; font-size:17px; display:flex; align-items:center; justify-content:center; flex:none; }
+.nm { font-size:19px; font-weight:800; }
+.dt { color:rgba(220,248,215,0.72); font-size:14px; margin-top:1px; }
+.stepsfold { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); border-radius:20px;
+  box-shadow:0 8px 28px rgba(2,10,5,0.45); padding:4px 18px; margin-bottom:14px; }
+.stepsfold summary { list-style:none; cursor:pointer; display:flex; justify-content:space-between;
+  align-items:center; padding:14px 0; -webkit-tap-highlight-color:transparent; }
+.stepsfold summary::-webkit-details-marker { display:none; }
+.stepsfold .chev { color:rgba(220,248,215,0.72); font-size:15px; transition:transform .2s; }
+.stepsfold[open] > summary .chev { transform:rotate(180deg); }
+.listchips { display:flex; gap:8px; margin-top:13px; flex-wrap:wrap; }
+.lchip, .rchip { font-size:12px; font-weight:800; letter-spacing:0.5px; padding:7px 13px; border-radius:99px;
+  background:rgba(255,255,255,0.10); color:rgba(220,248,215,0.72); cursor:pointer; user-select:none;
+  display:inline-block; -webkit-tap-highlight-color:transparent; transition:all .2s; }
+.lchip.lon, .rchip.lon { background:linear-gradient(135deg,#E2FFA6,#B8F84A); color:#122B07;
+  box-shadow:0 0 10px #B8F84A55; }
+.rwrap { margin:2px 0 12px; }
+.lpanel { border-top:1px solid rgba(255,255,255,0.13); margin-top:11px; padding-top:3px; }
+.stepsfold .step { box-shadow:none; border:none; background:transparent;
+  border-top:1px solid rgba(255,255,255,0.13); border-radius:0; margin:0; padding:12px 0; }
+.foot { text-align:center; color:rgba(220,248,215,0.72); font-size:14px; margin-top:16px; }
+a { color:#B8F84A; text-decoration:none; font-weight:700; }
+#goalbox .kicker { color:#FF9FB2 !important; }
+#calbox .kicker { color:#7AE8FF !important; }
+#dragonbox .kicker { color:#FFD84A !important; }
+#peekbox .kicker { color:#7AE8FF !important; }
+#wakebox .kicker { color:#B8F84A !important; }
+#top1box .kicker { color:#FFD84A !important; }
+#calbox, #peekbox { border-left:4px solid #7AE8FF88; }
+#dragonbox, .stepsfold[data-droplid] { border-left:4px solid #FFD84A88; }
+.stepsfold[data-droplid] .kicker { color:#FFD84A !important; }
+#goalbox { border-left:4px solid #FF9FB288; }
+#routinebox { border-left:4px solid #B8F84A88; }
+#routinebox .kicker { color:#B8F84A !important; }
+#aftbox { border-left:4px solid #C9F07A88; }
+#aftbox .kicker { color:#C9F07A !important; }
+#cobox { border-left:4px solid #B8F84A88; }
+#cobox .kicker { color:#B8F84A !important; }
+#gratbox { border-left:4px solid #FFD84A88; }
+#gratbox .kicker { color:#FFD84A !important; }
+.kicker { opacity:1; }
+
+
+.chatbox { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); box-shadow:0 8px 28px rgba(2,10,5,0.45);
+  border-radius:20px; padding:14px 14px 12px; margin:6px 0 14px; }
+.chatlog { max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; padding:4px 2px 10px; }
+.chatempty { color:rgba(220,248,215,0.72); font-size:14px; font-style:italic; padding:4px 2px; }
+.cm { max-width:85%; padding:9px 13px; border-radius:14px; font-size:16px; line-height:1.35; white-space:pre-wrap; word-wrap:break-word; }
+.cm-d { align-self:flex-end; background:#B8F84A; color:#122B07; font-weight:600; border-bottom-right-radius:4px; }
+.cm-e { align-self:flex-start; background:rgba(255,255,255,0.09); color:#EFFFE9; border-bottom-left-radius:4px; }
+.chatform { display:flex; gap:8px; }
+.chatform input { flex:1; background:rgba(255,255,255,0.10); border:none; border-radius:12px; padding:12px 14px;
+  color:#EFFFE9; font-size:16px; outline:none; }
+.chatform button { background:#B8F84A; color:#122B07; border:none; border-radius:12px;
+  padding:12px 18px; font-weight:800; font-size:15px; }
+
+
+#notebox { background:#FBF0A2; border:none; border-radius:6px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3); color:#4A3F18; }
+#notebox .kicker { color:#8A6D1E !important; }
+#notebox .note { color:#4A3F18; font-family:'Caveat',cursive; font-size:24px; border-bottom:1px dashed rgba(74,63,24,0.25); }
+#notebox .nx { color:#8A6D1E; }
+#notebox .notehint { color:#8A6D1E; }
+#notebox input { background:rgba(255,255,255,0.55); color:#4A3F18; font-family:'Caveat',cursive; font-size:22px; }
+#notebox input::placeholder { color:#8A6D1E; }
+#notebox button[type=submit] { background:#4A3F18; color:#FDF3A9; }
+.note { display:flex; gap:10px; align-items:center; padding:8px 0; font-size:17px;
+  border-bottom:1px solid rgba(255,255,255,0.13); }
+.note:last-child { border-bottom:none; }
+.note span { flex:1; }
+.nx { background:none; border:none; color:rgba(220,248,215,0.72); font-size:15px; padding:4px 6px; }
+.notehint { color:rgba(220,248,215,0.72); font-size:12px; font-style:italic; margin-top:8px; }
+.dayhead { font-weight:800; font-size:15px; color:rgba(220,248,215,0.72); margin:10px 0 2px; }
+.dayhead:first-child { margin-top:0; }
+.mantra { display:flex; gap:10px; align-items:center; padding:9px 0;
+  font-size:16px; font-weight:600; line-height:1.35;
+  border-bottom:1px dashed rgba(255,255,255,0.13); }
+.mantra:last-child { border-bottom:none; }
+.mantra span { flex:1; }
+.mantra.mnote { border-radius:12px; padding:9px 10px; margin:5px 0; border-bottom:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.25); }
+.mpick { padding:8px 4px 10px; border-bottom:1px dashed rgba(255,255,255,0.13); }
+.mprow { display:flex; gap:10px; align-items:center; padding:5px 0; }
+.mplab { font-size:12px; font-weight:800; color:rgba(220,248,215,0.72); width:22px; }
+.msw { width:26px; height:26px; min-width:26px; border-radius:50%; padding:0; }
+.msw.mswnone { background:none; border:2px dashed rgba(220,248,215,0.72); color:rgba(220,248,215,0.72); font-size:11px; }
+.medit { flex:1; border:1px solid rgba(255,255,255,0.13); border-radius:10px; padding:8px 10px;
+  font-size:15px; background:rgba(255,255,255,0.06); color:inherit; }
+.mslider { flex:1; -webkit-appearance:none; appearance:none; height:14px; border-radius:99px;
+  background:linear-gradient(90deg,hsl(0,85%,70%),hsl(60,85%,70%),hsl(120,85%,70%),hsl(180,85%,70%),hsl(240,85%,70%),hsl(300,85%,70%),hsl(360,85%,70%)); }
+.mslider::-webkit-slider-thumb { -webkit-appearance:none; width:26px; height:26px; border-radius:50%;
+  background:#fff; border:3px solid rgba(0,0,0,0.35); }
+.mdel { background:none; border:1px solid rgba(220,248,215,0.72); color:rgba(220,248,215,0.72); border-radius:10px;
+  padding:7px 12px; font-size:13px; font-weight:700; }
+.mclose { margin-left:auto; border:none; border-radius:10px; padding:7px 16px;
+  font-size:13px; font-weight:800; background:rgba(255,255,255,0.14); color:inherit; }
+
+
+body { background-size:100% 240%; animation:sky 32s ease-in-out infinite alternate; position:relative; }
+@keyframes sky { 0% { background-position:50% 0%; } 100% { background-position:50% 100%; } }
+.orb { position:fixed; z-index:-1; border-radius:50%; pointer-events:none; filter:blur(58px); }
+.orb1 { width:330px; height:330px; background:radial-gradient(circle,rgba(184,248,74,0.26),transparent 70%);
+  top:-70px; right:-70px; animation:drift1 22s ease-in-out infinite alternate; }
+.orb2 { width:260px; height:260px; background:radial-gradient(circle,rgba(70,200,150,0.22),transparent 70%);
+  bottom:6%; left:-80px; animation:drift2 28s ease-in-out infinite alternate; }
+@keyframes drift1 { 0% { transform:translate(0,0) scale(1); } 100% { transform:translate(-45px,60px) scale(1.12); } }
+@keyframes drift2 { 0% { transform:translate(0,0); } 100% { transform:translate(55px,-45px); } }
+.fly { position:fixed; z-index:-1; width:3px; height:3px; border-radius:50%; background:#DFFFB0;
+  box-shadow:0 0 7px rgba(200,255,130,0.85); animation:twinkle 5s ease-in-out infinite; pointer-events:none; }
+@keyframes twinkle { 0%,100% { opacity:0.12; } 50% { opacity:0.9; } }
+h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weight:600;
+  font-size:44px; letter-spacing:0;
+  background:linear-gradient(100deg,#F2FFD6 0%,#C9F96E 45%,#7ED957 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 16px rgba(150,230,80,0.4)); }
+.sub { font-size:16px; font-weight:700; letter-spacing:0.5px; }
+.sec, .step { backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+.sec, .step { animation:rise .55s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+.sec:nth-of-type(1){animation-delay:.05s} .sec:nth-of-type(2){animation-delay:.12s}
+.sec:nth-of-type(3){animation-delay:.19s} .sec:nth-of-type(4){animation-delay:.26s}
+@media (prefers-reduced-motion:reduce){ body,.orb,.fly,.sec,.step{animation:none} }
+
+</style></head><body><div class="orb orb1"></div><div class="orb orb2"></div><div class="fly" style="top:7%;left:22%"></div><div class="fly" style="top:16%;left:76%;animation-delay:1.4s"></div><div class="fly" style="top:4%;left:52%;animation-delay:2.3s;width:2px;height:2px"></div><div class="fly" style="top:26%;left:10%;animation-delay:3s"></div>
+<div class="wx">☁️ 13°/-1°</div>
+<h1><span style="-webkit-text-fill-color:initial">⚡</span> Day</h1>
+<div class="sub">Monday, October 12 · one place, whole day</div>
+
+<div class="sec" id="mantrabox">
+  <div class="kicker" style="color:#B8F84A">🧭 Reminders<span class="gtool" id="mantraadd" style="float:right;letter-spacing:0">＋</span></div>
+  <div id="mantralist"></div>
+</div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var box = document.getElementById("mantrabox"), list = document.getElementById("mantralist");
+  var M = [];
+  function save() {
+    fetch(EP + "/?k=" + K + "&action=kvset", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: "mantras", value: M }) }).catch(function() {});
+  }
+  var PAL = ["", "#FFD66B", "#9BC995", "#8AB4F8", "#F79AA3", "#E8A86B", "#FFFFFF"];
+  var BGS = ["", "#E8A86B", "#FBF0A2", "#9BC995", "#8AB4F8", "#F79AA3", "#FFFFFF"];
+  var openPick = -1;
+  function col(it, k) {
+    var v = it[k];
+    if (typeof v === "string") return v;
+    return (k === "c" ? PAL : BGS)[v || 0] || "";
+  }
+  function hueOf(hex) {
+    if (!hex) return 30;
+    var r = parseInt(hex.slice(1, 3), 16) / 255, g = parseInt(hex.slice(3, 5), 16) / 255,
+        b2 = parseInt(hex.slice(5, 7), 16) / 255;
+    var mx = Math.max(r, g, b2), mn = Math.min(r, g, b2), h = 0;
+    if (mx !== mn) {
+      if (mx === r) h = (g - b2) / (mx - mn) % 6;
+      else if (mx === g) h = (b2 - r) / (mx - mn) + 2;
+      else h = (r - g) / (mx - mn) + 4;
+      h = Math.round(h * 60); if (h < 0) h += 360;
+    }
+    return h;
+  }
+  function hsl2hex(h, s, l) {
+    s /= 100; l /= 100;
+    var a = s * Math.min(l, 1 - l);
+    function f(n) {
+      var k = (n + h / 30) % 12;
+      var v = l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)));
+      return Math.round(v * 255).toString(16).padStart(2, "0");
+    }
+    return "#" + f(0) + f(8) + f(4);
+  }
+  function draw() {
+    list.innerHTML = M.length ? "" : '<div class="notehint">＋ add a saying you\u2019re working on \u2014 it shows morning + night</div>';
+    M.forEach(function(it, i) {
+      var d = document.createElement("div"); d.className = "mantra";
+      var c = col(it, "c"), b = col(it, "b");
+      if (b) {
+        d.classList.add("mnote");
+        d.style.background = b;
+      }
+      var s = document.createElement("span"); s.textContent = "\u201C" + it.t + "\u201D";
+      if (c) s.style.color = c;
+      else if (b) s.style.color = "#2A2520";
+      s.onclick = function() { openPick = openPick === i ? -1 : i; draw(); };
+      d.appendChild(s);
+      list.appendChild(d);
+      if (openPick === i) {
+        var pk = document.createElement("div"); pk.className = "mpick";
+        var er = document.createElement("div"); er.className = "mprow";
+        var inp = document.createElement("input"); inp.type = "text"; inp.className = "medit";
+        inp.value = it.t; inp.maxLength = 200;
+        inp.onchange = function() {
+          if (inp.value.trim()) { it.t = inp.value.trim(); save(); draw(); }
+        };
+        er.appendChild(inp); pk.appendChild(er);
+        [["Aa", "c"], ["bg", "b"]].forEach(function(row) {
+          var r = document.createElement("div"); r.className = "mprow";
+          var lb = document.createElement("span"); lb.className = "mplab"; lb.textContent = row[0];
+          r.appendChild(lb);
+          var off = document.createElement("button"); off.className = "msw mswnone"; off.textContent = "\u2715";
+          off.title = "default";
+          off.onclick = function() { it[row[1]] = ""; save(); draw(); };
+          r.appendChild(off);
+          var sl = document.createElement("input"); sl.type = "range"; sl.className = "mslider";
+          sl.min = 0; sl.max = 360; sl.value = hueOf(col(it, row[1]));
+          function apply(saveIt) {
+            var hex = row[1] === "c" ? hsl2hex(+sl.value, 90, 72) : hsl2hex(+sl.value, 70, 74);
+            it[row[1]] = hex;
+            if (row[1] === "c") { s.style.color = hex; }
+            else { d.classList.add("mnote"); d.style.background = hex; if (!col(it, "c")) s.style.color = "#2A2520"; }
+            if (saveIt) save();
+          }
+          sl.oninput = function() { apply(false); };
+          sl.onchange = function() { apply(true); };
+          r.appendChild(sl);
+          pk.appendChild(r);
+        });
+        var dr = document.createElement("div"); dr.className = "mprow";
+        var del = document.createElement("button"); del.className = "mdel"; del.textContent = "\uD83D\uDDD1 Delete";
+        del.onclick = function() {
+          if (!confirm("Remove this reminder?")) return;
+          openPick = -1; M.splice(i, 1); save(); draw();
+        };
+        var cl = document.createElement("button"); cl.className = "mclose"; cl.textContent = "Done";
+        cl.onclick = function() { openPick = -1; draw(); };
+        dr.appendChild(del); dr.appendChild(cl); pk.appendChild(dr);
+        list.appendChild(pk);
+      }
+    });
+  }
+  document.getElementById("mantraadd").onclick = function() {
+    var t = prompt("New reminder / saying");
+    if (!t || !t.trim()) return;
+    M.push({ t: t.trim() }); save(); draw();
+  };
+  fetch(EP + "/?k=" + K + "&action=kvget&key=mantras")
+    .then(function(r) { return r.json(); })
+    .then(function(j) {
+      M = (j.value || []).map(function(x) {
+        if (typeof x === "string") return { t: x };
+        x.c = col(x, "c"); x.b = col(x, "b");
+        return x;
+      });
+      draw();
+    })
+    .catch(function() { draw(); });
+})();
+</script>
+<div class="sec" id="calbox"><div class="kicker"><a class="klink" href="https://calendar.google.com/calendar/u/0/r/day/2026/10/12">📅 Today ↗</a></div><div class="ev evtap" data-key="a3e648d6d6f8" data-gid="mpabgda2lq5v78feibgr72u9vs" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#B8F84A">all day</span><span class="evs">Don&#x27;t go to work — Thanksgiving 🦃</span></div><div class="ev evtap" data-key="4059705af328" data-gid="v5t7uhkbekbqs4ge3ha1h4e070" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#B8F84A">10:00a</span><span class="evs">Message Jaxon + friends Happy Thanksgiving 🦃</span></div></div>
+<details class="stepsfold" id="peekbox"><summary><span class="kicker" style="margin:0"><a class="klink" href="https://calendar.google.com/calendar/u/0/r/week">👀 Next few days ↗</a></span><span class="chev">▾</span></summary><div class="dayhead">Tuesday</div><div class="ev evtap" data-key="135f1a5adb2b" data-gid="87rs0tspv4rd721vj51dkih9i8" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#B8F84A">10:00a</span><span class="evs">Call CNK Accountants 250-862-8577 (if no email back yet)</span></div><div class="ev evtap" data-key="fb68bccc03fa" data-gid="g48b939on8pkp6blc46uf57ou0_20261014T020000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#B8F84A">7:00p</span><span class="evs">Country Swing</span></div><div class="dayhead">Wednesday</div><div class="ev evtap" data-key="40c962a33352" data-gid="cdgmadr16lij6b9p6lhjgb9kc5j6cbb1c4rj6b9g6cojgo9h70rj6cj1ck_20261014T200000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#B8F84A">1:00p</span><span class="evs">Case management</span></div><div class="ev evtap" data-key="46002f94bc1c" data-gid="mtvdec4u6gdt44c19tl4b7ik7g_20261015T030000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#B8F84A">8:00p</span><span class="evs">Skincare weekly routine</span></div><div class="dayhead">Thursday</div><div class="ev evtap" data-key="5b41d86fbdc0" data-gid="c9hjicpo6dj3ib9oc4qj6b9k6pgjibb16krj0bb6ccpm8o9g64sjed1m6g_20261015T203000Z" data-cal="devondoherty07@gmail.com"><span class="evt" style="color:#B8F84A">1:30p</span><span class="evs">Singing Lessons</span></div></details><div class="sec" id="dragonbox" data-droplid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><div class="kicker"><a class="klink" href="https://tasks.google.com/">🐉 Daily Dragons ↗</a></div><div class="tk tktap" data-id="c0xLR09zSlBnbjBSNjJGdA" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Grocery: Taco Bowl + Weekly Meal Prep</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="aG1FSENCME15RkItN3R4Qw" data-lid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><span class="box"></span><span class="tkt">Foundation on site</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="listchips"><span class="lchip" data-lp="lp0" data-droplid="OE9DeWdFMm1uY3V4aHA0cQ">🌄 tomorrow · <span class="lcount">0</span></span><span class="lchip lon" data-lp="lp1" data-droplid="Qm1lM3gxUW5sUmNaejVhNA">🗓 week · <span class="lcount">3</span></span><span class="lchip" data-lp="lp2" data-droplid="UUt5ZlpxdXJKUkp3NTRBXw">📆 month · <span class="lcount">5</span></span><span class="lchip" data-lp="lp3" data-droplid="WEJaZ3ZWOFI1NHhMOFZWTA">🗃 some point · <span class="lcount">11</span></span></div><div class="lpanel" id="lp1" data-droplid="Qm1lM3gxUW5sUmNaejVhNA" style="display:block"><div class="tk tktap" data-id="a2s3VGFZekpOTVVmclNfUA" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Get a few products for holly to have</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="VW52Q2R2VTNWTGRJY3c1aQ" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Bens wedding gift</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="eUtMczdld3V5RGhhYWJVbw" data-lid="Qm1lM3gxUW5sUmNaejVhNA"><span class="box"></span><span class="tkt">Donate to that girl</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div><div class="lpanel" id="lp2" data-droplid="UUt5ZlpxdXJKUkp3NTRBXw" style="display:none"><div class="tk tktap" data-id="cldScE1pbVR6aGRRaWpMZg" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Kelowna Influencer</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="YnpPMGs3SklkZVJ1bDVxOQ" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Charged for the YMCA go in an pause</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="dXhpZ2tiUHhna012T2VUMg" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Eye Shawdow on site</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="UlhlRFhHeS1Hc0pCV3Rmdw" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">Multicolor photos ( lifestyle ) site</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="UlNlMVZEaENDQ01peVB1dg" data-lid="UUt5ZlpxdXJKUkp3NTRBXw"><span class="box"></span><span class="tkt">CRA paper for gym ( need taxes done)</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div></div><div class="lpanel" id="lp3" data-droplid="WEJaZ3ZWOFI1NHhMOFZWTA" style="display:none"><div class="tk tktap" data-id="WURrZ3Bja21OaHZ0UW9Fcg" data-lid="WEJaZ3ZWOFI1NHhMOFZWTA"><span class="box"></span><span class="tkt">Do re mi Fa in Soul do me</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="eVNHbVk2ci1NV0VmTVRWaw" data-lid="WEJaZ3ZWOFI1NHhMOFZWTA"><span class="box"></span><span class="tkt">New company ( ingredients )</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="NkV5Ni1uZU93YW1oZzdqOA" data-lid="WEJaZ3ZWOFI1NHhMOFZWTA"><span class="box"></span><span class="tkt">App for wyld ( clean scan app)</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="dmlHNlFnaXFEZUdSRTd5Xw" data-lid="WEJaZ3ZWOFI1NHhMOFZWTA"><span class="box"></span><span class="tkt">Health canda fulfillment center</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="tk tktap" data-id="NGJlVGV1ZzdCOU1KdDJ2Tg" data-lid="WEJaZ3ZWOFI1NHhMOFZWTA"><span class="box"></span><span class="tkt">Trust badges</span><span class="tka stario">☆</span><span class="tka tkedit">✎</span><span class="tka tkmove">↪</span></div><div class="empty">+6 more in the app</div></div><script>document.querySelectorAll('.lchip').forEach(function(c){var p=document.getElementById(c.getAttribute('data-lp'));c.onclick=function(){if(!p)return;var show=p.style.display==='none';document.querySelectorAll('.lpanel').forEach(function(x){x.style.display='none'});document.querySelectorAll('.lchip').forEach(function(x){x.classList.remove('lon')});if(show){p.style.display='block';c.classList.add('lon');}};});</script></div>
+
+
+<details class="stepsfold" id="goalbox" open>
+  <summary><span class="kicker" style="margin:0">🎯 Goals<span id="gtotal"></span></span><span class="chev">▾</span></summary>
+  <div class="rwrap"><span class="rchip" id="rchip_m">☀️ morning · 6 steps</span><div id="rpanel_m" style="display:none"><div class="step" data-step="step1"><div class="num">1</div><div><div class="nm">Wake</div><div class="dt">alarm in the bathroom · Alarmy scan · no snooze</div></div></div><div class="step" data-step="step2"><div class="num">2</div><div><div class="nm">Splash + skin</div><div class="dt">water chug · cold face splash · HA + moisturizer 60s</div></div></div><div class="step" data-step="step3"><div class="num">3</div><div><div class="nm">Kitchen</div><div class="dt">sermon on · breakfast prep + airfryer + coffee</div></div></div><div class="step" data-step="step4"><div class="num">4</div><div><div class="nm">Prayer walk</div><div class="dt">10 min · no phone · 3 gratitudes without fail</div></div></div><div class="step" data-step="step5"><div class="num">5</div><div><div class="nm">Breakfast + Bible</div><div class="dt">eat + coffee · 1 page lectio</div></div></div><div class="step" data-step="step6"><div class="num">6</div><div><div class="nm">Deep work</div><div class="dt">phone unlocks · 4h block before BJJ</div></div></div></div></div><script>(function(){var c=document.getElementById("rchip_m"),p=document.getElementById("rpanel_m");c.onclick=function(ev){ev.stopPropagation();var s=p.style.display==="none";p.style.display=s?"block":"none";c.classList.toggle("lon",s);};})();</script><div class="rwrap"><span class="rchip" id="rchip_a">⚡ afternoon · 4 steps</span><div id="rpanel_a" style="display:none"><div class="step" data-step="step1"><div class="num">1</div><div><div class="nm">Leave 10:15</div><div class="dt">BJJ Mon/Tue/Wed/Fri · gym Thu/Sat</div></div></div><div class="step" data-step="step2"><div class="num">2</div><div><div class="nm">Refuel</div><div class="dt">whey + lunch · 3-min reset</div></div></div><div class="step" data-step="step3"><div class="num">3</div><div><div class="nm">Work block 2</div><div class="dt">ads · outreach · product · LTV</div></div></div><div class="step" data-step="step4"><div class="num">4</div><div><div class="nm">Wrap by 5</div><div class="dt">loose ends · tomorrow&#x27;s first task</div></div></div></div></div><script>(function(){var c=document.getElementById("rchip_a"),p=document.getElementById("rpanel_a");c.onclick=function(ev){ev.stopPropagation();var s=p.style.display==="none";p.style.display=s?"block":"none";c.classList.toggle("lon",s);};})();</script><div class="rwrap"><span class="rchip" id="rchip_n">🌙 night · <span id="stepcount">0/5</span></span><div id="rpanel_n" style="display:none"><div class="step steptap" data-step="step1"><div class="num">1</div><div><div class="nm">Shutdown</div><div class="dt">at the desk 1 min · jot tomorrow&#x27;s first task</div></div></div><div class="step steptap" data-step="step2"><div class="num">2</div><div><div class="nm">Reward</div><div class="dt">Fortnite OR episode — pick one</div></div></div><div class="step steptap" data-step="step3"><div class="num">3</div><div><div class="nm">Shower + sing</div><div class="dt">screens off from here · then PM skin + minox foam on temples</div></div></div><div class="step steptap" data-step="step4"><div class="num">4</div><div><div class="nm">Journal as prayer</div><div class="dt">2 min · thank God · close the day</div></div></div><div class="step steptap" data-step="step5"><div class="num">5</div><div><div class="nm">Lights out</div><div class="dt">lie in the quiet · floor version: shower + 60s prayer</div></div></div></div></div><script>(function(){var c=document.getElementById("rchip_n"),p=document.getElementById("rpanel_n");c.onclick=function(ev){ev.stopPropagation();var s=p.style.display==="none";p.style.display=s?"block":"none";c.classList.toggle("lon",s);};})();</script>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var state = {};
+  function day() { return new Date().toLocaleDateString("en-CA"); }
+  var els = document.querySelectorAll(".steptap");
+  function draw() {
+    var done = 0;
+    els.forEach(function(el) {
+      var k = el.getAttribute("data-step"), on = state[k] === 1;
+      if (on) done++;
+      el.classList.toggle("sdone", on);
+      var num = el.querySelector(".num");
+      num.textContent = on ? "✓" : el.getAttribute("data-step").replace("step", "");
+    });
+    var c = document.getElementById("stepcount");
+    c.textContent = done + "/" + els.length + (done === els.length && els.length ? " — closed 🌙" : "");
+  }
+  els.forEach(function(el) {
+    el.addEventListener("click", function() {
+      var k = el.getAttribute("data-step");
+      state[k] = state[k] === 1 ? 0 : 1;
+      draw();
+      fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ day: day(), habit: k, done: state[k] }) }).catch(function() {});
+    });
+  });
+  fetch(EP + "/?k=" + K + "&action=habitstate&day=" + day())
+    .then(function(r) { return r.json(); })
+    .then(function(j) { state = j.habits || {}; draw(); })
+    .catch(function() { draw(); });
+})();
+</script>
+  <div class="subhead" id="gverdict"></div>
+  <div class="subhead" id="gwarn" style="display:none;color:#ff6b5e"></div>
+  <div id="gcats"></div>
+  <div class="notehint" style="margin-top:8px">tap the circle = did my stuff · tap the name = details</div>
+  <div class="gtools"><span class="gtool" id="gaddcat">＋ category</span></div>
+</details>
+
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var DEFS = null, st = {};
+  function iso(d) { return d.toLocaleDateString("en-CA"); }
+  var now = new Date(), today = iso(now);
+  var monday = new Date(now); monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  monday.setHours(0,0,0,0);
+  var start28 = new Date(now); start28.setDate(now.getDate() - 34);
+  var openCat = null, openItemCal = {}, openNote = null;
+  function gk(c, i) { return "G." + c + "." + i; }
+  function skk(c, i) { return "S." + c + "." + i; }
+  function addD(k, n) { var d = new Date(k + "T12:00:00"); d.setDate(d.getDate() + n); return iso(d); }
+  function isSkip(c, i, k) { return !!(st[k] && st[k][skk(c, i)]); }
+  function setH(h, v) {
+    fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ day: today, habit: h, done: v }) }).catch(function() {});
+  }
+  function setHDay(h, d, v) {
+    fetch(EP + "/?k=" + K + "&action=habitset", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ day: d, habit: h, done: v }) }).catch(function() {});
+  }
+  function saveDefs() {
+    fetch(EP + "/?k=" + K + "&action=kvset", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key: "goals2", value: DEFS }) }).catch(function() {});
+  }
+  function syncLegacy(cat) {
+    var leg = {};
+    cat.items.forEach(function(it) {
+      if (it.legacy) {
+        leg[it.legacy] = leg[it.legacy] || 0;
+        if (st[today] && st[today][gk(cat.id, it.id)]) leg[it.legacy] = 1;
+      }
+    });
+    Object.keys(leg).forEach(function(l) { setH(l, leg[l]); });
+  }
+  function period(it) {
+    if (it.per === "mo") {
+      var first = new Date(now.getFullYear(), now.getMonth(), 1);
+      var last = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      return { start: first, len: last.getDate() };
+    }
+    return { start: monday, len: 7 };
+  }
+  function weekHits(cid, it) {
+    var p = period(it), n = 0;
+    for (var d = new Date(p.start); d <= now; d.setDate(d.getDate() + 1)) {
+      var k = iso(d);
+      if (st[k] && st[k][gk(cid, it.id)]) n++;
+    }
+    return n;
+  }
+  function daysElapsed() { return Math.floor((now - monday) / 86400000) + 1; }
+  function pdaysElapsed(it) {
+    return Math.floor((now - period(it).start) / 86400000) + 1;
+  }
+  var TRACK1 = new Date(2026, 9, 10);
+  function itemPct(cid, it) {
+    // done vs due-so-far: starts at 100, drops when a due day passes unmet,
+    // and moves both ways when days are tapped/untapped
+    var m = it.min || 1, hits = weekHits(cid, it), p = period(it);
+    var doneToday = st[today] && st[today][gk(cid, it.id)] ? 1 : 0;
+    var todayD = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var pstart = p.start < TRACK1 ? TRACK1 : p.start;
+    var avail = Math.round((new Date(p.start.getFullYear(), p.start.getMonth(), p.start.getDate() + p.len) - pstart) / 86400000);
+    var eff = Math.min(m, Math.ceil(m * avail / p.len));
+    var skips = 0;
+    for (var sd = new Date(pstart); sd <= todayD; sd.setDate(sd.getDate() + 1)) {
+      if (isSkip(cid, it.id, iso(sd))) skips++;
+    }
+    var due;
+    if (it.per !== "mo" && it.days && it.days.length) {
+      due = 0;
+      for (var d = new Date(pstart); d <= todayD; d.setDate(d.getDate() + 1)) {
+        if (it.days.indexOf(d.getDay()) >= 0 && !isSkip(cid, it.id, iso(d)) && (d < todayD || doneToday)) due++;
+      }
+      due = Math.min(eff, due);
+    } else {
+      var remAfter = Math.round((new Date(p.start.getFullYear(), p.start.getMonth(), p.start.getDate() + p.len) - todayD) / 86400000) - 1;
+      due = Math.max(0, eff - remAfter - (doneToday ? 0 : 1) - skips);
+    }
+    if (due <= 0) return 100;
+    return Math.min(100, Math.round(hits * 100 / due));
+  }
+  function onPace(cid, it) {
+    var p = period(it);
+    var need = (it.min || 1) * pdaysElapsed(it) / p.len;
+    return weekHits(cid, it) >= Math.floor(need);
+  }
+  function reqItems(cat) {
+    return cat.items.filter(function(it) { return !it.opt; });
+  }
+  function catPct(cat) {
+    var req = reqItems(cat);
+    if (!req.length) return 100;
+    var s = 0;
+    req.forEach(function(it) { s += Math.min(100, itemPct(cat.id, it)); });
+    return Math.round(s / req.length);
+  }
+  function hitsBetween(cid, it, a, b) {
+    var n = 0;
+    for (var d = new Date(a); d <= b; d.setDate(d.getDate() + 1)) {
+      var k = iso(d);
+      if (st[k] && st[k][gk(cid, it.id)]) n++;
+    }
+    return n;
+  }
+  var TRACK0 = new Date(2026, 9, 5);
+  function itemOverall(cid, it) {
+    if (it.per === "mo") return Math.min(100, itemPct(cid, it));
+    var m = it.min || 1, s = 0, n = 0;
+    for (var w = 3; w >= 1; w--) {
+      var ws = new Date(monday); ws.setDate(monday.getDate() - 7 * w);
+      var we = new Date(ws); we.setDate(ws.getDate() + 6);
+      if (we < TRACK0) {
+        // pre-tracking history: credit-only, a logged week counts as 100
+        if (hitsBetween(cid, it, ws, we) > 0) { s += 100; n++; }
+      } else {
+        var sk2 = 0;
+        for (var d2 = new Date(ws); d2 <= we; d2.setDate(d2.getDate() + 1)) {
+          if (isSkip(cid, it.id, iso(d2))) sk2++;
+        }
+        s += Math.min(100, Math.round(hitsBetween(cid, it, ws, we) * 100 / Math.max(1, m - sk2)));
+        n++;
+      }
+    }
+    s += Math.min(100, itemPct(cid, it));
+    n++;
+    return Math.round(s / n);
+  }
+  function catOverall(cat) {
+    var req = reqItems(cat);
+    if (!req.length) return 100;
+    var s = 0;
+    req.forEach(function(it) { s += itemOverall(cat.id, it); });
+    return Math.round(s / req.length);
+  }
+  function calCells(cid, it) {
+    var html = '<div class="gcal">';
+    ["M","T","W","T","F","S","S"].forEach(function(h) {
+      html += '<span class="gchd">' + h + '</span>';
+    });
+    var end = new Date(now); end.setHours(0,0,0,0);
+    end.setDate(end.getDate() + (7 - ((end.getDay() + 6) % 7)) - 1);
+    var startC = new Date(end); startC.setDate(end.getDate() - 27);
+    var todayD = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var sched = it.days && it.days.length;
+    var makeups = 0;
+    for (var d = new Date(startC); d <= end; d.setDate(d.getDate() + 1)) {
+      var k = iso(d);
+      var done = st[k] && st[k][gk(cid, it.id)];
+      var skip = isSkip(cid, it.id, k);
+      var onSched = sched && it.days.indexOf(d.getDay()) >= 0;
+      if (done && sched && !onSched && d <= todayD) makeups++;
+      var cls, tip = "";
+      var sn = (DEFS.skipnotes || {})[k + "|" + gk(cid, it.id)];
+      if (skip && sn) tip = ' title="' + sn.replace(/"/g, "&quot;") + '"';
+      if (d > todayD) cls = onSched ? "gc-fut gc-futsched" : "gc-fut";
+      else if (done) cls = "gc-done";
+      else if (skip) cls = "gc-skip";
+      else if (sched && onSched && d < todayD) cls = "gc-miss";
+      else if (sched && onSched) cls = "gc-rest gc-futsched";
+      else cls = "gc-rest";
+      var lab = iso(d) === today ? "·" : (skip ? "s" : (d.getDate() === 1 ? "1" : ""));
+      html += '<span class="gcell ' + cls + '" data-d="' + k + '"' + tip + '>' + lab + '</span>';
+    }
+    var mk = sched ? ' · make-ups: ' + makeups : "";
+    var legend = sched
+      ? '<div class="gleg">🟩 did it · 🟥 missed · 🟦 skipped (sick etc) · tap: did → skip → clear' + mk + '</div>'
+      : '<div class="gleg">🟩 did it · 🟦 skipped · tap: did → skip → clear</div>';
+    return html + '</div>' + legend;
+  }
+  function verdict(p) {
+    if (p >= 100) return ["💎 Perfect week", "#9FD08C"];
+    if (p >= 80) return ["✓ Green — win", "#9FD08C"];
+    return ["🔥 Below 80 — step it up", "#E08A7A"];
+  }
+  function draw() {
+    if (!DEFS) return;
+    var wrap = document.getElementById("gcats");
+    wrap.innerHTML = "";
+    var tot = 0;
+    DEFS.cats.forEach(function(cat) {
+      var cp = catPct(cat);
+      tot += cp;
+      var allToday = cat.items.length > 0 && cat.items.every(function(it) {
+        return st[today] && st[today][gk(cat.id, it.id)];
+      });
+      var someToday = cat.items.some(function(it) {
+        return st[today] && st[today][gk(cat.id, it.id)];
+      });
+      var circCls = allToday ? " gon" : (someToday ? " ghalf" : "");
+      var d = document.createElement("div");
+      d.className = "gcat";
+      var ll = [];
+      if (cat.lag) ll.push('<span class="ghlag">🎯 ' + cat.lag + '</span>');
+      if (cat.lead) ll.push('<span class="ghlead">⚡ ' + cat.lead + '</span>');
+      var sub = ll.length ? '<div class="gheadll">' + ll.join(" ") + '</div>' : "";
+      var head = '<div class="gcathead">'
+        + '<span class="gcirc' + circCls + '"></span>'
+        + '<span class="gcatmain"><span class="gcatname">' + cat.icon + " " + cat.name + '</span>' + sub + '</span>'
+        + '<span class="gcatpct" style="color:' + verdict(cp)[1] + '">' + cp + '%</span></div>';
+      var body = "";
+      if (openCat === cat.id) {
+        body = '<div class="gcatbody">';
+        if (cat.star) body += '<div class="gstar">' + cat.star + '</div>';
+        body += '<div class="gll">'
+          + '<div class="gllrow" data-ll="lag"><span class="gllk glllag">🎯 lag</span><span>' + (cat.lag || "tap to set") + ' ✎</span></div>'
+          + '<div class="gllrow" data-ll="lead"><span class="gllk glllead">⚡ lead</span><span>' + (cat.lead || "tap to set") + ' ✎</span></div>'
+          + '</div>';
+        if (cat.note) {
+          body += '<div class="gtool gnotebtn">📖 full breakdown</div>'
+            + '<div class="gnote" style="display:' + (openNote === cat.id ? "block" : "none") + '">' + cat.note + '</div>';
+        }
+        cat.items.forEach(function(it) {
+          var hits = weekHits(cat.id, it), pct = itemPct(cat.id, it);
+          var onToday = st[today] && st[today][gk(cat.id, it.id)];
+          var chip = it.opt ? "" : (pct >= 80 ? ' <span class="gchipok">✓</span>' : " 🔥");
+          var stat = it.opt ? hits + "/" + it.min + (it.per === "mo" ? "mo" : "")
+            : hits + "/" + it.min + (it.per === "mo" ? "mo" : "") + (it.tgt > it.min ? "→" + it.tgt : "") + " · " + Math.min(pct, 150) + "%" + chip;
+          body += '<div class="gitem" data-i="' + it.id + '">'
+            + '<div class="gitemrow">'
+            + '<span class="gichk' + (onToday ? " gon" : "") + '" data-i="' + it.id + '"></span>'
+            + '<span class="giname" data-i="' + it.id + '">' + it.name + '</span>'
+            + '<span class="giopt' + (it.opt ? " gopton" : "") + '" data-i="' + it.id + '">' + (it.opt ? "optional" : "req") + '</span>'
+            + '<span class="gin">' + stat + '</span>'
+            + '<span class="giedit" data-i="' + it.id + '">✎</span></div>'
+            + (openItemCal[cat.id + "." + it.id] ? calCells(cat.id, it) : "")
+            + '</div>';
+        });
+        body += '<div class="gtools"><span class="gtool" data-act="additem">＋ goal</span>'
+          + '<span class="gtool" data-act="editcat">✎ category</span></div></div>';
+      }
+      d.innerHTML = head + body;
+      d.querySelector(".gcirc").onclick = function(ev) {
+        ev.stopPropagation();
+        var want = allToday ? 0 : 1;
+        st[today] = st[today] || {};
+        cat.items.forEach(function(it) {
+          st[today][gk(cat.id, it.id)] = want;
+          setH(gk(cat.id, it.id), want);
+        });
+        syncLegacy(cat);
+        draw();
+      };
+      d.querySelector(".gcathead").onclick = function() {
+        openCat = openCat === cat.id ? null : cat.id;
+        draw();
+      };
+      if (openCat === cat.id) {
+        d.querySelectorAll(".gllrow").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var k = el.getAttribute("data-ll");
+            var v = prompt(k === "lag" ? "🎯 Lag — the outcome" : "⚡ Lead — the daily domino", cat[k] || "");
+            if (v === null) return;
+            cat[k] = v.trim();
+            saveDefs(); draw();
+          };
+        });
+        var nb = d.querySelector(".gnotebtn");
+        if (nb) nb.onclick = function(ev) {
+          ev.stopPropagation();
+          openNote = openNote === cat.id ? null : cat.id;
+          draw();
+        };
+        d.querySelectorAll(".gichk").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var it = cat.items.filter(function(x) { return x.id === el.getAttribute("data-i"); })[0];
+            st[today] = st[today] || {};
+            var nv = st[today][gk(cat.id, it.id)] ? 0 : 1;
+            st[today][gk(cat.id, it.id)] = nv;
+            setH(gk(cat.id, it.id), nv);
+            syncLegacy(cat);
+            draw();
+          };
+        });
+        d.querySelectorAll(".giname").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var key = cat.id + "." + el.getAttribute("data-i");
+            openItemCal[key] = !openItemCal[key];
+            draw();
+          };
+        });
+        d.querySelectorAll(".gcell").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            if (el.classList.contains("gc-fut")) return;
+            var gi = el.closest(".gitem").getAttribute("data-i");
+            var it = cat.items.filter(function(x) { return x.id === gi; })[0];
+            var dd = el.getAttribute("data-d");
+            var K1 = gk(cat.id, it.id), K2 = skk(cat.id, it.id);
+            st[dd] = st[dd] || {};
+            if (st[dd][K1]) {
+              // did it -> skip (sick day): no two skips in a row, note required
+              if (isSkip(cat.id, it.id, addD(dd, -1)) || isSkip(cat.id, it.id, addD(dd, 1))) {
+                alert("Can't skip two days in a row — day before or after is already skipped.");
+                st[dd][K1] = 0; setHDay(K1, dd, 0);
+              } else {
+                var note = prompt("Skip note — why? (sick, travel...)", "");
+                if (note === null) { draw(); return; }
+                st[dd][K1] = 0; setHDay(K1, dd, 0);
+                st[dd][K2] = 1; setHDay(K2, dd, 1);
+                DEFS.skipnotes = DEFS.skipnotes || {};
+                if (note.trim()) DEFS.skipnotes[dd + "|" + K1] = note.trim();
+                saveDefs();
+              }
+            } else if (st[dd][K2]) {
+              st[dd][K2] = 0; setHDay(K2, dd, 0);
+              if (DEFS.skipnotes && DEFS.skipnotes[dd + "|" + K1]) {
+                delete DEFS.skipnotes[dd + "|" + K1];
+                saveDefs();
+              }
+            } else {
+              st[dd][K1] = 1; setHDay(K1, dd, 1);
+            }
+            draw();
+          };
+        });
+        d.querySelectorAll(".giopt").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var it = cat.items.filter(function(x) { return x.id === el.getAttribute("data-i"); })[0];
+            it.opt = it.opt ? 0 : 1;
+            saveDefs(); draw();
+          };
+        });
+        d.querySelectorAll(".giedit").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var it = cat.items.filter(function(x) { return x.id === el.getAttribute("data-i"); })[0];
+            var nm = prompt("Goal name (empty = delete)", it.name);
+            if (nm === null) return;
+            if (!nm.trim()) {
+              if (!confirm("Delete " + it.name + "?")) return;
+              cat.items = cat.items.filter(function(x) { return x.id !== it.id; });
+            } else {
+              it.name = nm.trim();
+              var cur = String(it.min) + "/" + (it.per === "mo" ? "mo" : "wk");
+              var fr = prompt("How often? e.g. 2/wk or 1/mo", cur);
+              if (fr) {
+                var fm = fr.match(/(\d+)\s*\/?\s*(mo|m|wk|w)?/i);
+                if (fm) {
+                  it.per = (fm[2] && fm[2].toLowerCase().charAt(0) === "m") ? "mo" : "wk";
+                  var cap = it.per === "mo" ? 31 : 7;
+                  it.min = Math.min(cap, Math.max(1, Number(fm[1])));
+                  if (!it.tgt || it.tgt < it.min) it.tgt = it.min;
+                }
+              }
+              var DAYN = ["sun","mon","tue","wed","thu","fri","sat"];
+              var curd = (it.days || []).map(function(n) { return DAYN[n]; }).join(",");
+              var ds = prompt("Fixed days? e.g. thu,sat (blank = any day)", curd);
+              if (ds !== null) {
+                var arr = [];
+                ds.split(/[,\s]+/).forEach(function(t) {
+                  var i = DAYN.indexOf(t.trim().toLowerCase().slice(0, 3));
+                  if (i >= 0 && arr.indexOf(i) < 0) arr.push(i);
+                });
+                it.days = arr;
+              }
+            }
+            saveDefs(); draw();
+          };
+        });
+        d.querySelectorAll(".gtool[data-act]").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var act = el.getAttribute("data-act");
+            if (act === "additem") {
+              var nm = prompt("New goal in " + cat.name);
+              if (!nm || !nm.trim()) return;
+              var fr = prompt("How often? e.g. 3/wk or 1/mo", "3/wk") || "3/wk";
+              var fm = fr.match(/(\d+)\s*\/?\s*(mo|m|wk|w)?/i);
+              var per = (fm && fm[2] && fm[2].toLowerCase().charAt(0) === "m") ? "mo" : "wk";
+              var cap = per === "mo" ? 31 : 7;
+              var mn = Math.min(cap, Math.max(1, fm ? Number(fm[1]) : 3));
+              cat.items.push({ id: "x" + Date.now().toString(36), name: nm.trim(),
+                min: mn, tgt: mn, per: per, days: [] });
+              saveDefs(); draw();
+            } else if (act === "editcat") {
+              var nm = prompt("Category name (empty = delete)", cat.name);
+              if (nm === null) return;
+              if (!nm.trim()) {
+                if (!confirm("Delete category " + cat.name + " and its goals?")) return;
+                DEFS.cats = DEFS.cats.filter(function(c) { return c.id !== cat.id; });
+              } else {
+                cat.name = nm.trim();
+                var ic = prompt("Emoji", cat.icon); if (ic) cat.icon = ic.trim();
+                var sr = prompt("North star line (shown on morning card)", cat.star || "");
+                if (sr !== null) cat.star = sr.trim();
+                var lg = prompt("🎯 Lag — the outcome (e.g. 185 lb · 12% BF)", cat.lag || "");
+                if (lg !== null) cat.lag = lg.trim();
+                var ld = prompt("⚡ Lead — the daily domino (e.g. exercise daily)", cat.lead || "");
+                if (ld !== null) cat.lead = ld.trim();
+              }
+              saveDefs(); draw();
+            }
+          };
+        });
+      }
+      wrap.appendChild(d);
+    });
+    var avg = DEFS.cats.length ? Math.round(tot / DEFS.cats.length) : 0;
+    var v = verdict(avg);
+    var gv = document.getElementById("gverdict");
+    gv.textContent = "This week: " + v[0] + " · " + avg + "%";
+    gv.style.color = v[1];
+    var slips = [];
+    DEFS.cats.forEach(function(cat) {
+      cat.items.forEach(function(it) {
+        if (it.opt) return;
+        var p = Math.min(100, itemPct(cat.id, it));
+        if (p < 80) slips.push(cat.icon + " " + it.name + " " + p + "%");
+      });
+    });
+    var gw = document.getElementById("gwarn");
+    if (gw) {
+      gw.textContent = slips.length ? "⚠️ Slipping: " + slips.join(" · ") : "";
+      gw.style.display = slips.length ? "" : "none";
+    }
+    var totO = 0;
+    DEFS.cats.forEach(function(cat) { totO += catOverall(cat); });
+    var avgO = DEFS.cats.length ? Math.round(totO / DEFS.cats.length) : 0;
+    var gt = document.getElementById("gtotal");
+    if (gt) {
+      gt.textContent = " · " + avgO + "%";
+      gt.style.color = verdict(avgO)[1];
+    }
+  }
+  var addBtn = document.getElementById("gaddcat");
+  if (addBtn) addBtn.onclick = function() {
+    if (!DEFS) return;
+    var nm = prompt("New category name");
+    if (!nm || !nm.trim()) return;
+    var ic = prompt("Emoji", "⭐") || "⭐";
+    DEFS.cats.push({ id: "c" + Date.now().toString(36), icon: ic.trim(), name: nm.trim(), star: "", items: [] });
+    saveDefs(); draw();
+  };
+  Promise.all([
+    fetch(EP + "/?k=" + K + "&action=kvget&key=goals2").then(function(r) { return r.json(); }),
+    fetch(EP + "/?k=" + K + "&action=habitrange&start=" + iso(start28) + "&end=" + today)
+      .then(function(r) { return r.json(); })
+  ]).then(function(res) {
+    DEFS = res[0].value || { cats: [] };
+    (res[1].rows || []).forEach(function(r) {
+      if (r.done && (r.habit.indexOf("G.") === 0 || r.habit.indexOf("S.") === 0)) {
+        st[r.day] = st[r.day] || {};
+        st[r.day][r.habit] = 1;
+      }
+    });
+    draw();
+  }).catch(function() {});
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<div class="sec" id="notebox"><div class="kicker" style="color:#B8F84A">📝 For tomorrow morning</div><div id="notelist"></div><form id="noteform" class="chatform"><input id="noteinput" type="text" placeholder="Jot it, then let it go…" autocomplete="off" maxlength="500"><button type="submit">Save</button></form><div class="notehint">shows up on your morning page — brain can let go now</div></div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var box = document.getElementById("notebox"), list = document.getElementById("notelist");
+  function since() { return new Date(Date.now() - 8*3600*1000).toISOString(); }
+  function load() {
+    fetch(EP + "/?k=" + K + "&action=notes&since=" + encodeURIComponent(since()))
+      .then(function(r) { return r.json(); })
+      .then(function(j) {
+        var all = j.notes || [];
+        var top1 = null, win = null, notes = [];
+        all.forEach(function(nt) {
+          if (nt.text.indexOf("\ud83c\udfaf ") === 0) top1 = nt;
+          else if (nt.text.indexOf("\ud83c\udfc6 ") === 0) win = nt;
+          else notes.push(nt);
+        });
+        var tb = document.getElementById("top1box");
+        if (tb) {
+          var any = top1 || win;
+          tb.style.display = any ? "block" : "none";
+          document.getElementById("top1text").textContent = top1 ? top1.text.slice(3) : "";
+          document.getElementById("top1text").style.display = top1 ? "block" : "none";
+          document.getElementById("wintext").textContent = win ? "\ud83c\udfc6 last night's win: " + win.text.slice(3) : "";
+          document.getElementById("wintext").style.display = win ? "block" : "none";
+        }
+        list.innerHTML = "";
+        notes.forEach(function(nt) {
+          var d = document.createElement("div"); d.className = "note";
+          var s = document.createElement("span"); s.textContent = nt.text; d.appendChild(s);
+          var x = document.createElement("button"); x.className = "nx"; x.textContent = "✕";
+          x.onclick = function() {
+            fetch(EP + "/?k=" + K + "&action=notedel", { method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id: nt.id }) }).then(load);
+          };
+          d.appendChild(x); list.appendChild(d);
+        });
+        
+      }).catch(function() {});
+  }
+  var f = document.getElementById("noteform");
+  if (f) f.addEventListener("submit", function(e) {
+    e.preventDefault();
+    var inp = document.getElementById("noteinput"), t = inp.value.trim();
+    if (!t) return;
+    inp.value = "";
+    fetch(EP + "/?k=" + K + "&action=notesave", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: t }) }).then(load);
+  });
+  load();
+})();
+</script>
+
+<div class="chatbox" id="chatbox">
+  <div class="kicker" style="color:#B8F84A">💬 Emma</div>
+  <div id="chatlog" class="chatlog"><div class="chatempty">Say anything — add a task, change an alarm, ask a question.</div></div>
+  <form id="chatform" class="chatform">
+    <input id="chatinput" type="text" placeholder="Message Emma…" autocomplete="off" maxlength="1000">
+    <button type="submit">Send</button>
+  </form>
+</div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3", last = 0;
+  var log = document.getElementById("chatlog");
+  function render(msgs) {
+    if (!msgs.length) return;
+    var empty = log.querySelector(".chatempty");
+    if (empty) empty.remove();
+    msgs.forEach(function(m) {
+      last = Math.max(last, m.id);
+      var div = document.createElement("div");
+      div.className = "cm " + (m.sender === "devon" ? "cm-d" : "cm-e");
+      div.textContent = m.text;
+      log.appendChild(div);
+    });
+    log.scrollTop = log.scrollHeight;
+  }
+  function poll() {
+    fetch(EP + "/?k=" + K + "&action=poll&since=" + last)
+      .then(function(r) { return r.json(); })
+      .then(function(j) { render(j.msgs || []); })
+      .catch(function() {});
+  }
+  document.getElementById("chatform").addEventListener("submit", function(e) {
+    e.preventDefault();
+    var inp = document.getElementById("chatinput");
+    var t = inp.value.trim();
+    if (!t) return;
+    inp.value = "";
+    fetch(EP + "/?k=" + K + "&action=send", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sender: "devon", text: t })
+    }).then(poll).catch(function() {});
+  });
+  poll();
+  setInterval(poll, 4000);
+})();
+</script>
+
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var KEY = "dhq_done_tasks";
+  var mem = {};
+  try { mem = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+  var cutoff = Date.now() - 3600 * 1000;
+  Object.keys(mem).forEach(function(k) { if (mem[k] < cutoff) delete mem[k]; });
+  function q(kind, payload) {
+    fetch(EP + "/?k=" + K + "&action=queue", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: kind, payload: payload }) }).catch(function() {});
+  }
+  var LISTS = {"Daily Dragons": "MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow", "Tomorrow": "OE9DeWdFMm1uY3V4aHA0cQ", "This Week": "Qm1lM3gxUW5sUmNaejVhNA", "This Month": "UUt5ZlpxdXJKUkp3NTRBXw", "At Some Point": "WEJaZ3ZWOFI1NHhMOFZWTA"};
+  document.querySelectorAll(".tktap").forEach(function(el) {
+    var id = el.getAttribute("data-id");
+    if (mem[id]) mark(el, true);
+    var dragged = false;
+    el.addEventListener("click", function() {
+      if (dragged) { dragged = false; return; }
+      var undo = el.classList.contains("done");
+      mark(el, !undo);
+      if (undo) delete mem[id]; else mem[id] = Date.now();
+      localStorage.setItem(KEY, JSON.stringify(mem));
+      q(undo ? "taskundo" : "taskdone", { id: id,
+        lid: el.getAttribute("data-lid"),
+        title: el.querySelector(".tkt").textContent });
+    });
+    var st = el.querySelector(".stario");
+    if (st) st.addEventListener("click", function(ev) {
+      ev.stopPropagation();
+      var on = st.textContent === "★";
+      st.textContent = on ? "☆" : "★";
+      el.classList.toggle("starred", !on);
+      q(on ? "stardel" : "staradd", { id: id, title: el.querySelector(".tkt").textContent });
+    });
+    var ed = el.querySelector(".tkedit");
+    if (ed) ed.addEventListener("click", function(ev) {
+      ev.stopPropagation();
+      var cur = el.querySelector(".tkt").textContent;
+      var t = prompt("Edit task", cur);
+      if (!t || !t.trim() || t.trim() === cur) return;
+      el.querySelector(".tkt").textContent = t.trim();
+      q("taskedit", { id: id, lid: el.getAttribute("data-lid"), title: t.trim() });
+    });
+    var mv = el.querySelector(".tkmove");
+    if (mv) mv.addEventListener("click", function(ev) {
+      ev.stopPropagation();
+      var old = el.querySelector(".tkmenu");
+      if (old) { old.remove(); return; }
+      var m = document.createElement("div");
+      m.className = "tkmenu";
+      Object.keys(LISTS).forEach(function(nm) {
+        if (LISTS[nm] === el.getAttribute("data-lid")) return;
+        var b = document.createElement("button");
+        b.textContent = nm;
+        b.addEventListener("click", function(e2) {
+          e2.stopPropagation();
+          q("taskmove", { id: id, lid: el.getAttribute("data-lid"), to: LISTS[nm],
+            title: el.querySelector(".tkt").textContent });
+          el.style.opacity = "0.3";
+          m.remove();
+        });
+        m.appendChild(b);
+      });
+      var del = document.createElement("button");
+      del.textContent = "🗑 Delete";
+      del.addEventListener("click", function(e2) {
+        e2.stopPropagation();
+        if (!confirm("Delete this task?")) { m.remove(); return; }
+        q("taskdel", { id: id, lid: el.getAttribute("data-lid"),
+          title: el.querySelector(".tkt").textContent });
+        el.style.opacity = "0.3";
+        m.remove();
+      });
+      m.appendChild(del);
+      el.appendChild(m);
+    });
+    var dTimer = null, ghost = null, sx = 0, sy = 0, dragging = false, curZone = null;
+    el.addEventListener("pointerdown", function(ev) {
+      if (ev.target.classList.contains("tka") || (ev.target.closest && ev.target.closest(".tkmenu"))) return;
+      sx = ev.clientX; sy = ev.clientY;
+      dTimer = setTimeout(function() {
+        dTimer = null; dragging = true;
+        if (navigator.vibrate) navigator.vibrate(30);
+        var r = el.getBoundingClientRect();
+        ghost = el.cloneNode(true);
+        ghost.classList.add("tkghost");
+        ghost.style.width = r.width + "px";
+        ghost.style.left = r.left + "px";
+        ghost.style.top = r.top + "px";
+        document.body.appendChild(ghost);
+        el.style.opacity = "0.4";
+        try { el.setPointerCapture(ev.pointerId); } catch (e) {}
+      }, 350);
+    });
+    el.addEventListener("touchmove", function(ev) {
+      if (dragging) ev.preventDefault();
+    }, { passive: false });
+    el.addEventListener("pointermove", function(ev) {
+      if (dTimer && (Math.abs(ev.clientX - sx) > 10 || Math.abs(ev.clientY - sy) > 10)) {
+        clearTimeout(dTimer); dTimer = null; return;
+      }
+      if (!dragging || !ghost) return;
+      ghost.style.transform = "translate(" + (ev.clientX - sx) + "px," + (ev.clientY - sy) + "px) scale(1.03)";
+      var t = document.elementFromPoint(ev.clientX, ev.clientY);
+      var z = t && t.closest ? t.closest("[data-droplid]") : null;
+      if (z !== curZone) {
+        if (curZone) curZone.classList.remove("dropglow");
+        curZone = z;
+        if (curZone) curZone.classList.add("dropglow");
+      }
+    });
+    function endDrag() {
+      if (dTimer) { clearTimeout(dTimer); dTimer = null; }
+      if (!dragging) return;
+      dragging = false; dragged = true;
+      if (ghost) { ghost.remove(); ghost = null; }
+      el.style.opacity = "";
+      var z = curZone;
+      if (curZone) { curZone.classList.remove("dropglow"); curZone = null; }
+      if (z) {
+        var to = z.getAttribute("data-droplid");
+        if (to && to !== el.getAttribute("data-lid")) {
+          q("taskmove", { id: id, lid: el.getAttribute("data-lid"), to: to,
+            title: el.querySelector(".tkt").textContent });
+          el.setAttribute("data-lid", to);
+          if (z.classList.contains("lchip")) {
+            var lc = z.querySelector(".lcount");
+            if (lc) lc.textContent = (parseInt(lc.textContent, 10) || 0) + 1;
+            var p2 = document.getElementById(z.getAttribute("data-lp"));
+            if (p2) p2.appendChild(el); else el.remove();
+          } else {
+            if (z.tagName === "DETAILS") z.open = true;
+            z.appendChild(el);
+          }
+        }
+      }
+    }
+    el.addEventListener("pointerup", endDrag);
+    el.addEventListener("pointercancel", endDrag);
+  });
+  var EMEM = {};
+  try { EMEM = JSON.parse(localStorage.getItem("dhq_hidden_evs") || "{}"); } catch (e) {}
+  Object.keys(EMEM).forEach(function(k) { if (EMEM[k] < cutoff) delete EMEM[k]; });
+  document.querySelectorAll(".evtap").forEach(function(el) {
+    var key = el.getAttribute("data-key");
+    if (EMEM[key]) el.classList.add("evgone");
+    el.addEventListener("click", function() {
+      if (el.classList.contains("evgone") || el.querySelector(".evconfirm")) return;
+      var c = document.createElement("span");
+      c.className = "evconfirm";
+      var yes = document.createElement("button");
+      yes.textContent = "🗑 Remove";
+      var ed = document.createElement("button");
+      ed.textContent = "✎ Edit";
+      ed.className = "evedit";
+      var no = document.createElement("button");
+      no.textContent = "✕";
+      c.appendChild(yes); c.appendChild(ed); c.appendChild(no);
+      ed.addEventListener("click", function(ev) {
+        ev.stopPropagation(); c.remove();
+        var eid = btoa(el.getAttribute("data-gid") + " " + el.getAttribute("data-cal"))
+          .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+        var eurl = "https://calendar.google.com/calendar/u/0/r/eventedit/" + eid;
+        window.open(window.gLink ? window.gLink(eurl) : eurl, "_blank");
+      });
+      el.appendChild(c);
+      yes.addEventListener("click", function(ev) {
+        ev.stopPropagation();
+        c.remove();
+        el.classList.add("evgone");
+        EMEM[key] = Date.now();
+        localStorage.setItem("dhq_hidden_evs", JSON.stringify(EMEM));
+        q("evdel", { key: key, gid: el.getAttribute("data-gid"),
+          cal: el.getAttribute("data-cal"),
+          title: el.querySelector(".evs").textContent });
+      });
+      no.addEventListener("click", function(ev) { ev.stopPropagation(); c.remove(); });
+    });
+  });
+  function mark(el, on) {
+    el.classList.toggle("done", on);
+    el.querySelector(".box").classList.toggle("checked", on);
+  }
+  localStorage.setItem(KEY, JSON.stringify(mem));
+  localStorage.setItem("dhq_hidden_evs", JSON.stringify(EMEM));
+})();
+</script>
+<div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
+<span style="font-size:12px">updated 11:51am · auto-refreshes</span></div>
+
+<script>
+(function() {
+  var android = /Android/i.test(navigator.userAgent);
+  window.gLink = function(url) {
+    if (!android) return url;
+    if (url.indexOf("tasks.google.com") >= 0)
+      return "intent://tasks.google.com/#Intent;scheme=https;package=com.google.android.apps.tasks;end";
+    var m = url.match(/calendar\.google\.com(\/[^#]*)?/);
+    if (m) return "intent://calendar.google.com" + (m[1] || "/") +
+      "#Intent;scheme=https;package=com.google.android.calendar;end";
+    return url;
+  };
+  if (!android) return;
+  document.querySelectorAll('a[href*="tasks.google.com"], a[href*="calendar.google.com"]')
+    .forEach(function(a) { a.href = window.gLink(a.href); a.removeAttribute("target"); });
+})();
+</script>
+</body></html>
