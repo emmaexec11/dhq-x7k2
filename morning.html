@@ -65,8 +65,8 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .gcatname { font-size:17px; font-weight:800; }
 .gheadll { font-size:12.5px; font-weight:650; color:rgba(255,255,255,0.78); line-height:1.45;
   display:flex; flex-wrap:wrap; gap:3px 12px; }
-.ghlag { color:#6BFF7E; }
-.ghlead { color:#C9A6FF; }
+.ghlag { color:#CDFF7A; }
+.ghlead { color:#BFE3FF; }
 .gcatpct { font-size:14px; font-weight:800; }
 .gcatbody { padding:0 2px 12px 6px; }
 .gstar { font-size:14px; color:rgba(255,255,255,0.78); font-weight:700; margin-bottom:8px; }
@@ -763,12 +763,10 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       if (openCat === cat.id) {
         body = '<div class="gcatbody">';
         if (cat.star) body += '<div class="gstar">' + cat.star + '</div>';
-        if (cat.lag || cat.lead) {
-          body += '<div class="gll">'
-            + (cat.lag ? '<div class="gllrow"><span class="gllk glllag">🎯 lag</span><span>' + cat.lag + '</span></div>' : '')
-            + (cat.lead ? '<div class="gllrow"><span class="gllk glllead">⚡ lead</span><span>' + cat.lead + '</span></div>' : '')
-            + '</div>';
-        }
+        body += '<div class="gll">'
+          + '<div class="gllrow" data-ll="lag"><span class="gllk glllag">🎯 lag</span><span>' + (cat.lag || "tap to set") + ' ✎</span></div>'
+          + '<div class="gllrow" data-ll="lead"><span class="gllk glllead">⚡ lead</span><span>' + (cat.lead || "tap to set") + ' ✎</span></div>'
+          + '</div>';
         if (cat.note) {
           body += '<div class="gtool gnotebtn">📖 full breakdown</div>'
             + '<div class="gnote" style="display:' + (openNote === cat.id ? "block" : "none") + '">' + cat.note + '</div>';
@@ -809,6 +807,16 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
         draw();
       };
       if (openCat === cat.id) {
+        d.querySelectorAll(".gllrow").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var k = el.getAttribute("data-ll");
+            var v = prompt(k === "lag" ? "🎯 Lag — the outcome" : "⚡ Lead — the daily domino", cat[k] || "");
+            if (v === null) return;
+            cat[k] = v.trim();
+            saveDefs(); draw();
+          };
+        });
         var nb = d.querySelector(".gnotebtn");
         if (nb) nb.onclick = function(ev) {
           ev.stopPropagation();
@@ -1243,7 +1251,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 11:13pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 11:17pm · auto-refreshes</span></div>
 
 <script>
 (function() {

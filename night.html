@@ -736,12 +736,10 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       if (openCat === cat.id) {
         body = '<div class="gcatbody">';
         if (cat.star) body += '<div class="gstar">' + cat.star + '</div>';
-        if (cat.lag || cat.lead) {
-          body += '<div class="gll">'
-            + (cat.lag ? '<div class="gllrow"><span class="gllk glllag">🎯 lag</span><span>' + cat.lag + '</span></div>' : '')
-            + (cat.lead ? '<div class="gllrow"><span class="gllk glllead">⚡ lead</span><span>' + cat.lead + '</span></div>' : '')
-            + '</div>';
-        }
+        body += '<div class="gll">'
+          + '<div class="gllrow" data-ll="lag"><span class="gllk glllag">🎯 lag</span><span>' + (cat.lag || "tap to set") + ' ✎</span></div>'
+          + '<div class="gllrow" data-ll="lead"><span class="gllk glllead">⚡ lead</span><span>' + (cat.lead || "tap to set") + ' ✎</span></div>'
+          + '</div>';
         if (cat.note) {
           body += '<div class="gtool gnotebtn">📖 full breakdown</div>'
             + '<div class="gnote" style="display:' + (openNote === cat.id ? "block" : "none") + '">' + cat.note + '</div>';
@@ -782,6 +780,16 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
         draw();
       };
       if (openCat === cat.id) {
+        d.querySelectorAll(".gllrow").forEach(function(el) {
+          el.onclick = function(ev) {
+            ev.stopPropagation();
+            var k = el.getAttribute("data-ll");
+            var v = prompt(k === "lag" ? "🎯 Lag — the outcome" : "⚡ Lead — the daily domino", cat[k] || "");
+            if (v === null) return;
+            cat[k] = v.trim();
+            saveDefs(); draw();
+          };
+        });
         var nb = d.querySelector(".gnotebtn");
         if (nb) nb.onclick = function(ev) {
           ev.stopPropagation();
@@ -1271,7 +1279,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a><br>
-<span style="font-size:12px">updated 11:13pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 11:17pm · auto-refreshes</span></div>
 
 <script>
 (function() {
