@@ -61,7 +61,10 @@ body { background:linear-gradient(170deg,#0E2A57 0%,#1D56A8 34%,#3E7BC4 52%,#E86
 .gcirc.ghalf::after { content:""; position:absolute; inset:5px; border-radius:50%;
   background:linear-gradient(135deg,#FFE0A3,#FFC46B); opacity:0.85; }
 @keyframes gpop { 0% { transform:scale(0.6); } 60% { transform:scale(1.15); } 100% { transform:scale(1); } }
-.gcatname { flex:1; font-size:17px; font-weight:800; }
+.gcatmain { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.gcatname { font-size:17px; font-weight:800; }
+.gheadll { font-size:12.5px; font-weight:650; color:rgba(255,255,255,0.78); line-height:1.45;
+  display:flex; flex-wrap:wrap; gap:3px 12px; }
 .gcatpct { font-size:14px; font-weight:800; }
 .gcatbody { padding:0 2px 12px 6px; }
 .gstar { font-size:14px; color:rgba(255,255,255,0.78); font-weight:700; margin-bottom:8px; }
@@ -746,9 +749,13 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       var circCls = allToday ? " gon" : (someToday ? " ghalf" : "");
       var d = document.createElement("div");
       d.className = "gcat";
+      var ll = [];
+      if (cat.lag) ll.push('<span class="ghlag">🎯 ' + cat.lag + '</span>');
+      if (cat.lead) ll.push('<span class="ghlead">⚡ ' + cat.lead + '</span>');
+      var sub = ll.length ? '<div class="gheadll">' + ll.join(" ") + '</div>' : "";
       var head = '<div class="gcathead">'
         + '<span class="gcirc' + circCls + '"></span>'
-        + '<span class="gcatname">' + cat.icon + " " + cat.name + '</span>'
+        + '<span class="gcatmain"><span class="gcatname">' + cat.icon + " " + cat.name + '</span>' + sub + '</span>'
         + '<span class="gcatpct" style="color:' + verdict(cp)[1] + '">' + cp + '%</span></div>';
       var body = "";
       if (openCat === cat.id) {
@@ -932,6 +939,10 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
                 var ic = prompt("Emoji", cat.icon); if (ic) cat.icon = ic.trim();
                 var sr = prompt("North star line (shown on morning card)", cat.star || "");
                 if (sr !== null) cat.star = sr.trim();
+                var lg = prompt("🎯 Lag — the outcome (e.g. 185 lb · 12% BF)", cat.lag || "");
+                if (lg !== null) cat.lag = lg.trim();
+                var ld = prompt("⚡ Lead — the daily domino (e.g. exercise daily)", cat.lead || "");
+                if (ld !== null) cat.lead = ld.trim();
               }
               saveDefs(); draw();
             }
@@ -1230,7 +1241,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 10:50pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 11:10pm · auto-refreshes</span></div>
 
 <script>
 (function() {
