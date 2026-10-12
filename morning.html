@@ -526,7 +526,11 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
         // pre-tracking history: credit-only, a logged week counts as 100
         if (hitsBetween(cid, it, ws, we) > 0) { s += 100; n++; }
       } else {
-        s += Math.min(100, Math.round(hitsBetween(cid, it, ws, we) * 100 / m));
+        var sk2 = 0;
+        for (var d2 = new Date(ws); d2 <= we; d2.setDate(d2.getDate() + 1)) {
+          if (isSkip(cid, it.id, iso(d2))) sk2++;
+        }
+        s += Math.min(100, Math.round(hitsBetween(cid, it, ws, we) * 100 / Math.max(1, m - sk2)));
         n++;
       }
     }
@@ -1075,7 +1079,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 10:18pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 10:19pm · auto-refreshes</span></div>
 
 <script>
 (function() {
