@@ -246,12 +246,21 @@ a { color:#FFC46B; text-decoration:none; font-weight:700; }
 .mantra span { flex:1; }
 .mantra.mnote { border-radius:12px; padding:9px 10px; margin:5px 0; border-bottom:none;
   box-shadow:0 2px 6px rgba(0,0,0,0.25); }
-.mpick { padding:8px 6px 10px; border-bottom:1px dashed rgba(255,255,255,0.18); }
-.mprow { display:flex; gap:8px; align-items:center; padding:3px 0; }
+.mpick { padding:8px 4px 10px; border-bottom:1px dashed rgba(255,255,255,0.18); }
+.mprow { display:flex; gap:10px; align-items:center; padding:5px 0; }
 .mplab { font-size:12px; font-weight:800; color:rgba(255,255,255,0.78); width:22px; }
-.msw { width:26px; height:26px; min-width:26px; border-radius:50%; border:2px solid transparent; padding:0; }
+.msw { width:26px; height:26px; min-width:26px; border-radius:50%; padding:0; }
 .msw.mswnone { background:none; border:2px dashed rgba(255,255,255,0.78); color:rgba(255,255,255,0.78); font-size:11px; }
-.msw.mswon { border:2px solid rgba(255,255,255,0.78); outline:2px solid rgba(255,255,255,0.78); outline-offset:1px; }
+.medit { flex:1; border:1px solid rgba(255,255,255,0.18); border-radius:10px; padding:8px 10px;
+  font-size:15px; background:rgba(255,255,255,0.06); color:inherit; }
+.mslider { flex:1; -webkit-appearance:none; appearance:none; height:14px; border-radius:99px;
+  background:linear-gradient(90deg,hsl(0,85%,70%),hsl(60,85%,70%),hsl(120,85%,70%),hsl(180,85%,70%),hsl(240,85%,70%),hsl(300,85%,70%),hsl(360,85%,70%)); }
+.mslider::-webkit-slider-thumb { -webkit-appearance:none; width:26px; height:26px; border-radius:50%;
+  background:#fff; border:3px solid rgba(0,0,0,0.35); }
+.mdel { background:none; border:1px solid rgba(255,255,255,0.78); color:rgba(255,255,255,0.78); border-radius:10px;
+  padding:7px 12px; font-size:13px; font-weight:700; }
+.mclose { margin-left:auto; border:none; border-radius:10px; padding:7px 16px;
+  font-size:13px; font-weight:800; background:rgba(255,255,255,0.14); color:inherit; }
 
 
 body { background-size:100% 240%; animation:sky 30s ease-in-out infinite alternate; position:relative; }
@@ -299,44 +308,89 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   var PAL = ["", "#FFD66B", "#9BC995", "#8AB4F8", "#F79AA3", "#E8A86B", "#FFFFFF"];
   var BGS = ["", "#E8A86B", "#FBF0A2", "#9BC995", "#8AB4F8", "#F79AA3", "#FFFFFF"];
   var openPick = -1;
+  function col(it, k) {
+    var v = it[k];
+    if (typeof v === "string") return v;
+    return (k === "c" ? PAL : BGS)[v || 0] || "";
+  }
+  function hueOf(hex) {
+    if (!hex) return 30;
+    var r = parseInt(hex.slice(1, 3), 16) / 255, g = parseInt(hex.slice(3, 5), 16) / 255,
+        b2 = parseInt(hex.slice(5, 7), 16) / 255;
+    var mx = Math.max(r, g, b2), mn = Math.min(r, g, b2), h = 0;
+    if (mx !== mn) {
+      if (mx === r) h = (g - b2) / (mx - mn) % 6;
+      else if (mx === g) h = (b2 - r) / (mx - mn) + 2;
+      else h = (r - g) / (mx - mn) + 4;
+      h = Math.round(h * 60); if (h < 0) h += 360;
+    }
+    return h;
+  }
+  function hsl2hex(h, s, l) {
+    s /= 100; l /= 100;
+    var a = s * Math.min(l, 1 - l);
+    function f(n) {
+      var k = (n + h / 30) % 12;
+      var v = l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)));
+      return Math.round(v * 255).toString(16).padStart(2, "0");
+    }
+    return "#" + f(0) + f(8) + f(4);
+  }
   function draw() {
     list.innerHTML = M.length ? "" : '<div class="notehint">＋ add a saying you\u2019re working on \u2014 it shows morning + night</div>';
     M.forEach(function(it, i) {
       var d = document.createElement("div"); d.className = "mantra";
-      var c = PAL[it.c || 0], b = BGS[it.b || 0];
+      var c = col(it, "c"), b = col(it, "b");
       if (b) {
         d.classList.add("mnote");
         d.style.background = b;
-        d.style.borderColor = b;
       }
       var s = document.createElement("span"); s.textContent = "\u201C" + it.t + "\u201D";
       if (c) s.style.color = c;
       else if (b) s.style.color = "#2A2520";
       s.onclick = function() { openPick = openPick === i ? -1 : i; draw(); };
       d.appendChild(s);
-      var x = document.createElement("button"); x.className = "nx"; x.textContent = "\u2715";
-      if (b) x.style.color = "#2A2520";
-      x.onclick = function() {
-        if (!confirm("Remove this reminder?")) return;
-        if (openPick === i) openPick = -1;
-        M.splice(i, 1); save(); draw();
-      };
-      d.appendChild(x); list.appendChild(d);
+      list.appendChild(d);
       if (openPick === i) {
         var pk = document.createElement("div"); pk.className = "mpick";
-        [["Aa", PAL, "c"], ["bg", BGS, "b"]].forEach(function(row) {
+        var er = document.createElement("div"); er.className = "mprow";
+        var inp = document.createElement("input"); inp.type = "text"; inp.className = "medit";
+        inp.value = it.t; inp.maxLength = 200;
+        inp.onchange = function() {
+          if (inp.value.trim()) { it.t = inp.value.trim(); save(); draw(); }
+        };
+        er.appendChild(inp); pk.appendChild(er);
+        [["Aa", "c"], ["bg", "b"]].forEach(function(row) {
           var r = document.createElement("div"); r.className = "mprow";
           var lb = document.createElement("span"); lb.className = "mplab"; lb.textContent = row[0];
           r.appendChild(lb);
-          row[1].forEach(function(col, ci) {
-            var sw = document.createElement("button"); sw.className = "msw";
-            if (col) { sw.style.background = col; } else { sw.classList.add("mswnone"); sw.textContent = "\u2715"; }
-            if ((it[row[2]] || 0) === ci) sw.classList.add("mswon");
-            sw.onclick = function() { it[row[2]] = ci; save(); draw(); };
-            r.appendChild(sw);
-          });
+          var off = document.createElement("button"); off.className = "msw mswnone"; off.textContent = "\u2715";
+          off.title = "default";
+          off.onclick = function() { it[row[1]] = ""; save(); draw(); };
+          r.appendChild(off);
+          var sl = document.createElement("input"); sl.type = "range"; sl.className = "mslider";
+          sl.min = 0; sl.max = 360; sl.value = hueOf(col(it, row[1]));
+          function apply(saveIt) {
+            var hex = row[1] === "c" ? hsl2hex(+sl.value, 90, 72) : hsl2hex(+sl.value, 70, 74);
+            it[row[1]] = hex;
+            if (row[1] === "c") { s.style.color = hex; }
+            else { d.classList.add("mnote"); d.style.background = hex; if (!col(it, "c")) s.style.color = "#2A2520"; }
+            if (saveIt) save();
+          }
+          sl.oninput = function() { apply(false); };
+          sl.onchange = function() { apply(true); };
+          r.appendChild(sl);
           pk.appendChild(r);
         });
+        var dr = document.createElement("div"); dr.className = "mprow";
+        var del = document.createElement("button"); del.className = "mdel"; del.textContent = "\uD83D\uDDD1 Delete";
+        del.onclick = function() {
+          if (!confirm("Remove this reminder?")) return;
+          openPick = -1; M.splice(i, 1); save(); draw();
+        };
+        var cl = document.createElement("button"); cl.className = "mclose"; cl.textContent = "Done";
+        cl.onclick = function() { openPick = -1; draw(); };
+        dr.appendChild(del); dr.appendChild(cl); pk.appendChild(dr);
         list.appendChild(pk);
       }
     });
@@ -344,13 +398,15 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
   document.getElementById("mantraadd").onclick = function() {
     var t = prompt("New reminder / saying");
     if (!t || !t.trim()) return;
-    M.push({ t: t.trim(), c: 0 }); save(); draw();
+    M.push({ t: t.trim() }); save(); draw();
   };
   fetch(EP + "/?k=" + K + "&action=kvget&key=mantras")
     .then(function(r) { return r.json(); })
     .then(function(j) {
       M = (j.value || []).map(function(x) {
-        return typeof x === "string" ? { t: x, c: 0 } : x;
+        if (typeof x === "string") return { t: x };
+        x.c = col(x, "c"); x.b = col(x, "b");
+        return x;
       });
       draw();
     })
@@ -1174,7 +1230,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 10:48pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 10:50pm · auto-refreshes</span></div>
 
 <script>
 (function() {
