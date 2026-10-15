@@ -292,9 +292,9 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 @media (prefers-reduced-motion:reduce){ body,.orb,.sec,.step{animation:none} }
 
 </style></head><body><div class="orb orb1"></div><div class="orb orb2"></div>
-<div class="wx">🌦 20°/8°</div>
+<div class="wx">☁️ 20°/8°</div>
 <h1><span style="-webkit-text-fill-color:initial">🌅</span> Morning</h1>
-<div class="sub">Wednesday, October 14</div>
+<div class="sub">Thursday, October 15</div>
 <div class="sec" id="top1box" style="display:none"><div class="kicker" style="color:#FFC46B">🎯 Today's #1</div><div id="top1text"></div><div id="wintext" class="notehint"></div></div>
 <div class="sec" id="mantrabox">
   <div class="kicker" style="color:#FFC46B">🧭 Reminders<span class="gtool" id="mantraadd" style="float:right;letter-spacing:0">＋</span></div>
@@ -418,7 +418,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
     .catch(function() { draw(); });
 })();
 </script>
-<div class="sec" id="calbox"><div class="kicker"><a class="klink" href="https://calendar.google.com/calendar/u/0/r/day/2026/10/14">📅 Today ↗</a></div><div class="empty">nothing booked — open day</div></div>
+<div class="sec" id="calbox"><div class="kicker"><a class="klink" href="https://calendar.google.com/calendar/u/0/r/day/2026/10/15">📅 Today ↗</a></div><div class="empty">nothing booked — open day</div></div>
 
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <div class="sec" id="notebox" style="display:none"><div class="kicker" style="color:#FFC46B">📝 From last night</div><div id="notelist"></div></div>
@@ -473,6 +473,30 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
       body: JSON.stringify({ text: t }) }).then(load);
   });
   load();
+})();
+</script>
+<div class="sec" id="wakebox">
+  <div class="kicker" style="color:#FFC46B">☀️ Wake anchor</div>
+  <div class="wakerow"><button id="upbtn">☀️ I'm up</button></div>
+  <div class="notehint">10 min outside before 9am — sunrise 07:20. Same wake time beats more sleep</div>
+  <div class="notehint" id="waketrend">last days: Sun 08:30 · Tue 08:38 · Wed 08:14 · Thu 08:05 · Sat 09:13 · Tue 09:30 · Wed 09:00</div>
+</div>
+<script>
+(function() {
+  var EP = "https://emmalindsay--fa014b18bbba11f19dfa1607ee4eb77e.web.val.run", K = "dhq-x7k2-rls84m-v9q3";
+  var day = new Date().toLocaleDateString("en-CA");
+  var mem = localStorage.getItem("dhq_wake_" + day);
+  var box = document.getElementById("wakebox");
+  var btn = document.getElementById("upbtn");
+  if (mem) { box.style.display = "none"; }
+  btn.addEventListener("click", function() {
+    var t = new Date().toTimeString().slice(0, 5);
+    box.style.display = "none";
+    localStorage.setItem("dhq_wake_" + day, t);
+    fetch(EP + "/?k=" + K + "&action=queue", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: "wake", payload: { day: day, t: t } }) }).catch(function() {});
+  });
 })();
 </script><div class="sec" id="dragonbox" data-droplid="MTgxMjMxMjg3Nzk3MzI5ODc0NTU6MDow"><div class="kicker"><a class="klink" href="https://tasks.google.com/">🐉 Daily Dragons ↗</a></div><div class="empty">all clear 🎉</div><div class="listchips"><span class="lchip" data-lp="lp0" data-droplid="OE9DeWdFMm1uY3V4aHA0cQ">🌄 tomorrow · <span class="lcount">0</span></span><span class="lchip" data-lp="lp1" data-droplid="Qm1lM3gxUW5sUmNaejVhNA">🗓 week · <span class="lcount">0</span></span><span class="lchip" data-lp="lp2" data-droplid="UUt5ZlpxdXJKUkp3NTRBXw">📆 month · <span class="lcount">0</span></span><span class="lchip" data-lp="lp3" data-droplid="WEJaZ3ZWOFI1NHhMOFZWTA">🗃 some point · <span class="lcount">0</span></span></div><script>document.querySelectorAll('.lchip').forEach(function(c){var p=document.getElementById(c.getAttribute('data-lp'));c.onclick=function(){if(!p)return;var show=p.style.display==='none';document.querySelectorAll('.lpanel').forEach(function(x){x.style.display='none'});document.querySelectorAll('.lchip').forEach(function(x){x.classList.remove('lon')});if(show){p.style.display='block';c.classList.add('lon');}};});</script></div>
 
@@ -1227,7 +1251,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="day.html">Day ⚡</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 11:59pm · auto-refreshes</span></div>
+<span style="font-size:12px">updated 12:19am · auto-refreshes</span></div>
 
 <script>
 (function() {
