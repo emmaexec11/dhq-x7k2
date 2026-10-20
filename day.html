@@ -110,6 +110,9 @@ body { background:linear-gradient(170deg,#04120A 0%,#0A2416 30%,#10381F 52%,#0B2
 .gnotebtn { padding:4px 0 8px; }
 .gnote { white-space:pre-wrap; font-size:14px; line-height:1.55; color:#EFFFE9;
   background:rgba(255,255,255,0.10); border-radius:14px; padding:13px 14px; margin:2px 0 12px; }
+.gnotearea { width:100%; box-sizing:border-box; min-height:260px; border:none; border-radius:12px;
+  padding:11px 12px; font-size:14px; line-height:1.55; font-family:inherit;
+  background:rgba(255,255,255,0.07); color:#EFFFE9; resize:vertical; }
 #top1text { font-size:22px; font-weight:800; line-height:1.3; }
 .coform { margin-bottom:12px; }
 .coform:last-of-type { margin-bottom:4px; }
@@ -298,7 +301,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 @media (prefers-reduced-motion:reduce){ body,.orb,.fly,.sec,.step{animation:none} }
 
 </style></head><body><div class="orb orb1"></div><div class="orb orb2"></div><div class="fly" style="top:7%;left:22%"></div><div class="fly" style="top:16%;left:76%;animation-delay:1.4s"></div><div class="fly" style="top:4%;left:52%;animation-delay:2.3s;width:2px;height:2px"></div><div class="fly" style="top:26%;left:10%;animation-delay:3s"></div>
-<div class="wx">☁️ 15°/0°</div>
+<div class="wx">☁️ 14°/0°</div>
 <h1><span style="-webkit-text-fill-color:initial">⚡</span> Day</h1>
 <div class="sub">Tuesday, October 20 · one place, whole day</div>
 
@@ -687,7 +690,8 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
           + '</div>';
         if (cat.note) {
           body += '<div class="gtool gnotebtn">📖 full breakdown</div>'
-            + '<div class="gnote" style="display:' + (openNote === cat.id ? "block" : "none") + '">' + cat.note + '</div>';
+            + '<div class="gnote" style="display:' + (openNote === cat.id ? "block" : "none") + '">' + cat.note
+            + '<div class="gtools"><span class="gtool gnoteedit">✎ edit</span></div></div>';
         }
         cat.items.forEach(function(it) {
           var hits = weekHits(cat.id, it), pct = itemPct(cat.id, it);
@@ -740,6 +744,25 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
           ev.stopPropagation();
           openNote = openNote === cat.id ? null : cat.id;
           draw();
+        };
+        var ne = d.querySelector(".gnoteedit");
+        if (ne) ne.onclick = function(ev) {
+          ev.stopPropagation();
+          var g = d.querySelector(".gnote");
+          g.innerHTML = '<textarea class="gnotearea"></textarea>'
+            + '<div class="gtools"><span class="gtool gnotesave">💾 save</span>'
+            + '<span class="gtool gnotecancel">✕ cancel</span></div>';
+          var ta = g.querySelector(".gnotearea");
+          ta.value = cat.note;
+          ta.onclick = function(e2) { e2.stopPropagation(); };
+          g.querySelector(".gnotesave").onclick = function(e2) {
+            e2.stopPropagation();
+            cat.note = ta.value;
+            saveDefs(); draw();
+          };
+          g.querySelector(".gnotecancel").onclick = function(e2) {
+            e2.stopPropagation(); draw();
+          };
         };
         d.querySelectorAll(".gichk").forEach(function(el) {
           el.onclick = function(ev) {
@@ -1224,7 +1247,7 @@ h1 { font-family:'Fredoka','SF Pro Rounded',-apple-system,sans-serif; font-weigh
 })();
 </script>
 <div class="foot"><a href="index.html">← HQ</a> &nbsp;·&nbsp; <a href="morning.html">Morning 🌅</a> &nbsp;·&nbsp; <a href="night.html">Night 🌙</a><br>
-<span style="font-size:12px">updated 9:33am · auto-refreshes</span></div>
+<span style="font-size:12px">updated 9:48am · auto-refreshes</span></div>
 
 <script>
 (function() {
